@@ -6,6 +6,7 @@ import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -26,10 +27,16 @@ public class GmapfxController implements MapComponentInitializedListener {
         myPaneWithMapsAndOtherFeatures.getChildren().add(mapComponent);
     }
 
+    public void createSimpleMap(final Tab tab) {
+        //generates google map with some defaults and put it into top pane
+        mapComponent = new GoogleMapView();
+        mapComponent.addMapInializedListener(this);
+        tab.setContent(mapComponent);
+    }
+
     @Override
     public void mapInitialized() {
         LatLong center = new LatLong(34.0219, -118.4814);
-
         MapOptions options = new MapOptions()
                 .center(center)
                 .mapMarker(false)
@@ -51,4 +58,5 @@ public class GmapfxController implements MapComponentInitializedListener {
 
         map = mapComponent.createMap(options);
     }
+
 }

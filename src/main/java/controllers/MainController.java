@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -13,6 +14,9 @@ public class MainController {
     private AnchorPane myPaneWithMapsAndOtherFeatures;
 
     @FXML
+    private Tab tab_with_map;
+
+    @FXML
     private AnchorPane myPaneWithControls;
 
     @FXML
@@ -20,7 +24,8 @@ public class MainController {
 
     public void showMap(){
         final GmapfxController gmapfxController = new GmapfxController();
-        gmapfxController.createSimpleMap(myPaneWithMapsAndOtherFeatures);
+//        gmapfxController.createSimpleMap(myPaneWithMapsAndOtherFeatures);
+        gmapfxController.createSimpleMap(tab_with_map);
     }
 
     public void showControlsInit() {
