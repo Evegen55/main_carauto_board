@@ -1,5 +1,7 @@
 package controllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 
@@ -16,6 +18,16 @@ public class ClimateControlController {
 
     public void createInitForControls(final AnchorPane myPaneWithControls) {
         System.out.println(slider.getOrientation());
+
+        // Adding Listener to value property.
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, //
+                                Number oldValue, Number newValue) {
+                System.out.println("New value: " + newValue);
+            }
+        });
 
     }
 }

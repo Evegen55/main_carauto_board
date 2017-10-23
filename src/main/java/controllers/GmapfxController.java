@@ -13,8 +13,8 @@ import javafx.scene.layout.AnchorPane;
  */
 public class GmapfxController implements MapComponentInitializedListener {
 
-    protected GoogleMapView mapComponent;
-    protected GoogleMap map;
+    private GoogleMapView mapComponent;
+    private GoogleMap map;
 
     /**
      *
