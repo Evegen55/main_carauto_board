@@ -100,7 +100,7 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
             DirectionsResult e = results;
             GeocodingService gs = new GeocodingService();
             LOGGER.info("SIZE ROUTES: " + e.getRoutes().size() + "\n" + "ORIGIN: " + e.getRoutes().get(0).getLegs().get(0).getStartLocation());
-            gs.reverseGeocode(e.getRoutes().get(0).getLegs().get(0).getStartLocation().getLatitude(), e.getRoutes().get(0).getLegs().get(0).getStartLocation().getLongitude(), this);
+//            gs.reverseGeocode(e.getRoutes().get(0).getLegs().get(0).getStartLocation().getLatitude(), e.getRoutes().get(0).getLegs().get(0).getStartLocation().getLongitude(), this);
             LOGGER.info("LEGS SIZE: " + e.getRoutes().get(0).getLegs().size());
             LOGGER.info("WAYPOINTS " + e.getGeocodedWaypoints().size());
             double d = 0;

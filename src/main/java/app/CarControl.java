@@ -26,7 +26,7 @@ public class CarControl extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/base_form.fxml"));
         // set the main controller as root controller
-        final MainController mainController = new MainController();
+        final MainController mainController = new MainController(primaryStage);
         loader.setController(mainController);
         final Parent parent = loader.load();
         final Scene scene = new Scene(parent);
@@ -35,7 +35,8 @@ public class CarControl extends Application {
 
         //do the stuff
         mainController.showMap();
-        mainController.showControlsInit();
+        mainController.initialiseControls();
+        mainController.initializeMusic();
     }
 
 }
