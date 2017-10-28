@@ -17,6 +17,9 @@ public class MainController {
     private Tab tab_with_map;
 
     @FXML
+    private AnchorPane pane_with_map;
+
+    @FXML
     private AnchorPane myPaneWithControls;
 
     @FXML
@@ -25,7 +28,8 @@ public class MainController {
     public void showMap(){
         final GmapfxController gmapfxController = new GmapfxController();
 //        gmapfxController.createSimpleMap(myPaneWithMapsAndOtherFeatures);
-        gmapfxController.createSimpleMap(tab_with_map);
+//        gmapfxController.createSimpleMap(tab_with_map);
+        gmapfxController.createSimpleMap(pane_with_map);
     }
 
     public void showControlsInit() {

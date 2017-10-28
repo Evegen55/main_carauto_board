@@ -2,31 +2,56 @@ package controllers;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
-import com.lynden.gmapsfx.javascript.object.LatLong;
-import com.lynden.gmapsfx.javascript.object.MapOptions;
-import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import com.lynden.gmapsfx.javascript.object.*;
+import com.lynden.gmapsfx.service.directions.*;
+import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
+import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
+import com.lynden.gmapsfx.service.geocoding.GeocodingService;
+import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 /**
  * @author (created on 10/20/2017).
  */
-public class GmapfxController implements MapComponentInitializedListener {
+public class GmapfxController implements MapComponentInitializedListener, DirectionsServiceCallback, GeocodingServiceCallback {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(GmapfxController.class);
 
     private GoogleMapView mapComponent;
     private GoogleMap map;
 
+    private String styleString = getStyleForMap();
+
+    private String getStyleForMap() {
+        String content = null;
+        try {
+            content = IOUtils.toString(this.getClass()
+                    .getResourceAsStream("/css/grayMap.json"), "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return content;
+    }
+
     /**
-     *
+     * @param anchorPane
      */
-    public void createSimpleMap(final AnchorPane myPaneWithMapsAndOtherFeatures) {
+    public void createSimpleMap(final AnchorPane anchorPane) {
         //generates google map with some defaults and put it into top pane
         mapComponent = new GoogleMapView();
         mapComponent.addMapInializedListener(this);
-        myPaneWithMapsAndOtherFeatures.getChildren().add(mapComponent);
+        anchorPane.getChildren().add(mapComponent);
     }
 
+    /**
+     * @param tab
+     */
     public void createSimpleMap(final Tab tab) {
         //generates google map with some defaults and put it into top pane
         mapComponent = new GoogleMapView();
@@ -39,7 +64,6 @@ public class GmapfxController implements MapComponentInitializedListener {
         LatLong center = new LatLong(34.0219, -118.4814);
         MapOptions options = new MapOptions()
                 .center(center)
-                .mapMarker(false)
                 .mapType(MapTypeIdEnum.ROADMAP)
                 //maybe set false
                 .mapTypeControl(true)
@@ -50,13 +74,57 @@ public class GmapfxController implements MapComponentInitializedListener {
                 .streetViewControl(false)
                 .zoom(8)
                 .zoomControl(true)
-                // TODO: 22.10.2017 try to use css or json
-                .styleString("[{'featureType':'landscape','stylers':[{'saturation':-100},{'lightness':65},{'visibility':'on'}]},{'featureType':'poi','stylers':[{'saturation':-100},{'lightness':51},{'visibility':'simplified'}]},{'featureType':'road.highway','stylers':[{'saturation':-100},{'visibility':'simplified'}]},{\"featureType\":\"road.arterial\",\"stylers\":[{\"saturation\":-100},{\"lightness\":30},{\"visibility\":\"on\"}]},{\"featureType\":\"road.local\",\"stylers\":[{\"saturation\":-100},{\"lightness\":40},{\"visibility\":\"on\"}]},{\"featureType\":\"transit\",\"stylers\":[{\"saturation\":-100},{\"visibility\":\"simplified\"}]},{\"featureType\":\"administrative.province\",\"stylers\":[{\"visibility\":\"off\"}]},{\"featureType\":\"water\",\"elementType\":\"labels\",\"stylers\":[{\"visibility\":\"on\"},{\"lightness\":-25},{\"saturation\":-100}]},{\"featureType\":\"water\",\"elementType\":\"geometry\",\"stylers\":[{\"hue\":\"#ffff00\"},{\"lightness\":-25},{\"saturation\":-97}]}]");
-        //right string, no?
-        //                .styleString("[{\"featureType\":\"landscape\",\"stylers\":[{\"saturation\":-100},{\"lightness\":65},{\"visibility\":\"on\"}]},{\"featureType\":\"poi\",\"stylers\":[{\"saturation\":-100},{\"lightness\":51},{\"visibility\":\"simplified\"}]},{\"featureType\":\"road.highway\",\"stylers\":[{\"saturation\":-100},{\"visibility\":\"simplified\"}]},{\"featureType\":\"road.arterial\",\"stylers\":[{\"saturation\":-100},{\"lightness\":30},{\"visibility\":\"on\"}]},{\"featureType\":\"road.local\",\"stylers\":[{\"saturation\":-100},{\"lightness\":40},{\"visibility\":\"on\"}]},{\"featureType\":\"transit\",\"stylers\":[{\"saturation\":-100},{\"visibility\":\"simplified\"}]},{\"featureType\":\"administrative.province\",\"stylers\":[{\"visibility\":\"off\"}]},{\"featureType\":\"water\",\"elementType\":\"labels\",\"stylers\":[{\"visibility\":\"on\"},{\"lightness\":-25},{\"saturation\":-100}]},{\"featureType\":\"water\",\"elementType\":\"geometry\",\"stylers\":[{\"hue\":\"#ffff00\"},{\"lightness\":-25},{\"saturation\":-97}]}]\n")
-        ;
-
+                .styleString(styleString); // TODO: 28.10.2017 add the theme to a menu
+        //it returns control for created map
         map = mapComponent.createMap(options);
+
+        // TODO: 28.10.2017 gets it from mouse
+        String addressOrigin = "Los Angeles";
+        String addressDestination = "Santa Barbara";
+
+        DirectionsPane directionsPane = mapComponent.getDirec();
+        DirectionsService directionsService = new DirectionsService();
+        DirectionsRenderer directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
+        DirectionsRequest directionsRequest = new DirectionsRequest(
+                addressOrigin,
+                addressDestination,
+                TravelModes.DRIVING);
+        directionsService.getRoute(directionsRequest, this, directionsRenderer);
     }
 
+    @Override
+    public void directionsReceived(DirectionsResult results, DirectionStatus status) {
+        if (status.equals(DirectionStatus.OK)) {
+            mapComponent.getMap().showDirectionsPane();
+            LOGGER.info("Directions was found");
+            DirectionsResult e = results;
+            GeocodingService gs = new GeocodingService();
+            LOGGER.info("SIZE ROUTES: " + e.getRoutes().size() + "\n" + "ORIGIN: " + e.getRoutes().get(0).getLegs().get(0).getStartLocation());
+            gs.reverseGeocode(e.getRoutes().get(0).getLegs().get(0).getStartLocation().getLatitude(), e.getRoutes().get(0).getLegs().get(0).getStartLocation().getLongitude(), this);
+            LOGGER.info("LEGS SIZE: " + e.getRoutes().get(0).getLegs().size());
+            LOGGER.info("WAYPOINTS " + e.getGeocodedWaypoints().size());
+            double d = 0;
+            for (DirectionsLeg g : e.getRoutes().get(0).getLegs()) {
+                d += g.getDistance().getValue();
+                System.out.println("DISTANCE " + g.getDistance().getValue());
+            }
+            try {
+                LOGGER.info("Distance total = " + e.getRoutes().get(0).getLegs().get(0).getDistance().getText());
+            } catch (Exception ex) {
+                LOGGER.error("ERROR: " + ex.getMessage());
+            }
+
+        }
+    }
+
+    @Override
+    public void geocodedResultsReceived(GeocodingResult[] results, GeocoderStatus status) {
+        if (status.equals(GeocoderStatus.OK)) {
+            for (GeocodingResult e : results) {
+                LOGGER.info(e.getVariableName());
+                LOGGER.info("GEOCODE: " + e.getFormattedAddress() + "\n" + e.toString());
+            }
+
+        }
+    }
 }
