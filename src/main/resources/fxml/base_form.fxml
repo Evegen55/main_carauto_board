@@ -20,10 +20,31 @@
                             <content>
                                 <Pane fx:id="pane_with_music" prefHeight="200.0" prefWidth="200.0">
                                     <children>
-                                        <Button fx:id="btn_choose_music" layoutX="14.0" layoutY="25.0"
-                                                mnemonicParsing="false" text="Choose audio"/>
-                                        <Label fx:id="lbl_with_music" layoutX="14.0" layoutY="63.0" prefHeight="17.0"
-                                               prefWidth="572.0"/>
+                                        <SplitPane dividerPositions="0.25" orientation="VERTICAL" prefHeight="569.0"
+                                                   prefWidth="598.0">
+                                            <items>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0"
+                                                            prefWidth="160.0">
+                                                    <children>
+                                                        <Button fx:id="btn_choose_music" layoutX="2.0" layoutY="14.0"
+                                                                mnemonicParsing="false" text="Choose audio"/>
+                                                        <Button fx:id="btn_stop_music" layoutX="112.0" layoutY="14.0"
+                                                                mnemonicParsing="false" text="stop audio"/>
+                                                        <Button fx:id="btn_play_music" layoutX="206.0" layoutY="14.0"
+                                                                mnemonicParsing="false" text="play audio"/>
+                                                        <Button fx:id="btn_pick_folder" layoutX="2.0" layoutY="57.0"
+                                                                mnemonicParsing="false" text="Pick folder"/>
+                                                    </children>
+                                                </AnchorPane>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0"
+                                                            prefWidth="160.0">
+                                                    <children>
+                                                        <Label fx:id="lbl_with_music" prefHeight="17.0"
+                                                               prefWidth="572.0"/>
+                                                    </children>
+                                                </AnchorPane>
+                                            </items>
+                                        </SplitPane>
                                     </children>
                                 </Pane>
                             </content>

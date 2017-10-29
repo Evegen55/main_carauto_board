@@ -7,6 +7,7 @@ import javafx.scene.media.AudioEqualizer;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FilenameUtils;
@@ -15,25 +16,39 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class AudioController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(AudioController.class);
 
-    public void pickListFileInsideFolderWithMaps(final Stage primaryStage, final Button button,
-                                                 final Pane pane, final Label lbl_with_music) {
-        button.setOnAction(action -> {
+    private MediaPlayer mediaPlayer;
+
+    public void setInitialState(final Stage primaryStage, final Button buttonToOpen, final Button btn_stop_music,
+                                final Button btn_play_music, final Button btn_pick_folder,
+                                final Pane pane, final Label lbl_with_music) {
+        buttonToOpen.setOnAction(action -> {
             final File openDialogFile = getFileChooserForMusic(primaryStage);
             if (openDialogFile != null) {
                 try {
-                    readAudioFile(openDialogFile, pane, lbl_with_music);
+                    readAndPlayAudioFile(openDialogFile, pane, lbl_with_music);
                 } catch (IOException e1) {
                     LOGGER.error("Second exception");
                     e1.printStackTrace();
                 }
-            } else {
-                pickAndReadAudioFilesFromFolder(primaryStage);
             }
+        });
+
+        btn_stop_music.setOnAction(action -> {
+            mediaPlayer.stop();
+        });
+
+        btn_play_music.setOnAction(action -> {
+            mediaPlayer.play();
+        });
+
+        btn_pick_folder.setOnAction(action -> {
+            pickAndReadAudioFilesFromFolder(primaryStage);
         });
 
     }
@@ -49,7 +64,7 @@ public class AudioController {
         return fileChooser.showOpenDialog(primaryStage);
     }
 
-    private void readAudioFile(final File openDialogFile, final Pane pane, Label lbl_with_music) throws IOException {
+    private void readAndPlayAudioFile(final File openDialogFile, final Pane pane, Label lbl_with_music) throws IOException {
         String openDialogFilePath = openDialogFile.getPath();
         LOGGER.info("now opening: " + openDialogFilePath);
         String baseName = FilenameUtils.getBaseName(openDialogFilePath);
@@ -57,7 +72,7 @@ public class AudioController {
         final String path = openDialogFile.toURI().toASCIIString();
         final Media mediaSound = new Media(path);
         LOGGER.info("mediaSound opened " + mediaSound.getSource());
-        final MediaPlayer mediaPlayer = new MediaPlayer(mediaSound);
+        mediaPlayer = new MediaPlayer(mediaSound);
 
         // TODO: 29.10.2017 process it
         AudioEqualizer mediaPlayerAudioEqualizer = mediaPlayer.getAudioEqualizer();
@@ -68,7 +83,17 @@ public class AudioController {
     }
 
     private void pickAndReadAudioFilesFromFolder(final Stage primaryStage) {
-
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Find a folder with audio files");
+        File selectedDirectory = directoryChooser.showDialog(primaryStage);
+        final File[] listFiles = selectedDirectory.listFiles();
+        if (listFiles != null) {
+            LOGGER.info("Found " + listFiles.length + " files");
+            Arrays.stream(listFiles).forEach(file -> {
+                LOGGER.info("Trying to load from the file: " + file.getPath());
+                // TODO: 29.10.2017
+            });
+        }
     }
 
 }

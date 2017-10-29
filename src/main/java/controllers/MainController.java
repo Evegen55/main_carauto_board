@@ -39,6 +39,12 @@ public class MainController {
     private Button btn_choose_music;
     @FXML
     private Label lbl_with_music;
+    @FXML
+    private Button btn_stop_music;
+    @FXML
+    private Button btn_play_music;
+    @FXML
+    private Button btn_pick_folder;
 
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -57,6 +63,7 @@ public class MainController {
     public void initializeMusic() {
         AudioController audioController = new AudioController();
         audioController
-                .pickListFileInsideFolderWithMaps(primaryStage, btn_choose_music, pane_with_music, lbl_with_music);
+                .setInitialState(primaryStage, btn_choose_music, btn_stop_music, btn_play_music, btn_pick_folder,
+                        pane_with_music, lbl_with_music);
     }
 }
