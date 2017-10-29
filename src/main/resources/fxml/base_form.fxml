@@ -22,6 +22,8 @@
                                     <children>
                                         <Button fx:id="btn_choose_music" layoutX="14.0" layoutY="25.0"
                                                 mnemonicParsing="false" text="Choose audio"/>
+                                        <Label fx:id="lbl_with_music" layoutX="14.0" layoutY="63.0" prefHeight="17.0"
+                                               prefWidth="572.0"/>
                                     </children>
                                 </Pane>
                             </content>

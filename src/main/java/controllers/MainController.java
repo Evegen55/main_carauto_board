@@ -2,10 +2,10 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -37,12 +37,14 @@ public class MainController {
     private Pane pane_with_music;
     @FXML
     private Button btn_choose_music;
+    @FXML
+    private Label lbl_with_music;
 
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
-    public void showMap(){
+    public void showMap() {
         final GmapfxController gmapfxController = new GmapfxController();
         gmapfxController.createSimpleMap(pane_with_map);
     }
@@ -54,6 +56,7 @@ public class MainController {
 
     public void initializeMusic() {
         AudioController audioController = new AudioController();
-        audioController.pickListFileInsideFolderWithMaps(primaryStage, btn_choose_music, pane_with_music);
+        audioController
+                .pickListFileInsideFolderWithMaps(primaryStage, btn_choose_music, pane_with_music, lbl_with_music);
     }
 }
