@@ -1,46 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<SplitPane dividerPositions="0.75" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-           orientation="VERTICAL" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141"
-           xmlns:fx="http://javafx.com/fxml/1">
+
+<SplitPane dividerPositions="0.75" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <items>
-        <AnchorPane fx:id="myPaneWithMapsAndOtherFeatures" minHeight="0.0" minWidth="0.0" prefHeight="100.0"
-                    prefWidth="160.0">
+        <AnchorPane fx:id="myPaneWithMapsAndOtherFeatures" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
             <children>
                 <TabPane prefHeight="596.0" prefWidth="598.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                         <Tab fx:id="tab_with_map" text="Maps and Routes">
                             <content>
-                                <AnchorPane fx:id="pane_with_map" prefHeight="200.0" prefWidth="200.0"/>
+                                <AnchorPane fx:id="pane_with_map" prefHeight="200.0" prefWidth="200.0" />
                             </content>
                         </Tab>
                         <Tab fx:id="tab_with_music" text="Music">
                             <content>
                                 <Pane fx:id="pane_with_music" prefHeight="200.0" prefWidth="200.0">
                                     <children>
-                                        <SplitPane dividerPositions="0.25" orientation="VERTICAL" prefHeight="569.0"
-                                                   prefWidth="598.0">
+                                        <SplitPane dividerPositions="0.25" orientation="VERTICAL" prefHeight="569.0" prefWidth="598.0">
                                             <items>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0"
-                                                            prefWidth="160.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                                     <children>
-                                                        <Button fx:id="btn_choose_music" layoutX="2.0" layoutY="14.0"
-                                                                mnemonicParsing="false" text="Choose audio"/>
-                                                        <Button fx:id="btn_stop_music" layoutX="112.0" layoutY="14.0"
-                                                                mnemonicParsing="false" text="stop audio"/>
-                                                        <Button fx:id="btn_play_music" layoutX="206.0" layoutY="14.0"
-                                                                mnemonicParsing="false" text="play audio"/>
-                                                        <Button fx:id="btn_pick_folder" layoutX="2.0" layoutY="57.0"
-                                                                mnemonicParsing="false" text="Pick folder"/>
+                                                        <Button fx:id="btn_choose_music" layoutX="2.0" layoutY="14.0" mnemonicParsing="false" text="Choose audio" />
+                                                        <Button fx:id="btn_stop_music" layoutX="112.0" layoutY="14.0" mnemonicParsing="false" text="stop audio" />
+                                                        <Button fx:id="btn_play_music" layoutX="206.0" layoutY="14.0" mnemonicParsing="false" text="play audio" />
+                                                        <Button fx:id="btn_pick_folder" layoutX="2.0" layoutY="57.0" mnemonicParsing="false" text="Pick folder" />
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0"
-                                                            prefWidth="160.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                                     <children>
-                                                        <Label fx:id="lbl_with_music" prefHeight="17.0"
-                                                               prefWidth="572.0"/>
+                                                        <Label fx:id="lbl_with_music" prefHeight="17.0" prefWidth="572.0" />
                                                     </children>
                                                 </AnchorPane>
                                             </items>
@@ -49,9 +40,12 @@
                                 </Pane>
                             </content>
                         </Tab>
-                        <Tab text="Web"/>
-                        <Tab text="Video"/>
-                        <Tab text="Files"/>
+                        <Tab fx:id="tab_with_web" text="Web">
+                     <content>
+                        <Pane fx:id="pane_with_web" prefHeight="200.0" prefWidth="200.0" />
+                     </content></Tab>
+                        <Tab text="Video" />
+                        <Tab text="Files" />
                     </tabs>
                 </TabPane>
             </children>
@@ -60,12 +54,10 @@
             <children>
                 <Pane prefHeight="200.0" prefWidth="200.0">
                     <children>
-                        <Slider fx:id="gen_temperature_slider" blockIncrement="1.0" layoutX="50.0" layoutY="30.0"
-                                majorTickUnit="10.0" max="26.0" min="16.0" minWidth="100" minorTickCount="4"
-                                orientation="VERTICAL" showTickLabels="true" showTickMarks="true" snapToTicks="true"
-                                value="22.0"/>
+                        <Slider fx:id="gen_temperature_slider" blockIncrement="1.0" layoutX="50.0" layoutY="30.0" majorTickUnit="10.0" max="26.0" min="16.0" minWidth="100" minorTickCount="4" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="22.0" />
                     </children>
                 </Pane>
+            <Button fx:id="btn_clear_directions" layoutX="193.0" layoutY="22.0" mnemonicParsing="false" text="clean directions" />
             </children>
         </AnchorPane>
     </items>

@@ -8,6 +8,7 @@ import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
 import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import org.apache.commons.io.IOUtils;
@@ -25,6 +26,10 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
 
     private GoogleMapView mapComponent;
     private GoogleMap map;
+    private DirectionsPane directionsPane;
+    private DirectionsRenderer directionsRenderer;
+    private DirectionsService directionsService;
+
 
     private String styleString = getStyleForMap();
 
@@ -82,9 +87,9 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
         String addressOrigin = "Los Angeles";
         String addressDestination = "Santa Barbara";
 
-        DirectionsPane directionsPane = mapComponent.getDirec();
-        DirectionsService directionsService = new DirectionsService();
-        DirectionsRenderer directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
+        directionsPane = mapComponent.getDirec();
+        directionsService = new DirectionsService();
+        directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
         DirectionsRequest directionsRequest = new DirectionsRequest(
                 addressOrigin,
                 addressDestination,
@@ -126,5 +131,10 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
             }
 
         }
+    }
+
+    public void initButtons(final Button btn_clear_directions) {
+        btn_clear_directions.setOnAction(action -> {
+        });
     }
 }

@@ -37,6 +37,7 @@ public class CarControl extends Application {
         mainController.showMap();
         mainController.initialiseControls();
         mainController.initializeMusic();
+        mainController.initWebView();
     }
 
 }

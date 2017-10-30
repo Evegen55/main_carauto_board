@@ -23,6 +23,8 @@ public class MainController {
     private Tab tab_with_map;
     @FXML
     private AnchorPane pane_with_map;
+    @FXML
+    private Button btn_clear_directions;
 
     //elements with controls
     @FXML
@@ -46,6 +48,12 @@ public class MainController {
     @FXML
     private Button btn_pick_folder;
 
+    //elements with web
+    @FXML
+    private Pane pane_with_web;
+    @FXML
+    private Tab tab_with_web;
+
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -53,6 +61,7 @@ public class MainController {
     public void showMap() {
         final GmapfxController gmapfxController = new GmapfxController();
         gmapfxController.createSimpleMap(pane_with_map);
+        gmapfxController.initButtons(btn_clear_directions);
     }
 
     public void initialiseControls() {
@@ -61,9 +70,18 @@ public class MainController {
     }
 
     public void initializeMusic() {
-        AudioController audioController = new AudioController();
+        AudioController audioController = new AudioController(primaryStage);
         audioController
-                .setInitialState(primaryStage, btn_choose_music, btn_stop_music, btn_play_music, btn_pick_folder,
+                .setInitialState(btn_choose_music, btn_stop_music, btn_play_music, btn_pick_folder,
                         pane_with_music, lbl_with_music);
+    }
+
+    public void initWebView() {
+        tab_with_web.setOnSelectionChanged(action -> {
+            WebBrowserController webBrowserController = new WebBrowserController();
+            webBrowserController.createSimpleBrowse(pane_with_web);
+        });
+
+
     }
 }

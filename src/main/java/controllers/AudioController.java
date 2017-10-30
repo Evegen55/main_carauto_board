@@ -21,10 +21,15 @@ import java.util.Arrays;
 public class AudioController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(AudioController.class);
+    private final Stage primaryStage;
 
     private MediaPlayer mediaPlayer;
 
-    public void setInitialState(final Stage primaryStage, final Button buttonToOpen, final Button btn_stop_music,
+    public AudioController(final Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    public void setInitialState(final Button buttonToOpen, final Button btn_stop_music,
                                 final Button btn_play_music, final Button btn_pick_folder,
                                 final Pane pane, final Label lbl_with_music) {
         buttonToOpen.setOnAction(action -> {
@@ -83,16 +88,18 @@ public class AudioController {
     }
 
     private void pickAndReadAudioFilesFromFolder(final Stage primaryStage) {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
+        final DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Find a folder with audio files");
-        File selectedDirectory = directoryChooser.showDialog(primaryStage);
-        final File[] listFiles = selectedDirectory.listFiles();
-        if (listFiles != null) {
-            LOGGER.info("Found " + listFiles.length + " files");
-            Arrays.stream(listFiles).forEach(file -> {
-                LOGGER.info("Trying to load from the file: " + file.getPath());
-                // TODO: 29.10.2017
-            });
+        final File selectedDirectory = directoryChooser.showDialog(primaryStage);
+        if (selectedDirectory != null) {
+            final File[] listFiles = selectedDirectory.listFiles();
+            if (listFiles != null) {
+                LOGGER.info("Found " + listFiles.length + " files");
+                Arrays.stream(listFiles).forEach(file -> {
+                    LOGGER.info("Trying to load from the file: " + file.getPath());
+                    // TODO: 29.10.2017
+                });
+            }
         }
     }
 
