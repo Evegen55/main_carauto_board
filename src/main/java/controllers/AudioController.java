@@ -27,6 +27,7 @@ public class AudioController {
         this.primaryStage = primaryStage;
     }
 
+    // TODO: 10/30/2017 list of audio items from folder to a scroll pane
 
     /**
      * It reads and plays a single audio file
