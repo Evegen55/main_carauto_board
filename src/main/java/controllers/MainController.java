@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.AudioItem;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -40,13 +39,6 @@ public class MainController {
     private Pane pane_with_music;
     @FXML
     private Button btn_choose_music;
-//    @FXML
-//    private Label lbl_with_music;
-//    @FXML
-//    private Button btn_stop_music;
-//    @FXML
-//    private Button btn_play_music;
-    private AudioItem audioItem = new AudioItem();
     @FXML
     private Button btn_pick_folder;
 
@@ -73,11 +65,7 @@ public class MainController {
 
     public void initializeMusic() {
         AudioController audioController = new AudioController(primaryStage);
-        // TODO: 10/30/2017 move it into audio controller to create a list of items when a folder is uploaded
-        pane_with_music.getChildren().add(audioItem);
-        audioController
-                .setInitialState(btn_choose_music, audioItem.getStop(), audioItem.getPlay(), btn_pick_folder,
-                        pane_with_music, audioItem.getLabel_for_name());
+        audioController.setInitialStateForSingleAudioItem(btn_choose_music, pane_with_music);
     }
 
     public void initWebView() {
@@ -85,7 +73,5 @@ public class MainController {
             WebBrowserController webBrowserController = new WebBrowserController();
             webBrowserController.createSimpleBrowse(pane_with_web);
         });
-
-
     }
 }

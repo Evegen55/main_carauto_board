@@ -1,14 +1,16 @@
 package entities;
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 
 
-
 /**
  * An object which is created dynamique
+ *
  * @author (created on 10/30/2017).
  */
 public class AudioItem extends AnchorPane {
@@ -72,6 +74,14 @@ public class AudioItem extends AnchorPane {
 
     public Label getLabel_for_time() {
         return label_for_time;
+    }
+
+    /**
+     * @return modifiable list of children.
+     */
+    @Override
+    public ObservableList<Node> getChildren() {
+        return super.getChildren();
     }
 
 }
