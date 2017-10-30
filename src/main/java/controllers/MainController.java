@@ -22,8 +22,6 @@ public class MainController {
     @FXML
     private Tab tab_with_map;
     @FXML
-    private AnchorPane pane_with_map;
-    @FXML
     private Button btn_clear_directions;
 
     //elements with controls
@@ -31,6 +29,8 @@ public class MainController {
     private AnchorPane myPaneWithControls;
     @FXML
     private Slider gen_temperature_slider;
+    @FXML
+    private Label lbl_with_temperature;
 
     //elements with music
     @FXML
@@ -60,13 +60,13 @@ public class MainController {
 
     public void showMap() {
         final GmapfxController gmapfxController = new GmapfxController();
-        gmapfxController.createSimpleMap(pane_with_map);
+        gmapfxController.createSimpleMap(tab_with_map);
         gmapfxController.initButtons(btn_clear_directions);
     }
 
     public void initialiseControls() {
         final ClimateControlController climateControlController = new ClimateControlController(gen_temperature_slider);
-        climateControlController.createInitForControls(myPaneWithControls);
+        climateControlController.createInitForControls(myPaneWithControls, lbl_with_temperature);
     }
 
     public void initializeMusic() {

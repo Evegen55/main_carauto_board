@@ -51,6 +51,7 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
         //generates google map with some defaults and put it into top pane
         mapComponent = new GoogleMapView();
         mapComponent.addMapInializedListener(this);
+        mapComponent.setMinHeight(anchorPane.getHeight());
         anchorPane.getChildren().add(mapComponent);
     }
 
@@ -95,6 +96,10 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
                 addressDestination,
                 TravelModes.DRIVING);
         directionsService.getRoute(directionsRequest, this, directionsRenderer);
+
+
+        System.out.println("===========================" + mapComponent.getHeight());
+        System.out.println("===========================" + mapComponent.getWidth());
     }
 
     @Override
