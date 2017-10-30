@@ -22,31 +22,25 @@
                             <content>
                                 <Pane fx:id="pane_with_music" prefHeight="200.0" prefWidth="200.0">
                                     <children>
-                                        <SplitPane dividerPositions="0.25" orientation="VERTICAL" prefHeight="992.0"
-                                                   prefWidth="766.0">
-                                            <items>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0"
-                                                            prefWidth="160.0">
-                                                    <children>
-                                                        <Button fx:id="btn_choose_music" layoutX="2.0" layoutY="14.0"
-                                                                mnemonicParsing="false" text="Choose audio"/>
-                                                        <Button fx:id="btn_stop_music" layoutX="112.0" layoutY="14.0"
-                                                                mnemonicParsing="false" text="stop audio"/>
-                                                        <Button fx:id="btn_play_music" layoutX="206.0" layoutY="14.0"
-                                                                mnemonicParsing="false" text="play audio"/>
-                                                        <Button fx:id="btn_pick_folder" layoutX="2.0" layoutY="57.0"
-                                                                mnemonicParsing="false" text="Pick folder"/>
-                                                    </children>
-                                                </AnchorPane>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0"
-                                                            prefWidth="160.0">
-                                                    <children>
-                                                        <Label fx:id="lbl_with_music" prefHeight="17.0"
-                                                               prefWidth="572.0"/>
-                                                    </children>
-                                                </AnchorPane>
-                                            </items>
-                                        </SplitPane>
+                                        <!--<AnchorPane fx:id="audioItem" layoutX="14.0" layoutY="404.0" minHeight="0.0"-->
+                                                    <!--minWidth="0.0" prefHeight="80.0" prefWidth="704.0">-->
+                                            <!--<children>-->
+                                                <!--<Button fx:id="btn_stop_music" layoutX="14.0" layoutY="49.0"-->
+                                                        <!--mnemonicParsing="false" text="stop audio"/>-->
+                                                <!--<Button fx:id="btn_play_music" layoutX="14.0" layoutY="15.0"-->
+                                                        <!--mnemonicParsing="false" text="play audio"/>-->
+                                                <!--<Label fx:id="lbl_with_music" layoutX="95.0" layoutY="19.0"-->
+                                                       <!--prefHeight="17.0" prefWidth="409.0" text="Label"/>-->
+                                                <!--<Slider layoutX="95.0" layoutY="55.0" prefHeight="14.0"-->
+                                                        <!--prefWidth="553.0"/>-->
+                                                <!--<Label layoutX="657.0" layoutY="4.0" prefHeight="72.0" prefWidth="47.0"-->
+                                                       <!--text="Label"/>-->
+                                            <!--</children>-->
+                                        <!--</AnchorPane>-->
+                                        <Button fx:id="btn_choose_music" layoutX="98.0" layoutY="202.0"
+                                                mnemonicParsing="false" text="Choose audio"/>
+                                        <Button fx:id="btn_pick_folder" layoutX="14.0" layoutY="202.0"
+                                                mnemonicParsing="false" text="Pick folder"/>
                                     </children>
                                 </Pane>
                             </content>

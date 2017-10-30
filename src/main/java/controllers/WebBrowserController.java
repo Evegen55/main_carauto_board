@@ -1,6 +1,5 @@
 package controllers;
 
-import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;

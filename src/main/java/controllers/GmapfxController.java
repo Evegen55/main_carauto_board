@@ -87,19 +87,15 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
         // TODO: 28.10.2017 gets it from mouse
         String addressOrigin = "Los Angeles";
         String addressDestination = "Santa Barbara";
-
-        directionsPane = mapComponent.getDirec();
-        directionsService = new DirectionsService();
-        directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
         DirectionsRequest directionsRequest = new DirectionsRequest(
                 addressOrigin,
                 addressDestination,
                 TravelModes.DRIVING);
+
+        directionsPane = mapComponent.getDirec();
+        directionsService = new DirectionsService();
+        directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
         directionsService.getRoute(directionsRequest, this, directionsRenderer);
-
-
-        System.out.println("===========================" + mapComponent.getHeight());
-        System.out.println("===========================" + mapComponent.getWidth());
     }
 
     @Override

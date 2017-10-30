@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.AudioItem;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -39,12 +40,13 @@ public class MainController {
     private Pane pane_with_music;
     @FXML
     private Button btn_choose_music;
-    @FXML
-    private Label lbl_with_music;
-    @FXML
-    private Button btn_stop_music;
-    @FXML
-    private Button btn_play_music;
+//    @FXML
+//    private Label lbl_with_music;
+//    @FXML
+//    private Button btn_stop_music;
+//    @FXML
+//    private Button btn_play_music;
+    private AudioItem audioItem = new AudioItem();
     @FXML
     private Button btn_pick_folder;
 
@@ -71,9 +73,10 @@ public class MainController {
 
     public void initializeMusic() {
         AudioController audioController = new AudioController(primaryStage);
+        pane_with_music.getChildren().add(audioItem);
         audioController
-                .setInitialState(btn_choose_music, btn_stop_music, btn_play_music, btn_pick_folder,
-                        pane_with_music, lbl_with_music);
+                .setInitialState(btn_choose_music, audioItem.getStop(), audioItem.getPlay(), btn_pick_folder,
+                        pane_with_music, audioItem.getLabel_for_name());
     }
 
     public void initWebView() {
