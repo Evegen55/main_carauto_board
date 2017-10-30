@@ -1,10 +1,7 @@
 package controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -38,6 +35,8 @@ public class MainController {
     @FXML
     private Pane pane_with_music;
     @FXML
+    private ScrollPane scroll_for_music;
+    @FXML
     private Button btn_choose_music;
     @FXML
     private Button btn_pick_folder;
@@ -64,8 +63,8 @@ public class MainController {
     }
 
     public void initializeMusic() {
-        AudioController audioController = new AudioController(primaryStage);
-        audioController.setInitialStateForSingleAudioItem(btn_choose_music, pane_with_music);
+        final AudioController audioController = new AudioController(primaryStage);
+        audioController.setInitState(btn_pick_folder, btn_choose_music, pane_with_music);
     }
 
     public void initWebView() {
