@@ -51,8 +51,9 @@ public class AudioController {
         final AudioItem audioItem = new AudioItem();
         String openDialogFilePath = singleFileFromOpenedDialog.getPath();
         LOGGER.info("now opening: " + openDialogFilePath);
-        String baseName = FilenameUtils.getBaseName(openDialogFilePath);
+        String baseName = FilenameUtils.getName(openDialogFilePath);
         audioItem.getLabel_for_name().setText(baseName);
+
         final String path = singleFileFromOpenedDialog.toURI().toASCIIString();
         final Media mediaSound = new Media(path);
         LOGGER.info("mediaSound opened " + mediaSound.getSource());
@@ -62,7 +63,12 @@ public class AudioController {
         pane.getChildren().add(audioItem);
 
         audioItem.getStop().setOnAction(action -> mediaPlayer.stop());
-        audioItem.getPlay().setOnAction(action -> mediaPlayer.play());
+        audioItem.getPlay().setOnAction(action -> {
+            audioItem.getLabel_for_time().setText(String.valueOf(mediaSound.getDuration().toMinutes()));
+            mediaPlayer.play();
+        });
+
+
 
     }
 
