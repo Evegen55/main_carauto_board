@@ -73,6 +73,7 @@ public class MainController {
 
     public void initializeMusic() {
         AudioController audioController = new AudioController(primaryStage);
+        // TODO: 10/30/2017 move it into audio controller to create a list of items when a folder is uploaded
         pane_with_music.getChildren().add(audioItem);
         audioController
                 .setInitialState(btn_choose_music, audioItem.getStop(), audioItem.getPlay(), btn_pick_folder,

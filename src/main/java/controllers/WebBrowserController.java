@@ -14,6 +14,8 @@ public class WebBrowserController {
         final WebEngine webEngine = browser.getEngine();
         String url = "https://www.google.com/";
         webEngine.load(url);
+        browser.setMaxWidth(pane.getWidth());
+        browser.setMinHeight(pane.getHeight());
         pane.getChildren().add(browser);
     }
 }
