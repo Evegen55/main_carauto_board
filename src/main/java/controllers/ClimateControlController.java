@@ -1,7 +1,6 @@
 package controllers;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 import org.slf4j.Logger;
@@ -20,17 +19,13 @@ public class ClimateControlController {
         this.slider = slider;
     }
 
-    public void createInitForControls(final AnchorPane myPaneWithControls) {
-        LOGGER.info(slider.getOrientation().toString());
-
+    public void createInitForControls(final AnchorPane myPaneWithControls, final Label lbl_with_temperature) {
+        lbl_with_temperature.setText("Initial temperature: " + slider.getValue());
         // Adding Listener to value property.
-        slider.valueProperty().addListener(new ChangeListener<Number>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, //
-                                Number oldValue, Number newValue) {
-                LOGGER.info("New value: " + newValue);
-            }
+        //
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            // TODO: 10/30/2017 smth
+            lbl_with_temperature.setText("New temperature: " + newValue);
         });
 
     }

@@ -8,6 +8,7 @@ import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
 import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import org.apache.commons.io.IOUtils;
@@ -25,6 +26,10 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
 
     private GoogleMapView mapComponent;
     private GoogleMap map;
+    private DirectionsPane directionsPane;
+    private DirectionsRenderer directionsRenderer;
+    private DirectionsService directionsService;
+
 
     private String styleString = getStyleForMap();
 
@@ -40,21 +45,11 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
     }
 
     /**
-     * @param anchorPane
-     */
-    public void createSimpleMap(final AnchorPane anchorPane) {
-        //generates google map with some defaults and put it into top pane
-        mapComponent = new GoogleMapView();
-        mapComponent.addMapInializedListener(this);
-        anchorPane.getChildren().add(mapComponent);
-    }
-
-    /**
      * @param tab
      */
     public void createSimpleMap(final Tab tab) {
         //generates google map with some defaults and put it into top pane
-        mapComponent = new GoogleMapView();
+        mapComponent = new GoogleMapView("/html/maps.html");
         mapComponent.addMapInializedListener(this);
         tab.setContent(mapComponent);
     }
@@ -81,14 +76,14 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
         // TODO: 28.10.2017 gets it from mouse
         String addressOrigin = "Los Angeles";
         String addressDestination = "Santa Barbara";
-
-        DirectionsPane directionsPane = mapComponent.getDirec();
-        DirectionsService directionsService = new DirectionsService();
-        DirectionsRenderer directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
         DirectionsRequest directionsRequest = new DirectionsRequest(
                 addressOrigin,
                 addressDestination,
                 TravelModes.DRIVING);
+
+        directionsPane = mapComponent.getDirec();
+        directionsService = new DirectionsService();
+        directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
         directionsService.getRoute(directionsRequest, this, directionsRenderer);
     }
 
@@ -126,5 +121,19 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
             }
 
         }
+    }
+
+    public void initButtons(final Button btn_clear_directions, Button btn_show_directions) {
+        btn_clear_directions.setOnAction(action -> {
+            // TODO: 10/31/2017 research it
+//            directionsRenderer.clearDirections();
+            directionsRenderer.getJSObject().eval("hideDirections()");
+        });
+
+        btn_show_directions.setOnAction(action -> {
+            // TODO: 10/31/2017 research it
+//            directionsRenderer.clearDirections();
+            directionsRenderer.getJSObject().eval("showDirections()");
+        });
     }
 }

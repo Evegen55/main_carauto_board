@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Here is the main application
  */
-public class CarControl extends Application {
+public class CarControlBoard extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -37,6 +37,7 @@ public class CarControl extends Application {
         mainController.showMap();
         mainController.initialiseControls();
         mainController.initializeMusic();
+        mainController.initWebView();
     }
 
 }
