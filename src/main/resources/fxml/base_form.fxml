@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
@@ -9,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<SplitPane dividerPositions="0.75" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="1366.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.75" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="1366.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <items>
         <AnchorPane fx:id="myPaneWithMapsAndOtherFeatures" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
             <children>
@@ -59,8 +62,9 @@
                         <Slider fx:id="gen_temperature_slider" blockIncrement="1.0" layoutY="19.0" majorTickUnit="10.0" max="26.0" min="16.0" minWidth="100" minorTickCount="4" orientation="VERTICAL" prefHeight="300.0" prefWidth="134.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="22.0" />
                     </children>
                 </Pane>
-                <Button fx:id="btn_clear_directions" layoutX="653.0" layoutY="14.0" mnemonicParsing="false" text="clean directions" />
+                <Button fx:id="btn_clear_directions" layoutX="653.0" layoutY="14.0" mnemonicParsing="false" text="hide directions" />
                 <Label fx:id="lbl_with_temperature" layoutX="142.0" layoutY="31.0" prefHeight="17.0" prefWidth="409.0" />
+            <Button fx:id="btn_show_directions" layoutX="653.0" layoutY="48.0" mnemonicParsing="false" text="show directions" />
             </children>
         </AnchorPane>
     </items>

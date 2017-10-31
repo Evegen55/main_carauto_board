@@ -1,7 +1,11 @@
 package controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -20,6 +24,8 @@ public class MainController {
     private Tab tab_with_map;
     @FXML
     private Button btn_clear_directions;
+    @FXML
+    private Button btn_show_directions;
 
     //elements with controls
     @FXML
@@ -54,7 +60,7 @@ public class MainController {
     public void showMap() {
         final GmapfxController gmapfxController = new GmapfxController();
         gmapfxController.createSimpleMap(tab_with_map);
-        gmapfxController.initButtons(btn_clear_directions);
+        gmapfxController.initButtons(btn_clear_directions, btn_show_directions);
     }
 
     public void initialiseControls() {

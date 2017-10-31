@@ -123,8 +123,17 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
         }
     }
 
-    public void initButtons(final Button btn_clear_directions) {
+    public void initButtons(final Button btn_clear_directions, Button btn_show_directions) {
         btn_clear_directions.setOnAction(action -> {
+            // TODO: 10/31/2017 research it
+//            directionsRenderer.clearDirections();
+            directionsRenderer.getJSObject().eval("hideDirections()");
+        });
+
+        btn_show_directions.setOnAction(action -> {
+            // TODO: 10/31/2017 research it
+//            directionsRenderer.clearDirections();
+            directionsRenderer.getJSObject().eval("showDirections()");
         });
     }
 }
