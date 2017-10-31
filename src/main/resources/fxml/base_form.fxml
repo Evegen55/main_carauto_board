@@ -80,7 +80,7 @@
                                                       </ImageView>
                                                   </graphic>
                                               </Button>
-                                    <Button fx:id="btn_choose_video1" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                    <Button fx:id="btn_play_video" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
                                        <graphic>
                                           <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -89,7 +89,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button fx:id="btn_choose_video11" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                    <Button fx:id="btn_stop_video" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
                                        <graphic>
                                           <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -102,7 +102,7 @@
                               </HBox>
                               <SplitPane dividerPositions="0.5" layoutY="107.0" orientation="VERTICAL" prefHeight="885.0" prefWidth="766.0">
                                 <items>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                                  <AnchorPane fx:id="top_pane_for_video" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
                                 </items>
                               </SplitPane>

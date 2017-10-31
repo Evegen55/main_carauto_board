@@ -55,9 +55,13 @@ public class MainController {
 
     //video
     @FXML
-    private Pane pane_with_video;
+    private Pane top_pane_for_video;
     @FXML
     private Button btn_choose_video;
+    @FXML
+    private Button btn_play_video;
+    @FXML
+    private Button btn_stop_video;
 
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -88,6 +92,6 @@ public class MainController {
 
     public void initVideo() {
         final VideoController videoController = new VideoController(primaryStage);
-        videoController.seiInitState(pane_with_video, btn_choose_video);
+        videoController.seiInitState(top_pane_for_video, btn_choose_video, btn_play_video, btn_stop_video);
     }
 }
