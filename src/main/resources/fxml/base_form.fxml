@@ -67,17 +67,45 @@
                         </Tab>
                         <Tab text="Video">
                             <content>
-                                <Pane fx:id="pane_with_video" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/playlist.css">
+                                <Pane fx:id="pane_with_video" prefHeight="200.0" prefWidth="200.0" styleClass="pane" stylesheets="@../css/playlist.css">
                                     <children>
-                                        <Button fx:id="btn_choose_video" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
-                                            <graphic>
-                                                <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                                    <image>
-                                                        <Image url="http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/48/Play-Movies-icon.png" />
-                                                    </image>
-                                                </ImageView>
-                                            </graphic>
-                                        </Button>
+                              <HBox layoutX="14.0" layoutY="14.0" prefHeight="57.0" prefWidth="207.0">
+                                 <children>
+                                              <Button fx:id="btn_choose_video" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                                  <graphic>
+                                                      <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                                          <image>
+                                                              <Image url="http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/48/Play-Movies-icon.png" />
+                                                          </image>
+                                                      </ImageView>
+                                                  </graphic>
+                                              </Button>
+                                    <Button fx:id="btn_choose_video1" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                       <graphic>
+                                          <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="http://icons.iconarchive.com/icons/hopstarter/soft-scraps/48/Button-Play-icon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button fx:id="btn_choose_video11" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                       <graphic>
+                                          <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="http://icons.iconarchive.com/icons/icons-land/play-stop-pause/48/Stop-Normal-icon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <SplitPane dividerPositions="0.5" layoutY="107.0" orientation="VERTICAL" prefHeight="885.0" prefWidth="766.0">
+                                <items>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                                </items>
+                              </SplitPane>
                                     </children>
                                 </Pane>
                             </content>
