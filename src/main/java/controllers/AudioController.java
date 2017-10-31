@@ -85,10 +85,15 @@ public class AudioController {
 
         audioItem.getStop().setOnAction(action -> mediaPlayer.stop());
         audioItem.getPlay().setOnAction(action -> {
+            checkStopForOtherAudioItems();
             audioItem.getLabel_for_time().setText(String.valueOf(mediaSound.getDuration().toMinutes()));
             mediaPlayer.play();
         });
 
+    }
+
+    private void checkStopForOtherAudioItems() {
+        // TODO: 10/31/2017 add logic to stop other audio items
     }
 
     private static File getFileChooserForMusic(final Stage primaryStage) {
