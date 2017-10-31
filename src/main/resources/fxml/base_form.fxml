@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
@@ -10,20 +14,17 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<SplitPane dividerPositions="0.75" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-           orientation="VERTICAL" prefHeight="1366.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8"
-           xmlns:fx="http://javafx.com/fxml/1">
+
+<SplitPane dividerPositions="0.75" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="1366.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <items>
-        <AnchorPane fx:id="myPaneWithMapsAndOtherFeatures" minHeight="0.0" minWidth="0.0" prefHeight="100.0"
-                    prefWidth="160.0">
+        <AnchorPane fx:id="myPaneWithMapsAndOtherFeatures" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
             <children>
                 <TabPane prefHeight="1020.0" prefWidth="766.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                        <Tab fx:id="tab_with_map" text="Maps and Routes"/>
+                        <Tab fx:id="tab_with_map" text="Maps and Routes" />
                         <Tab fx:id="tab_with_music" text="Music">
                             <content>
-                                <Pane fx:id="pane_with_music" prefHeight="200.0" prefWidth="200.0" styleClass="pane"
-                                      stylesheets="@../css/playlist.css">
+                                <Pane fx:id="pane_with_music" prefHeight="200.0" prefWidth="200.0" styleClass="pane" stylesheets="@../css/playlist.css">
                                     <children>
                                         <!--<AnchorPane fx:id="audioItem" layoutX="14.0" layoutY="404.0" minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="661.0">-->
                                         <!--<children>-->
@@ -37,24 +38,20 @@
                                         <!--<Button fx:id="btn_stop_music" layoutX="584.0" layoutY="8.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="stop audio" />-->
                                         <!--</children>-->
                                         <!--</AnchorPane>-->
-                                        <Button fx:id="btn_choose_music" layoutX="684.0" layoutY="95.0"
-                                                mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                        <Button fx:id="btn_choose_music" layoutX="684.0" layoutY="95.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
                                             <graphic>
-                                                <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true"
-                                                           preserveRatio="true">
+                                                <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
-                                                        <Image url="http://icons.iconarchive.com/icons/wwalczyszyn/iwindows/64/Music-Library-icon.png"/>
+                                                        <Image url="http://icons.iconarchive.com/icons/wwalczyszyn/iwindows/64/Music-Library-icon.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="btn_pick_folder" layoutX="684.0" layoutY="14.0"
-                                                mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                        <Button fx:id="btn_pick_folder" layoutX="684.0" layoutY="14.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
                                             <graphic>
-                                                <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true"
-                                                           preserveRatio="true">
+                                                <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
-                                                        <Image url="http://icons.iconarchive.com/icons/uriy1966/steel-system/64/Music-icon.png"/>
+                                                        <Image url="http://icons.iconarchive.com/icons/uriy1966/steel-system/64/Music-icon.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -65,11 +62,27 @@
                         </Tab>
                         <Tab fx:id="tab_with_web" text="Web">
                             <content>
-                                <Pane fx:id="pane_with_web" prefHeight="200.0" prefWidth="200.0"/>
+                                <Pane fx:id="pane_with_web" prefHeight="200.0" prefWidth="200.0" />
                             </content>
                         </Tab>
-                        <Tab text="Video"/>
-                        <Tab text="Files"/>
+                        <Tab text="Video">
+                            <content>
+                                <Pane fx:id="pane_with_video" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/playlist.css">
+                                    <children>
+                                        <Button fx:id="btn_choose_video" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                            <graphic>
+                                                <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/48/Play-Movies-icon.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                    </children>
+                                </Pane>
+                            </content>
+                        </Tab>
+                        <Tab text="Files" />
                     </tabs>
                 </TabPane>
             </children>
@@ -78,17 +91,12 @@
             <children>
                 <Pane prefHeight="338.0" prefWidth="134.0">
                     <children>
-                        <Slider fx:id="gen_temperature_slider" blockIncrement="1.0" layoutY="19.0" majorTickUnit="10.0"
-                                max="26.0" min="16.0" minWidth="100" minorTickCount="4" orientation="VERTICAL"
-                                prefHeight="300.0" prefWidth="134.0" showTickLabels="true" showTickMarks="true"
-                                snapToTicks="true" value="22.0"/>
+                        <Slider fx:id="gen_temperature_slider" blockIncrement="1.0" layoutY="19.0" majorTickUnit="10.0" max="26.0" min="16.0" minWidth="100" minorTickCount="4" orientation="VERTICAL" prefHeight="300.0" prefWidth="134.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="22.0" />
                     </children>
                 </Pane>
-                <Button fx:id="btn_clear_directions" layoutX="653.0" layoutY="14.0" mnemonicParsing="false"
-                        text="hide directions"/>
-                <Label fx:id="lbl_with_temperature" layoutX="142.0" layoutY="31.0" prefHeight="17.0" prefWidth="409.0"/>
-                <Button fx:id="btn_show_directions" layoutX="651.0" layoutY="48.0" mnemonicParsing="false"
-                        text="show directions"/>
+                <Button fx:id="btn_clear_directions" layoutX="653.0" layoutY="14.0" mnemonicParsing="false" text="hide directions" />
+                <Label fx:id="lbl_with_temperature" layoutX="142.0" layoutY="31.0" prefHeight="17.0" prefWidth="409.0" />
+                <Button fx:id="btn_show_directions" layoutX="651.0" layoutY="48.0" mnemonicParsing="false" text="show directions" />
             </children>
         </AnchorPane>
     </items>

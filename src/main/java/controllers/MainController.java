@@ -53,6 +53,12 @@ public class MainController {
     @FXML
     private Tab tab_with_web;
 
+    //video
+    @FXML
+    private Pane pane_with_video;
+    @FXML
+    private Button btn_choose_video;
+
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -78,5 +84,10 @@ public class MainController {
             WebBrowserController webBrowserController = new WebBrowserController();
             webBrowserController.createSimpleBrowse(pane_with_web);
         });
+    }
+
+    public void initVideo() {
+        final VideoController videoController = new VideoController(primaryStage);
+        videoController.seiInitState(pane_with_video, btn_choose_video);
     }
 }
