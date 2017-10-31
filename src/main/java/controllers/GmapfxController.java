@@ -45,22 +45,11 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
     }
 
     /**
-     * @param anchorPane
-     */
-    public void createSimpleMap(final AnchorPane anchorPane) {
-        //generates google map with some defaults and put it into top pane
-        mapComponent = new GoogleMapView();
-        mapComponent.addMapInializedListener(this);
-        mapComponent.setMinHeight(anchorPane.getHeight());
-        anchorPane.getChildren().add(mapComponent);
-    }
-
-    /**
      * @param tab
      */
     public void createSimpleMap(final Tab tab) {
         //generates google map with some defaults and put it into top pane
-        mapComponent = new GoogleMapView();
+        mapComponent = new GoogleMapView("/html/maps.html");
         mapComponent.addMapInializedListener(this);
         tab.setContent(mapComponent);
     }
