@@ -2,11 +2,15 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -93,5 +97,33 @@ public class MainController {
     public void initVideo() {
         final VideoController videoController = new VideoController(primaryStage);
         videoController.seiInitState(top_pane_for_video, btn_choose_video, btn_play_video, btn_stop_video);
+    }
+
+
+    @FXML
+    Button btnStartCamera;
+
+    @FXML
+    Button btnStopCamera;
+
+    @FXML
+    Button btnDisposeCamera;
+
+    @FXML
+    ComboBox<WebCamPreviewController.WebCamInfo> cbCameraOptions;
+
+    @FXML
+    Pane bpWebCamPaneHolder;
+
+    @FXML
+    FlowPane fpBottomPane;
+
+    @FXML
+    ImageView imgWebCamCapturedImage;
+
+    public void initWebcam() {
+        WebCamPreviewController webCamPreviewController = new WebCamPreviewController(btnStartCamera, btnStopCamera,
+                btnDisposeCamera, cbCameraOptions, bpWebCamPaneHolder, fpBottomPane, imgWebCamCapturedImage);
+        webCamPreviewController.initialize(null, null);
     }
 }

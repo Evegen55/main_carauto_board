@@ -39,6 +39,7 @@ public class CarControlBoard extends Application {
         mainController.initializeMusic();
         mainController.initWebView();
         mainController.initVideo();
+        mainController.initWebcam();
     }
 
 }

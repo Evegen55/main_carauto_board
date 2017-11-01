@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -14,6 +15,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
 
 <SplitPane dividerPositions="0.75" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="1366.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <items>
@@ -103,7 +106,33 @@
                               <SplitPane dividerPositions="0.5" layoutY="107.0" orientation="VERTICAL" prefHeight="885.0" prefWidth="766.0">
                                 <items>
                                   <AnchorPane fx:id="top_pane_for_video" maxHeight="439.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                                  <AnchorPane minHeight="446.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                                  <AnchorPane minHeight="446.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                       <children>
+                                          <Pane fx:id="bpWebCamPaneHolder" prefHeight="445.0" prefWidth="766.0">
+                                             <children>
+                                                 <FlowPane fx:id="fpBottomPane" layoutX="14.0" layoutY="14.0" prefHeight="126.0" prefWidth="103.0" style="-fx-background-color:#ccc;">
+                                                     <children>
+                                                         <Button fx:id="btnStopCamera" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="102.0" text="Stop Camera">
+                                                         <font>
+                                                            <Font name="Segoe UI" size="12.0" />
+                                                         </font>
+                                                      </Button>
+                                                         <Button fx:id="btnStartCamera" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="102.0" text="Start Camera">
+                                                             <font>
+                                                                 <Font name="Segoe UI" size="12.0" fx:id="x1" />
+                                                             </font>
+                                                         </Button>
+                                                         <Button fx:id="btnDisposeCamera" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="41.0" prefWidth="103.0" text="Dispose Camera">
+                                                         <font>
+                                                            <Font name="Segoe UI" size="12.0" />
+                                                         </font></Button>
+                                                     </children>
+                                                 </FlowPane>
+                                                <ImageView fx:id="imgWebCamCapturedImage" fitHeight="373.0" fitWidth="362.0" layoutX="181.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" />
+                                             </children>
+                                          </Pane>
+                                          <ComboBox fx:id="cbCameraOptions" layoutX="394.0" layoutY="15.0" prefHeight="35.0" prefWidth="370.0" style="-fx-font-size: 12px;" />
+                                       </children></AnchorPane>
                                 </items>
                               </SplitPane>
                                     </children>
