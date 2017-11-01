@@ -102,8 +102,8 @@
                               </HBox>
                               <SplitPane dividerPositions="0.5" layoutY="107.0" orientation="VERTICAL" prefHeight="885.0" prefWidth="766.0">
                                 <items>
-                                  <AnchorPane fx:id="top_pane_for_video" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                                  <AnchorPane fx:id="top_pane_for_video" maxHeight="439.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                                  <AnchorPane minHeight="446.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
                                 </items>
                               </SplitPane>
                                     </children>
