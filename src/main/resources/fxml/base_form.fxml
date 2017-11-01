@@ -128,7 +128,7 @@
                                                          </font></Button>
                                                      </children>
                                                  </FlowPane>
-                                                <ImageView fx:id="imgWebCamCapturedImage" fitHeight="373.0" fitWidth="362.0" layoutX="181.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" />
+                                                <ImageView fx:id="imgWebCamCapturedImage" fitHeight="322.0" fitWidth="357.0" layoutX="395.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" />
                                              </children>
                                           </Pane>
                                           <ComboBox fx:id="cbCameraOptions" layoutX="394.0" layoutY="15.0" prefHeight="35.0" prefWidth="370.0" style="-fx-font-size: 12px;" />

@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.WebCamInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -9,7 +10,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -67,6 +67,22 @@ public class MainController {
     @FXML
     private Button btn_stop_video;
 
+    //webcam
+    @FXML
+    private Button btnStartCamera;
+    @FXML
+    private Button btnStopCamera;
+    @FXML
+    private Button btnDisposeCamera;
+    @FXML
+    private ComboBox<WebCamInfo> cbCameraOptions;
+    @FXML
+    private Pane bpWebCamPaneHolder;
+    @FXML
+    private FlowPane fpBottomPane;
+    @FXML
+    private ImageView imgWebCamCapturedImage;
+
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -100,30 +116,9 @@ public class MainController {
     }
 
 
-    @FXML
-    Button btnStartCamera;
-
-    @FXML
-    Button btnStopCamera;
-
-    @FXML
-    Button btnDisposeCamera;
-
-    @FXML
-    ComboBox<WebCamPreviewController.WebCamInfo> cbCameraOptions;
-
-    @FXML
-    Pane bpWebCamPaneHolder;
-
-    @FXML
-    FlowPane fpBottomPane;
-
-    @FXML
-    ImageView imgWebCamCapturedImage;
-
     public void initWebcam() {
         WebCamPreviewController webCamPreviewController = new WebCamPreviewController(btnStartCamera, btnStopCamera,
                 btnDisposeCamera, cbCameraOptions, bpWebCamPaneHolder, fpBottomPane, imgWebCamCapturedImage);
-        webCamPreviewController.initialize(null, null);
+        webCamPreviewController.initialize(null, null); //just because fxml loader is already used
     }
 }

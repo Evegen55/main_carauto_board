@@ -1,6 +1,7 @@
 package controllers;
 
 import com.github.sarxos.webcam.Webcam;
+import entities.WebCamInfo;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -31,15 +32,17 @@ import java.util.ResourceBundle;
  */
 public class WebCamPreviewController implements Initializable {
 
-    Button btnStartCamera;
-    Button btnStopCamera;
-    Button btnDisposeCamera;
-    ComboBox<WebCamInfo> cbCameraOptions;
-    Pane bpWebCamPaneHolder;
-    FlowPane fpBottomPane;
-    ImageView imgWebCamCapturedImage;
+    private Button btnStartCamera;
+    private Button btnStopCamera;
+    private Button btnDisposeCamera;
+    private ComboBox<WebCamInfo> cbCameraOptions;
+    private Pane bpWebCamPaneHolder;
+    private FlowPane fpBottomPane;
+    private ImageView imgWebCamCapturedImage;
 
-    public WebCamPreviewController(Button btnStartCamera, Button btnStopCamera, Button btnDisposeCamera, ComboBox<WebCamInfo> cbCameraOptions, Pane bpWebCamPaneHolder, FlowPane fpBottomPane, ImageView imgWebCamCapturedImage) {
+    public WebCamPreviewController(final Button btnStartCamera, final Button btnStopCamera, final Button btnDisposeCamera,
+                                   final ComboBox<WebCamInfo> cbCameraOptions, final Pane bpWebCamPaneHolder,
+                                   final FlowPane fpBottomPane, final ImageView imgWebCamCapturedImage) {
         this.btnStartCamera = btnStartCamera;
         this.btnStopCamera = btnStopCamera;
         this.btnDisposeCamera = btnDisposeCamera;
@@ -47,33 +50,6 @@ public class WebCamPreviewController implements Initializable {
         this.bpWebCamPaneHolder = bpWebCamPaneHolder;
         this.fpBottomPane = fpBottomPane;
         this.imgWebCamCapturedImage = imgWebCamCapturedImage;
-    }
-
-    public class WebCamInfo {
-
-        private String webCamName;
-        private int webCamIndex;
-
-        public String getWebCamName() {
-            return webCamName;
-        }
-
-        public void setWebCamName(String webCamName) {
-            this.webCamName = webCamName;
-        }
-
-        public int getWebCamIndex() {
-            return webCamIndex;
-        }
-
-        public void setWebCamIndex(int webCamIndex) {
-            this.webCamIndex = webCamIndex;
-        }
-
-        @Override
-        public String toString() {
-            return webCamName;
-        }
     }
 
     private BufferedImage grabbedImage;
@@ -108,14 +84,7 @@ public class WebCamPreviewController implements Initializable {
                 }
             }
         });
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                setImageViewSize();
-            }
-        });
-
+        Platform.runLater(this::setImageViewSize);
 
         btnStartCamera.setOnAction(this::startCamera);
         btnStopCamera.setOnAction(this::stopCamera);
@@ -124,13 +93,12 @@ public class WebCamPreviewController implements Initializable {
     }
 
     protected void setImageViewSize() {
-
-        double height = bpWebCamPaneHolder.getHeight();
-        double width = bpWebCamPaneHolder.getWidth();
-        imgWebCamCapturedImage.setFitHeight(height);
-        imgWebCamCapturedImage.setFitWidth(width);
-        imgWebCamCapturedImage.prefHeight(height);
-        imgWebCamCapturedImage.prefWidth(width);
+//        double height = bpWebCamPaneHolder.getHeight();
+//        double width = bpWebCamPaneHolder.getWidth();
+//        imgWebCamCapturedImage.setFitHeight(height);
+//        imgWebCamCapturedImage.setFitWidth(width);
+//        imgWebCamCapturedImage.prefHeight(height);
+//        imgWebCamCapturedImage.prefWidth(width);
         imgWebCamCapturedImage.setPreserveRatio(true);
 
     }
