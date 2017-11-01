@@ -92,6 +92,15 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
+                                    <Button fx:id="btn_pause_video" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                       <graphic>
+                                          <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-8/48/Pause-icon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
                                     <Button fx:id="btn_stop_video" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
                                        <graphic>
                                           <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
@@ -108,38 +117,70 @@
                                   <AnchorPane fx:id="top_pane_for_video" maxHeight="439.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
                                   <AnchorPane minHeight="446.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                        <children>
-                                          <Pane fx:id="bpWebCamPaneHolder" prefHeight="445.0" prefWidth="766.0">
+                                          <Pane fx:id="bpWebCamPaneHolder1" prefHeight="276.0" prefWidth="383.0">
                                              <children>
-                                                 <FlowPane fx:id="fpBottomPane" layoutX="14.0" layoutY="14.0" prefHeight="126.0" prefWidth="103.0" style="-fx-background-color:#ccc;">
-                                                     <children>
-                                                         <Button fx:id="btnStopCamera" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="102.0" text="Stop Camera">
+                                                <FlowPane fx:id="fpBottomPane1" layoutX="31.0" layoutY="229.0" prefHeight="45.0" prefWidth="321.0" style="-fx-background-color:#ccc;">
+                                                   <children>
+                                                      <Button fx:id="btnStopCamera1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Stop Camera">
                                                          <font>
                                                             <Font name="Segoe UI" size="12.0" />
                                                          </font>
                                                       </Button>
-                                                         <Button fx:id="btnStartCamera" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="102.0" text="Start Camera">
+                                                      <Button fx:id="btnStartCamera1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Start Camera">
+                                                         <font>
+                                                            <Font name="Segoe UI" size="12.0" fx:id="x11" />
+                                                         </font>
+                                                      </Button>
+                                                      <Button fx:id="btnDisposeCamera1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Dispose Camera">
+                                                         <font>
+                                                            <Font name="Segoe UI" size="12.0" />
+                                                         </font>
+                                                      </Button>
+                                                   </children>
+                                                </FlowPane>
+                                                <ImageView fx:id="imgWebCamCapturedImage1" fitHeight="180.0" fitWidth="320.0" layoutX="32.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" />
+                                                <ComboBox fx:id="cbCameraOptions1" layoutX="32.0" layoutY="14.0" prefHeight="35.0" prefWidth="320.0" style="-fx-font-size: 12px;" />
+                                             </children>
+                                          </Pane>
+                                          <Pane fx:id="bpWebCamPaneHolder" layoutX="382.0" layoutY="1.0" prefHeight="276.0" prefWidth="383.0">
+                                             <children>
+                                                 <FlowPane fx:id="fpBottomPane" layoutX="31.0" layoutY="229.0" prefHeight="45.0" prefWidth="321.0" style="-fx-background-color:#ccc;">
+                                                     <children>
+                                                         <Button fx:id="btnStopCamera" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Stop Camera">
+                                                         <font>
+                                                            <Font name="Segoe UI" size="12.0" />
+                                                         </font>
+                                                      </Button>
+                                                         <Button fx:id="btnStartCamera" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Start Camera">
                                                              <font>
                                                                  <Font name="Segoe UI" size="12.0" fx:id="x1" />
                                                              </font>
                                                          </Button>
-                                                         <Button fx:id="btnDisposeCamera" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="41.0" prefWidth="103.0" text="Dispose Camera">
+                                                         <Button fx:id="btnDisposeCamera" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Dispose Camera">
                                                          <font>
                                                             <Font name="Segoe UI" size="12.0" />
                                                          </font></Button>
                                                      </children>
                                                  </FlowPane>
-                                                <ImageView fx:id="imgWebCamCapturedImage" fitHeight="322.0" fitWidth="357.0" layoutX="395.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" />
+                                                <ImageView fx:id="imgWebCamCapturedImage" fitHeight="180.0" fitWidth="320.0" layoutX="32.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" />
+                                                <ComboBox fx:id="cbCameraOptions" layoutX="32.0" layoutY="14.0" prefHeight="35.0" prefWidth="320.0" style="-fx-font-size: 12px;" />
                                              </children>
                                           </Pane>
-                                          <ComboBox fx:id="cbCameraOptions" layoutX="394.0" layoutY="15.0" prefHeight="35.0" prefWidth="370.0" style="-fx-font-size: 12px;" />
                                        </children></AnchorPane>
                                 </items>
                               </SplitPane>
+                              <Slider fx:id="time_slider" layoutX="352.0" layoutY="72.0" prefHeight="14.0" prefWidth="400.0" />
+                              <Slider fx:id="volume_audio_slider" layoutX="355.0" layoutY="14.0" prefHeight="14.0" prefWidth="400.0" />
                                     </children>
                                 </Pane>
                             </content>
                         </Tab>
                         <Tab text="Files" />
+                  <Tab text="WebSocketChat">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                  </Tab>
                     </tabs>
                 </TabPane>
             </children>

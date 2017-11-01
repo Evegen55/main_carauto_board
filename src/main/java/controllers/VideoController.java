@@ -29,7 +29,7 @@ public class VideoController {
     }
 
     public void seiInitState(final Pane pane, final Button buttonToOpen,
-                             Button btn_play_video, Button btn_stop_video) {
+                             final Button btn_play_video, final Button btn_stop_video) {
         buttonToOpen.setOnAction(action -> {
             final File singleFileFromOpenedDialog = getFileChooserForVideo(primaryStage);
             if (singleFileFromOpenedDialog != null) {

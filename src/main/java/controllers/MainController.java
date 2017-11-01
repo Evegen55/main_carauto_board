@@ -67,7 +67,7 @@ public class MainController {
     @FXML
     private Button btn_stop_video;
 
-    //webcam
+    //webcam control 0
     @FXML
     private Button btnStartCamera;
     @FXML
@@ -82,6 +82,22 @@ public class MainController {
     private FlowPane fpBottomPane;
     @FXML
     private ImageView imgWebCamCapturedImage;
+
+    //webcam control 1
+    @FXML
+    private Button btnStartCamera1;
+    @FXML
+    private Button btnStopCamera1;
+    @FXML
+    private Button btnDisposeCamera1;
+    @FXML
+    private ComboBox<WebCamInfo> cbCameraOptions1;
+    @FXML
+    private Pane bpWebCamPaneHolder1;
+    @FXML
+    private FlowPane fpBottomPane1;
+    @FXML
+    private ImageView imgWebCamCapturedImage1;
 
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -117,8 +133,14 @@ public class MainController {
 
 
     public void initWebcam() {
-        WebCamPreviewController webCamPreviewController = new WebCamPreviewController(btnStartCamera, btnStopCamera,
-                btnDisposeCamera, cbCameraOptions, bpWebCamPaneHolder, fpBottomPane, imgWebCamCapturedImage);
+        WebCamPreviewController webCamPreviewController =
+                new WebCamPreviewController(btnStartCamera, btnStopCamera, btnDisposeCamera,
+                        cbCameraOptions, bpWebCamPaneHolder, fpBottomPane, imgWebCamCapturedImage);
         webCamPreviewController.initialize(null, null); //just because fxml loader is already used
+
+        WebCamPreviewController webCamPreviewController1 =
+                new WebCamPreviewController(btnStartCamera1, btnStopCamera1, btnDisposeCamera1,
+                        cbCameraOptions1, bpWebCamPaneHolder1, fpBottomPane1, imgWebCamCapturedImage1);
+        webCamPreviewController1.initialize(null, null); //just because fxml loader is already used
     }
 }

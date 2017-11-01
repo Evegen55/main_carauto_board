@@ -5,8 +5,6 @@ import entities.WebCamInfo;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -33,6 +31,7 @@ import static app.CarControlBoard.EXECUTOR_SERVICE;
  * This is controller for WebCamPreview FXML.
  *
  * @author Rakesh Bhatt (rakeshbhatt10)
+ * @author Evgenii Lartcev
  */
 public class WebCamPreviewController implements Initializable {
 
@@ -69,7 +68,7 @@ public class WebCamPreviewController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
 
         fpBottomPane.setDisable(true);
-        ObservableList<WebCamInfo> options = FXCollections.observableArrayList();
+        final ObservableList<WebCamInfo> options = FXCollections.observableArrayList();
         int webCamCounter = 0;
         for (Webcam webcam : Webcam.getWebcams()) {
             final WebCamInfo webCamInfo = new WebCamInfo(webCamCounter, webcam.getName());
@@ -92,18 +91,11 @@ public class WebCamPreviewController implements Initializable {
 
     }
 
-    protected void setImageViewSize() {
-//        double height = bpWebCamPaneHolder.getHeight();
-//        double width = bpWebCamPaneHolder.getWidth();
-//        imgWebCamCapturedImage.setFitHeight(height);
-//        imgWebCamCapturedImage.setFitWidth(width);
-//        imgWebCamCapturedImage.prefHeight(height);
-//        imgWebCamCapturedImage.prefWidth(width);
+    private void setImageViewSize() {
         imgWebCamCapturedImage.setPreserveRatio(true);
-
     }
 
-    protected void initializeWebCam(final int webCamIndex) {
+    private void initializeWebCam(final int webCamIndex) {
 
         EXECUTOR_SERVICE.submit(() -> {
             if (selWebCam == null) {
@@ -122,11 +114,10 @@ public class WebCamPreviewController implements Initializable {
         btnStartCamera.setDisable(true);
     }
 
-    protected void startWebCamStream() {
+    private void startWebCamStream() {
 
         stopCamera = false;
         Task<Void> task = new Task<Void>() {
-
             @Override
             protected Void call() throws Exception {
 
@@ -165,20 +156,20 @@ public class WebCamPreviewController implements Initializable {
         }
     }
 
-    public void stopCamera(ActionEvent event) {
+    private void stopCamera(ActionEvent event) {
         stopCamera = true;
         btnStartCamera.setDisable(false);
         btnStopCamera.setDisable(true);
     }
 
-    public void startCamera(ActionEvent event) {
+    private void startCamera(ActionEvent event) {
         stopCamera = false;
         startWebCamStream();
         btnStartCamera.setDisable(true);
         btnStopCamera.setDisable(false);
     }
 
-    public void disposeCamera(ActionEvent event) {
+    private void disposeCamera(ActionEvent event) {
         stopCamera = true;
         closeCamera();
         btnStopCamera.setDisable(true);
