@@ -68,6 +68,13 @@ public class MainController {
     private Button btn_stop_video;
     @FXML
     private Button btn_pause_video;
+    @FXML
+    private Slider time_slider;
+    @FXML
+    private Label time_lbl;
+    @FXML
+    private Slider volume_audio_slider;
+
 
     //webcam control 0
     @FXML
@@ -130,8 +137,8 @@ public class MainController {
 
     public void initVideo() {
         final VideoController videoController = new VideoController(primaryStage);
-        videoController.seiInitState(top_pane_for_video, btn_choose_video,
-                btn_play_video, btn_stop_video, btn_pause_video);
+        videoController.seiInitState(top_pane_for_video, btn_choose_video, btn_play_video, btn_stop_video,
+                btn_pause_video, time_slider, volume_audio_slider, time_lbl);
     }
 
 
