@@ -10,11 +10,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Here is the main application
  */
 public class CarControlBoard extends Application {
+
+    public static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
 
     public static void main(String[] args) {
         launch(args);
@@ -39,6 +43,12 @@ public class CarControlBoard extends Application {
         mainController.initializeMusic();
         mainController.initWebView();
         mainController.initVideo();
+        mainController.initWebcam();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        EXECUTOR_SERVICE.shutdownNow();
     }
 
 }
