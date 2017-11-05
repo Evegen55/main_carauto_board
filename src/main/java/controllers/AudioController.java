@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+import static utils.Util.formatDurationForMedia;
+
 public class AudioController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(AudioController.class);
@@ -86,7 +88,8 @@ public class AudioController {
         audioItem.getStop().setOnAction(action -> mediaPlayer.stop());
         audioItem.getPlay().setOnAction(action -> {
             checkStopForOtherAudioItems();
-            audioItem.getLabel_for_time().setText(String.valueOf(mediaSound.getDuration().toMinutes()));
+            final String formatted = formatDurationForMedia(mediaSound.getDuration());
+            audioItem.getLabel_for_time().setText(formatted);
             mediaPlayer.play();
         });
 

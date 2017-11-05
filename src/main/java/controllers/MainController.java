@@ -69,8 +69,6 @@ public class MainController {
     private Label time_lbl;
     @FXML
     private Slider volume_audio_slider;
-    @FXML
-    private Label volume_lbl;
 
 
     //webcam control 0
@@ -109,18 +107,18 @@ public class MainController {
         this.primaryStage = primaryStage;
     }
 
-    public void showMap() {
+    public void initMap() {
         final GmapfxController gmapfxController = new GmapfxController();
         gmapfxController.createSimpleMap(tab_with_map);
         gmapfxController.initButtons(btn_clear_directions, btn_show_directions);
     }
 
-    public void initialiseControls() {
+    public void initControls() {
         final ClimateControlController climateControlController = new ClimateControlController(gen_temperature_slider);
         climateControlController.createInitForControls(myPaneWithControls, lbl_with_temperature);
     }
 
-    public void initializeMusic() {
+    public void initMusic() {
         final AudioController audioController = new AudioController(primaryStage);
         audioController.setInitState(btn_pick_folder, btn_choose_music, pane_with_music);
     }
@@ -135,11 +133,10 @@ public class MainController {
     public void initVideo() {
         final VideoController videoController = new VideoController(primaryStage);
         videoController.seiInitState(top_pane_for_video, btn_choose_video, btn_play_video, btn_stop_video,
-                btn_pause_video, time_slider, volume_audio_slider, time_lbl, volume_lbl);
+                btn_pause_video, time_slider, volume_audio_slider, time_lbl);
     }
 
-
-    public void initWebcam() {
+    public void initWebcams() {
         WebCamPreviewController webCamPreviewController =
                 new WebCamPreviewController(btnStartCamera, btnStopCamera, btnDisposeCamera,
                         cbCameraOptions, bpWebCamPaneHolder, fpBottomPane, imgWebCamCapturedImage);

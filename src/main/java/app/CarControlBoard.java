@@ -38,12 +38,12 @@ public class CarControlBoard extends Application {
         primaryStage.show();
 
         //do the stuff
-        mainController.showMap();
-        mainController.initialiseControls();
-        mainController.initializeMusic();
+        mainController.initMap();
+        mainController.initControls();
+        mainController.initMusic();
         mainController.initWebView();
         mainController.initVideo();
-        mainController.initWebcam();
+        mainController.initWebcams();
     }
 
     @Override

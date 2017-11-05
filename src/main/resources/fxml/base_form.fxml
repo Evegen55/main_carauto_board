@@ -56,6 +56,7 @@
                                                 </ImageView>
                                             </graphic>
                                         </Button>
+                              <Slider fx:id="volume_audio_slider_music" layoutX="686.0" layoutY="178.0" minorTickCount="5" orientation="VERTICAL" prefHeight="396.0" prefWidth="64.0" showTickLabels="true" showTickMarks="true" value="70.0" />
                                     </children>
                                 </Pane>
                             </content>
@@ -167,9 +168,8 @@
                                 </items>
                               </SplitPane>
                               <Slider fx:id="time_slider" layoutX="352.0" layoutY="72.0" prefHeight="14.0" prefWidth="400.0" />
-                              <Slider fx:id="volume_audio_slider" layoutX="355.0" layoutY="14.0" prefHeight="14.0" prefWidth="400.0" value="100.0" />
+                              <Slider fx:id="volume_audio_slider" layoutX="355.0" layoutY="14.0" minorTickCount="5" prefHeight="14.0" prefWidth="400.0" showTickLabels="true" showTickMarks="true" value="70.0" />
                               <Label fx:id="time_lbl" layoutX="664.0" layoutY="55.0" prefHeight="17.0" prefWidth="82.0" textAlignment="RIGHT" />
-                              <Label fx:id="volume_lbl" layoutX="664.0" layoutY="28.0" prefHeight="17.0" prefWidth="82.0" textAlignment="RIGHT" />
                                     </children>
                                 </Pane>
                             </content>

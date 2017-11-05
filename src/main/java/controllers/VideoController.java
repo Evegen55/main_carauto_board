@@ -11,12 +11,13 @@ import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+
+import static utils.Util.formatDurationForMedia;
 
 /**
  * @author (created on 10/31/2017).
@@ -35,7 +36,7 @@ public class VideoController {
 
     public void seiInitState(final Pane pane, final Button buttonToOpen, final Button btn_play_video,
                              final Button btn_stop_video, final Button btn_pause_video, final Slider time_slider,
-                             final Slider volume_audio_slider, final Label time_lbl, final Label volume_lbl) {
+                             final Slider volume_audio_slider, final Label time_lbl) {
         buttonToOpen.setOnAction(action -> {
             final File singleFileFromOpenedDialog = getFileChooserForVideo(primaryStage);
             if (singleFileFromOpenedDialog != null) {
@@ -43,7 +44,7 @@ public class VideoController {
                     readFileAndSetInitialStateForVideoItem(singleFileFromOpenedDialog, pane);
                     setupControlButtons(btn_play_video, btn_stop_video, btn_pause_video);
                     setupTimeSliderDependsOnMediaPlayer(time_slider, time_lbl);
-                    setupVolumeSliderDependsOnMediaPlayer(volume_audio_slider, volume_lbl);
+                    setupVolumeSliderDependsOnMediaPlayer(volume_audio_slider);
                 } catch (IOException e1) {
                     LOGGER.error("An error: \n" + e1.getCause());
                 }
@@ -101,19 +102,16 @@ public class VideoController {
             double total = mediaPlayer.getTotalDuration().toMillis();
             final double vol = curr / total * 100;
             time_slider.setValue(vol);
-            final String format =
-                    DurationFormatUtils.formatDuration((long) currentTime.toMillis(), "H:mm:ss", true);
+            final String format = formatDurationForMedia(currentTime);
             time_lbl.setText(format);
         });
     }
 
-    private void setupVolumeSliderDependsOnMediaPlayer(final Slider volume_audio, Label volume_lbl) {
+    private void setupVolumeSliderDependsOnMediaPlayer(final Slider volume_audio) {
         volume_audio.valueProperty().addListener(event -> {
             if (volume_audio.isPressed()) {
                 mediaPlayer.setVolume(volume_audio.getValue() / 100);
-                volume_lbl.setText(String.valueOf(volume_audio.getValue()));
             }
         });
-
     }
 }
