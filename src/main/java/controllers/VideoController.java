@@ -16,6 +16,7 @@ import java.io.IOException;
 /**
  * @author (created on 10/31/2017).
  */
+// TODO: 05.11.2017 sliders to control sound volume and timeline.
 public class VideoController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(VideoController.class);
@@ -29,7 +30,7 @@ public class VideoController {
     }
 
     public void seiInitState(final Pane pane, final Button buttonToOpen,
-                             final Button btn_play_video, final Button btn_stop_video) {
+                             final Button btn_play_video, final Button btn_stop_video, Button btn_pause_video) {
         buttonToOpen.setOnAction(action -> {
             final File singleFileFromOpenedDialog = getFileChooserForVideo(primaryStage);
             if (singleFileFromOpenedDialog != null) {
@@ -51,6 +52,12 @@ public class VideoController {
         btn_stop_video.setOnAction(action -> {
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
+            }
+        });
+
+        btn_pause_video.setOnAction(action -> {
+            if (mediaPlayer != null) {
+                mediaPlayer.pause();
             }
         });
     }
