@@ -10,6 +10,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,22 +35,20 @@ public class VideoController {
 
     public void seiInitState(final Pane pane, final Button buttonToOpen, final Button btn_play_video,
                              final Button btn_stop_video, final Button btn_pause_video, final Slider time_slider,
-                             final Slider volume_audio_slider, Label time_lbl) {
+                             final Slider volume_audio_slider, final Label time_lbl, final Label volume_lbl) {
         buttonToOpen.setOnAction(action -> {
             final File singleFileFromOpenedDialog = getFileChooserForVideo(primaryStage);
             if (singleFileFromOpenedDialog != null) {
                 try {
                     readFileAndSetInitialStateForVideoItem(singleFileFromOpenedDialog, pane);
+                    setupControlButtons(btn_play_video, btn_stop_video, btn_pause_video);
+                    setupTimeSliderDependsOnMediaPlayer(time_slider, time_lbl);
+                    setupVolumeSliderDependsOnMediaPlayer(volume_audio_slider, volume_lbl);
                 } catch (IOException e1) {
-                    LOGGER.error("Second exception");
-                    e1.printStackTrace();
+                    LOGGER.error("An error: \n" + e1.getCause());
                 }
             }
         });
-
-        setupControlButtons(btn_play_video, btn_stop_video, btn_pause_video);
-        setupTimeSliderDependsOnMediaPlayer(time_slider, time_lbl);
-        setupVolumeSliderDependsOnMediaPlayer(volume_audio_slider);
 
     }
 
@@ -80,55 +80,40 @@ public class VideoController {
 
     private void setupControlButtons(final Button btn_play_video, final Button btn_stop_video,
                                      final Button btn_pause_video) {
-        btn_play_video.setOnAction(action -> {
-            if (mediaPlayer != null) {
-                mediaPlayer.play();
-            }
-        });
-
-        btn_stop_video.setOnAction(action -> {
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-            }
-        });
-
-        btn_pause_video.setOnAction(action -> {
-            if (mediaPlayer != null) {
-                mediaPlayer.pause();
-            }
-        });
+        btn_play_video.setOnAction(action -> mediaPlayer.play());
+        btn_stop_video.setOnAction(action -> mediaPlayer.stop());
+        btn_pause_video.setOnAction(action -> mediaPlayer.pause());
     }
 
     private void setupTimeSliderDependsOnMediaPlayer(final Slider time_slider, final Label time_lbl) {
         time_slider.valueProperty().addListener(event -> {
-            if (time_slider.isPressed()) {
+            if (time_slider.isValueChanging() || time_slider.isPressed()) {
                 mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(time_slider.getValue() / 100));
             }
         });
-        // TODO: 05.11.2017 why it doesn't work??
-        if (mediaPlayer != null) {
-            mediaPlayer.currentTimeProperty().addListener(event -> updateValues(time_slider, time_lbl));
-        }
+        mediaPlayer.currentTimeProperty().addListener(event -> updateValues(time_slider, time_lbl));
     }
 
     private void updateValues(final Slider time_slider, final Label time_lbl) {
         Platform.runLater(() -> {
-            double curr = mediaPlayer.getCurrentTime().toMillis();
+            final Duration currentTime = mediaPlayer.getCurrentTime();
+            double curr = currentTime.toMillis();
             double total = mediaPlayer.getTotalDuration().toMillis();
-            System.out.println(curr);
             final double vol = curr / total * 100;
             time_slider.setValue(vol);
-            time_lbl.setText("abc" + vol);
+            final String format =
+                    DurationFormatUtils.formatDuration((long) currentTime.toMillis(), "H:mm:ss", true);
+            time_lbl.setText(format);
         });
     }
 
-    private void setupVolumeSliderDependsOnMediaPlayer(final Slider volume_audio) {
-        if (mediaPlayer != null) {
-            volume_audio.valueProperty().addListener(event -> {
-                if (volume_audio.isPressed()) {
-                    mediaPlayer.setVolume(volume_audio.getValue() / 100);
-                }
-            });
-        }
+    private void setupVolumeSliderDependsOnMediaPlayer(final Slider volume_audio, Label volume_lbl) {
+        volume_audio.valueProperty().addListener(event -> {
+            if (volume_audio.isPressed()) {
+                mediaPlayer.setVolume(volume_audio.getValue() / 100);
+                volume_lbl.setText(String.valueOf(volume_audio.getValue()));
+            }
+        });
+
     }
 }

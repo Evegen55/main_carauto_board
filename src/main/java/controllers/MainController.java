@@ -2,12 +2,7 @@ package controllers;
 
 import entities.WebCamInfo;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -74,6 +69,8 @@ public class MainController {
     private Label time_lbl;
     @FXML
     private Slider volume_audio_slider;
+    @FXML
+    private Label volume_lbl;
 
 
     //webcam control 0
@@ -138,7 +135,7 @@ public class MainController {
     public void initVideo() {
         final VideoController videoController = new VideoController(primaryStage);
         videoController.seiInitState(top_pane_for_video, btn_choose_video, btn_play_video, btn_stop_video,
-                btn_pause_video, time_slider, volume_audio_slider, time_lbl);
+                btn_pause_video, time_slider, volume_audio_slider, time_lbl, volume_lbl);
     }
 
 
