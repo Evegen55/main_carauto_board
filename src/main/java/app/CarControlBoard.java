@@ -49,6 +49,7 @@ public class CarControlBoard extends Application {
     @Override
     public void stop() throws Exception {
         EXECUTOR_SERVICE.shutdownNow();
+        System.exit(0);
     }
 
 }
