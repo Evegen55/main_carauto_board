@@ -1,6 +1,5 @@
 package controllers;
 
-import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -10,14 +9,13 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 
-import static utils.Util.formatDurationForMedia;
+import static utils.Util.updateValuesForSliderDependsOnPlayer;
 
 /**
  * @author (created on 10/31/2017).
@@ -92,19 +90,7 @@ public class VideoController {
                 mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(time_slider.getValue() / 100));
             }
         });
-        mediaPlayer.currentTimeProperty().addListener(event -> updateValues(time_slider, time_lbl));
-    }
-
-    private void updateValues(final Slider time_slider, final Label time_lbl) {
-        Platform.runLater(() -> {
-            final Duration currentTime = mediaPlayer.getCurrentTime();
-            double curr = currentTime.toMillis();
-            double total = mediaPlayer.getTotalDuration().toMillis();
-            final double vol = curr / total * 100;
-            time_slider.setValue(vol);
-            final String format = formatDurationForMedia(currentTime);
-            time_lbl.setText(format);
-        });
+        mediaPlayer.currentTimeProperty().addListener(event -> updateValuesForSliderDependsOnPlayer(time_slider, time_lbl, mediaPlayer));
     }
 
     private void setupVolumeSliderDependsOnMediaPlayer(final Slider volume_audio) {

@@ -2,6 +2,8 @@ package controllers;
 
 import entities.AudioItem;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import static utils.Util.formatDurationForMedia;
+import static utils.Util.updateValuesForSliderDependsOnPlayer;
 
 public class AudioController {
 
@@ -81,6 +84,8 @@ public class AudioController {
         final MediaPlayer mediaPlayer = new MediaPlayer(mediaSound);
         final MediaView mediaView = new MediaView(mediaPlayer);
 
+        setupTimeSliderDependsOnMediaPlayer(audioItem.getSlider(), audioItem.getLabel_for_time(), mediaPlayer);
+
         audioItem.getLabel_for_name().setText(baseName);
         audioItem.getChildren().addAll(mediaView);
         pane.getChildren().add(audioItem);
@@ -93,6 +98,15 @@ public class AudioController {
             mediaPlayer.play();
         });
 
+    }
+
+    private void setupTimeSliderDependsOnMediaPlayer(final Slider slider, final Label label_for_time, MediaPlayer mediaPlayer) {
+        slider.valueProperty().addListener(event -> {
+            if (slider.isValueChanging() || slider.isPressed()) {
+                mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(slider.getValue() / 100));
+            }
+        });
+        mediaPlayer.currentTimeProperty().addListener(event -> updateValuesForSliderDependsOnPlayer(slider, label_for_time, mediaPlayer));
     }
 
     private void checkStopForOtherAudioItems() {
