@@ -34,6 +34,9 @@ public class AudioController {
     private static double layUotY = 0.0;
     private static double bias = 80.0;
 
+    //one for all sounds
+    private boolean alreadyPlaying = false;
+
     public AudioController(final Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -76,11 +79,11 @@ public class AudioController {
         layUotX = audioItem.getLayoutX();
         layUotY = audioItem.getLayoutY() + bias;
         final String openDialogFilePath = singleFileFromOpenedDialog.getPath();
-        LOGGER.info("now opening: " + openDialogFilePath);
+        LOGGER.info("Now is opening: " + openDialogFilePath);
         final String baseName = FilenameUtils.getName(openDialogFilePath);
         final String path = singleFileFromOpenedDialog.toURI().toASCIIString();
         final Media mediaSound = new Media(path);
-        LOGGER.info("mediaSound opened " + mediaSound.getSource());
+        LOGGER.info("MediaSound " + mediaSound.getSource() + " opened");
         final MediaPlayer mediaPlayer = new MediaPlayer(mediaSound);
         final MediaView mediaView = new MediaView(mediaPlayer);
 
@@ -90,12 +93,17 @@ public class AudioController {
         audioItem.getChildren().addAll(mediaView);
         pane.getChildren().add(audioItem);
 
-        audioItem.getStop().setOnAction(action -> mediaPlayer.stop());
+        audioItem.getStop().setOnAction(action -> {
+            mediaPlayer.stop();
+            alreadyPlaying = false;
+        });
         audioItem.getPlay().setOnAction(action -> {
-            checkStopForOtherAudioItems();
-            final String formatted = formatDurationForMedia(mediaSound.getDuration());
-            audioItem.getLabel_for_time().setText(formatted);
-            mediaPlayer.play();
+            if (!alreadyPlaying) {
+                final String formatted = formatDurationForMedia(mediaSound.getDuration());
+                audioItem.getLabel_for_time().setText(formatted);
+                mediaPlayer.play();
+                alreadyPlaying = true;
+            }
         });
 
     }
@@ -107,10 +115,6 @@ public class AudioController {
             }
         });
         mediaPlayer.currentTimeProperty().addListener(event -> updateValuesForSliderDependsOnPlayer(slider, label_for_time, mediaPlayer));
-    }
-
-    private void checkStopForOtherAudioItems() {
-        // TODO: 10/31/2017 add logic to stop other audio items
     }
 
     private static File getFileChooserForMusic(final Stage primaryStage) {
