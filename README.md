@@ -1,9 +1,22 @@
-# main_carauto_board
-moved from pick_files branch from https://github.com/Evegen55/map_uscd_with_navigation
+# Multimedia panel for a car (prototype)
+## Here is the sketch for car panel. 
 
-An attempt to create car control board as sketch.
+Thank you very much:
+- [Rob Terpilowski](https://github.com/rterp) with his [Google maps api for JavaFX](https://github.com/rterp/GMapsFX) and
+- [Bartosz Firyn](https://github.com/sarxos) with his [webcam library](https://github.com/sarxos/webcam-capture).
 
+
+There will be the next attempt to create by using [Qt platform](https://www.qt.io/) but this project is suitable to rapid prototyping the main idea.
+
+Here is the screen capture for the main ideas:
+**Maps**:
 ![alt text](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/1.PNG)
+
+**Audio panel**:
 ![alt text](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/2.PNG)
+
+**Browser**:
 ![alt text](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/3.PNG)
+
+**Video panel with carcams**:
 ![alt text](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/4.PNG)
