@@ -25,3 +25,9 @@ Here is the screen capture for the main ideas:
 **Video panel with carcams**:
 
 ![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/4.PNG)
+
+**Build and run:**
+
+`mvn assembly:assembly`
+
+`java -jar <Path-to-your-jar>/main_carauto_board-1.0-SNAPSHOT-jar-with-dependencies.jar`
