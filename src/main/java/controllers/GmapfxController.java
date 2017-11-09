@@ -47,10 +47,9 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
     private String getStyleForMap() {
         String content = null;
         try {
-            content = IOUtils.toString(this.getClass()
-                    .getResourceAsStream("/css/grayMap.json"), "UTF-8");
+            content = IOUtils.toString(this.getClass().getResourceAsStream("/css/grayMap.json"), "UTF-8");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getCause().toString());
         }
         return content;
     }
