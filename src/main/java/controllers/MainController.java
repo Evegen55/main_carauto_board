@@ -2,7 +2,13 @@ package controllers;
 
 import entities.WebCamInfo;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -20,11 +26,21 @@ public class MainController {
     @FXML
     private AnchorPane myPaneWithMapsAndOtherFeatures;
     @FXML
+    private TabPane tabPaneWithMap;
+    @FXML
     private Tab tab_with_map;
+    @FXML
+    private Pane paneWithMap;
+    @FXML
+    private FlowPane flowpaneWithMapButtons;
     @FXML
     private Button btn_clear_directions;
     @FXML
     private Button btn_show_directions;
+    @FXML
+    private Button btn_find_path;
+    @FXML
+    private Button btn_clear_path;
 
     //elements with controls
     @FXML
@@ -109,8 +125,8 @@ public class MainController {
 
     public void initMap() {
         final GmapfxController gmapfxController = new GmapfxController();
-        gmapfxController.createSimpleMap(tab_with_map);
-        gmapfxController.initButtons(btn_clear_directions, btn_show_directions);
+        gmapfxController.createSimpleMap(tab_with_map, flowpaneWithMapButtons,
+                btn_clear_directions, btn_show_directions, btn_find_path, btn_clear_path);
     }
 
     public void initControls() {

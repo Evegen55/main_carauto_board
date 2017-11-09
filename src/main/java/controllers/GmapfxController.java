@@ -2,15 +2,26 @@ package controllers;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
-import com.lynden.gmapsfx.javascript.object.*;
-import com.lynden.gmapsfx.service.directions.*;
+import com.lynden.gmapsfx.javascript.object.DirectionsPane;
+import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.MapOptions;
+import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import com.lynden.gmapsfx.service.directions.DirectionStatus;
+import com.lynden.gmapsfx.service.directions.DirectionsLeg;
+import com.lynden.gmapsfx.service.directions.DirectionsRenderer;
+import com.lynden.gmapsfx.service.directions.DirectionsRequest;
+import com.lynden.gmapsfx.service.directions.DirectionsResult;
+import com.lynden.gmapsfx.service.directions.DirectionsService;
+import com.lynden.gmapsfx.service.directions.DirectionsServiceCallback;
+import com.lynden.gmapsfx.service.directions.TravelModes;
 import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
 import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,11 +57,19 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
 
     /**
      * @param tab
+     * @param btn_clear_directions
+     * @param btn_show_directions
+     * @param btn_find_path
+     * @param btn_clear_path
      */
-    public void createSimpleMap(final Tab tab) {
+    public void createSimpleMap(final Tab tab, final FlowPane flowPane,
+                                final Button btn_clear_directions, final Button btn_show_directions,
+                                final Button btn_find_path, final Button btn_clear_path) {
         //generates google map with some defaults and put it into top pane
         mapComponent = new GoogleMapView("/html/maps.html");
         mapComponent.addMapInializedListener(this);
+        initControls(btn_clear_directions, btn_show_directions, btn_find_path, btn_clear_path);
+        mapComponent.getChildren().add(flowPane);
         tab.setContent(mapComponent);
     }
 
@@ -123,7 +142,8 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
         }
     }
 
-    public void initButtons(final Button btn_clear_directions, Button btn_show_directions) {
+    private void initControls(final Button btn_clear_directions, final Button btn_show_directions,
+                              final Button btn_find_path, final Button btn_clear_path) {
         btn_clear_directions.setOnAction(action -> {
             // TODO: 10/31/2017 research it
 //            directionsRenderer.clearDirections();
@@ -134,6 +154,14 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
             // TODO: 10/31/2017 research it
 //            directionsRenderer.clearDirections();
             directionsRenderer.getJSObject().eval("showDirections()");
+        });
+
+        btn_find_path.setOnAction(action -> {
+            // TODO: 11/9/2017
+        });
+
+        btn_clear_path.setOnAction(action -> {
+            // TODO: 11/9/2017
         });
     }
 }
