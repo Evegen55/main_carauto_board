@@ -10,10 +10,18 @@ There will be the next attempt to create by using [Qt platform](https://www.qt.i
 
 Here is the screen capture for the main ideas:
 
+**Maps**:
+
 ![**Maps**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/1.PNG)
+
+**Audio panel**:
 
 ![**Audio panel**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/2.PNG)
 
+**Browser**:
+
 ![**Browser**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/3.PNG)
+
+**Video panel with carcams**:
 
 ![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/4.PNG)
