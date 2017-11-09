@@ -1,0 +1,12 @@
+.slider .thumb {
+    -fx-background-image :url("http://icons.iconarchive.com/icons/graphicloads/folded/48/c-temperature-folded-icon.png");
+    -fx-padding: 24;
+    -fx-pref-height: 48;
+    -fx-pref-width: 48;
+    -fx-background-color:transparent;
+}
+
+.slider .track {
+   -fx-background-color: #ff9966;
+   -fx-pref-width: 14;
+}

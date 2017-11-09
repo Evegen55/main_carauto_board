@@ -194,11 +194,11 @@
                 </TabPane>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="myPaneWithControls" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+        <AnchorPane fx:id="myPaneWithControls" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="pane" stylesheets="@../css/playlist.css">
             <children>
                 <Pane prefHeight="338.0" prefWidth="134.0">
                     <children>
-                        <Slider fx:id="gen_temperature_slider" blockIncrement="1.0" layoutY="19.0" majorTickUnit="10.0" max="26.0" min="16.0" minWidth="100" minorTickCount="4" orientation="VERTICAL" prefHeight="300.0" prefWidth="134.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="22.0" />
+                        <Slider fx:id="gen_temperature_slider" blockIncrement="1.0" layoutY="19.0" majorTickUnit="10.0" max="26.0" min="16.0" minWidth="100" minorTickCount="4" orientation="VERTICAL" prefHeight="300.0" prefWidth="134.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" stylesheets="@../css/slider.css" value="22.0" />
                     </children>
                 </Pane>
                 <Button fx:id="btn_clear_directions" layoutX="653.0" layoutY="14.0" mnemonicParsing="false" text="hide directions" />
