@@ -9,14 +9,11 @@ Thank you very much:
 There will be the next attempt to create by using [Qt platform](https://www.qt.io/) but this project is suitable to rapid prototyping the main idea.
 
 Here is the screen capture for the main ideas:
-**Maps**:
-![alt text](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/1.PNG)
 
-**Audio panel**:
-![alt text](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/2.PNG)
+![**Maps**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/1.PNG)
 
-**Browser**:
-![alt text](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/3.PNG)
+![**Audio panel**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/2.PNG)
 
-**Video panel with carcams**:
-![alt text](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/4.PNG)
+![**Browser**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/3.PNG)
+
+![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/4.PNG)
