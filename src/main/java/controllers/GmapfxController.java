@@ -195,7 +195,7 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
 
         final DirectionsRequest directionsRequest =
                 new DirectionsRequest(addressOrigin, addressDestination, TravelModes.DRIVING);
-        directionsPane = mapComponent.getDirec();
+        directionsPane = mapComponent.getDirec(); // TODO: 11/10/2017 IT HAS TOBE CLEARED!
         directionsService = new DirectionsService();
         directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
         directionsService.getRoute(directionsRequest, this, directionsRenderer);
