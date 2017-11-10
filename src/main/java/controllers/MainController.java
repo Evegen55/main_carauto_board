@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -41,6 +42,14 @@ public class MainController {
     private Button btn_find_path;
     @FXML
     private Button btn_clear_path;
+    @FXML
+    private Pane path_choice_pane;
+    @FXML
+    private Button btn_get_coords_find_path;
+    @FXML
+    private TextField txt_from;
+    @FXML
+    private TextField txt_to;
 
     //elements with controls
     @FXML
@@ -126,7 +135,8 @@ public class MainController {
     public void initMap() {
         final GmapfxController gmapfxController = new GmapfxController();
         gmapfxController.createSimpleMap(tab_with_map, flowpaneWithMapButtons,
-                btn_clear_directions, btn_show_directions, btn_find_path, btn_clear_path);
+                btn_clear_directions, btn_show_directions, btn_find_path, btn_clear_path, path_choice_pane,
+                btn_get_coords_find_path, txt_from, txt_to);
     }
 
     public void initControls() {

@@ -21,7 +21,9 @@ import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +43,6 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
     private DirectionsRenderer directionsRenderer;
     private DirectionsService directionsService;
 
-
     private String styleString = getStyleForMap();
 
     private String getStyleForMap() {
@@ -60,15 +61,24 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
      * @param btn_show_directions
      * @param btn_find_path
      * @param btn_clear_path
+     * @param path_choice_pane
+     * @param btn_get_coords_find_path
+     * @param txt_from
+     * @param txt_to
      */
-    public void createSimpleMap(final Tab tab, final FlowPane flowPane,
-                                final Button btn_clear_directions, final Button btn_show_directions,
-                                final Button btn_find_path, final Button btn_clear_path) {
+    public void createSimpleMap(final Tab tab, final FlowPane flowPane, final Button btn_clear_directions,
+                                final Button btn_show_directions, final Button btn_find_path,
+                                final Button btn_clear_path, final Pane path_choice_pane,
+                                final Button btn_get_coords_find_path, final TextField txt_from,
+                                final TextField txt_to) {
         //generates google map with some defaults and put it into top pane
         mapComponent = new GoogleMapView("/html/maps.html");
         mapComponent.addMapInializedListener(this);
-        initControls(btn_clear_directions, btn_show_directions, btn_find_path, btn_clear_path);
-        mapComponent.getChildren().add(flowPane);
+
+        initControls(btn_clear_directions, btn_show_directions, btn_find_path, btn_clear_path, path_choice_pane,
+                btn_get_coords_find_path, txt_from, txt_to);
+        mapComponent.getChildren().addAll(flowPane, path_choice_pane);
+
         tab.setContent(mapComponent);
     }
 
@@ -90,19 +100,6 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
                 .styleString(styleString); // TODO: 28.10.2017 add the theme to a menu
         //it returns control for created map
         map = mapComponent.createMap(options);
-
-        // TODO: 28.10.2017 gets it from mouse
-        String addressOrigin = "Los Angeles";
-        String addressDestination = "Santa Barbara";
-        DirectionsRequest directionsRequest = new DirectionsRequest(
-                addressOrigin,
-                addressDestination,
-                TravelModes.DRIVING);
-
-        directionsPane = mapComponent.getDirec();
-        directionsService = new DirectionsService();
-        directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
-        directionsService.getRoute(directionsRequest, this, directionsRenderer);
     }
 
     @Override
@@ -142,25 +139,70 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
     }
 
     private void initControls(final Button btn_clear_directions, final Button btn_show_directions,
-                              final Button btn_find_path, final Button btn_clear_path) {
+                              final Button btn_find_path, final Button btn_clear_path, final Pane path_choice_pane,
+                              final Button btn_get_coords_find_path, final TextField txt_from, final TextField txt_to) {
+        //first thing to do
+        path_choice_pane.setVisible(false);
+        btn_get_coords_find_path.setVisible(false);
+
         btn_clear_directions.setOnAction(action -> {
-            // TODO: 10/31/2017 research it
-//            directionsRenderer.clearDirections();
-            directionsRenderer.getJSObject().eval("hideDirections()");
+//            directionsRenderer.getJSObject().eval("hideDirections()");
+            //or - in order to avoid check dir renderer for null
+            map.hideDirectionsPane();
         });
 
         btn_show_directions.setOnAction(action -> {
-            // TODO: 10/31/2017 research it
-//            directionsRenderer.clearDirections();
-            directionsRenderer.getJSObject().eval("showDirections()");
+            map.showDirectionsPane();
         });
 
+        //clear directions
+        //clear route
+        //clear texts - text fields always with ""
+        //show pane with path choice
         btn_find_path.setOnAction(action -> {
-            // TODO: 11/9/2017
+            clearPath();
+            txt_from.clear();
+            txt_to.clear();
+            path_choice_pane.setVisible(true);
+            btn_get_coords_find_path.setVisible(true);
+            btn_get_coords_find_path.setOnAction(btn_action ->
+                    getCoordinatesCalculatePathShowDirectionsAndHidePanel(path_choice_pane, txt_from, txt_to, btn_get_coords_find_path));
         });
 
-        btn_clear_path.setOnAction(action -> {
-            // TODO: 11/9/2017
-        });
+        btn_clear_path.setOnAction(action -> clearPath());
+    }
+
+    private void clearPath() {
+        if (directionsRenderer != null) {
+            directionsRenderer.clearDirections();
+        }
+        map.hideDirectionsPane();
+    }
+
+    private void getCoordinatesCalculatePathShowDirectionsAndHidePanel(final Pane path_choice_pane,
+                                                                       final TextField txt_from, final TextField txt_to,
+                                                                       final Button btn_get_coords_find_path) {
+        //default destinations
+        String addressOrigin = "Los Angeles";
+        String addressDestination = "Santa Barbara";
+
+        if (txt_from != null) {
+            addressOrigin = txt_from.getText();
+        }
+        if (txt_to != null) {
+            addressDestination = txt_to.getText();
+        }
+
+        final DirectionsRequest directionsRequest =
+                new DirectionsRequest(addressOrigin, addressDestination, TravelModes.DRIVING);
+        directionsPane = mapComponent.getDirec();
+        directionsService = new DirectionsService();
+        directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
+        directionsService.getRoute(directionsRequest, this, directionsRenderer);
+
+        if (!addressOrigin.equals("") || !addressDestination.equals("")) {
+            path_choice_pane.setVisible(false);
+            btn_get_coords_find_path.setVisible(false);
+        }
     }
 }
