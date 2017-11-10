@@ -10,9 +10,13 @@ There will be the next attempt to create by using [Qt platform](https://www.qt.i
 
 Here is the screen capture for the main ideas:
 
-**Maps**:
+**Maps (styled)**:
 
-![**Maps**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/1.PNG)
+![**Maps (styled)**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/1.PNG)
+
+**Maps (styled by default)**:
+
+![**Maps (styled by default)**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/1.1.PNG)
 
 **Audio panel**:
 
