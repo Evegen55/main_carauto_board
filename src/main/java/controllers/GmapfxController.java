@@ -42,10 +42,6 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
     private DirectionsRenderer directionsRenderer;
     private DirectionsService directionsService;
 
-    // TODO: 11/23/2017 move it into global settings
-    private StyleHelper styleHelper = new StyleHelper();
-    private String styleString = styleHelper.getStyleForMap(StyleList.NIGHT);
-
     /**
      * @param tab
      * @param btn_clear_directions
@@ -75,8 +71,11 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
 
     @Override
     public void mapInitialized() {
-        LatLong center = new LatLong(34.0219, -118.4814);
-        MapOptions options = new MapOptions()
+        // TODO: 11/23/2017 move it into global settings
+        final LatLong center = new LatLong(34.0219, -118.4814);
+        final StyleHelper styleHelper = new StyleHelper();
+        final String styleString = styleHelper.getStyleForMap(StyleList.NIGHT);
+        final MapOptions options = new MapOptions()
                 .center(center)
                 .mapType(MapTypeIdEnum.ROADMAP)
                 //maybe set false
