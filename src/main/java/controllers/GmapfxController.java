@@ -27,6 +27,8 @@ import javafx.scene.layout.Pane;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.StyleHelper;
+import utils.StyleList;
 
 import java.io.IOException;
 
@@ -43,17 +45,9 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
     private DirectionsRenderer directionsRenderer;
     private DirectionsService directionsService;
 
-    private String styleString = getStyleForMap();
-
-    private String getStyleForMap() {
-        String content = null;
-        try {
-            content = IOUtils.toString(this.getClass().getResourceAsStream("/css/grayMap.json"), "UTF-8");
-        } catch (IOException e) {
-            LOGGER.error(e.getCause().toString());
-        }
-        return content;
-    }
+    // TODO: 11/23/2017 move it into global settings
+    private StyleHelper styleHelper = new StyleHelper();
+    private String styleString = styleHelper.getStyleForMap(StyleList.RETRO);
 
     /**
      * @param tab
@@ -165,6 +159,8 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
             txt_to.clear();
             path_choice_pane.setVisible(true);
             btn_get_coords_find_path.setVisible(true);
+
+            //text fields are always not null but "" because we invoked clear()
             btn_get_coords_find_path.setOnAction(btn_action ->
                     getCoordinatesCalculatePathShowDirectionsAndHidePanel(path_choice_pane, txt_from, txt_to, btn_get_coords_find_path));
         });
@@ -179,23 +175,17 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
         map.hideDirectionsPane();
     }
 
+    // TODO: 11/23/2017 pass Travel mode from UI
     private void getCoordinatesCalculatePathShowDirectionsAndHidePanel(final Pane path_choice_pane,
                                                                        final TextField txt_from, final TextField txt_to,
                                                                        final Button btn_get_coords_find_path) {
-        //default destinations
-        String addressOrigin = "Los Angeles";
-        String addressDestination = "Santa Barbara";
-
-        if (txt_from != null) {
-            addressOrigin = txt_from.getText();
-        }
-        if (txt_to != null) {
-            addressDestination = txt_to.getText();
-        }
+        final String addressOrigin = txt_from.getText();
+        final String addressDestination = txt_to.getText();
 
         final DirectionsRequest directionsRequest =
                 new DirectionsRequest(addressOrigin, addressDestination, TravelModes.DRIVING);
-        directionsPane = mapComponent.getDirec(); // TODO: 11/10/2017 IT HAS TOBE CLEARED!
+
+        directionsPane = mapComponent.getDirec(); // TODO: 11/10/2017 IT HAS TO BE CLEARED!
         directionsService = new DirectionsService();
         directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
         directionsService.getRoute(directionsRequest, this, directionsRenderer);
