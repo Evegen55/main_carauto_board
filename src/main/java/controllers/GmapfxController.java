@@ -44,7 +44,7 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
 
     // TODO: 11/23/2017 move it into global settings
     private StyleHelper styleHelper = new StyleHelper();
-    private String styleString = styleHelper.getStyleForMap(StyleList.RETRO);
+    private String styleString = styleHelper.getStyleForMap(StyleList.NIGHT);
 
     /**
      * @param tab
@@ -97,24 +97,23 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
     public void directionsReceived(DirectionsResult results, DirectionStatus status) {
         if (status.equals(DirectionStatus.OK)) {
             mapComponent.getMap().showDirectionsPane();
-            LOGGER.info("Directions was found");
-            DirectionsResult e = results;
-            GeocodingService gs = new GeocodingService();
-            LOGGER.info("SIZE ROUTES: " + e.getRoutes().size() + "\n" + "ORIGIN: " + e.getRoutes().get(0).getLegs().get(0).getStartLocation());
-//            gs.reverseGeocode(e.getRoutes().get(0).getLegs().get(0).getStartLocation().getLatitude(), e.getRoutes().get(0).getLegs().get(0).getStartLocation().getLongitude(), this);
-            LOGGER.info("LEGS SIZE: " + e.getRoutes().get(0).getLegs().size());
-            LOGGER.info("WAYPOINTS " + e.getGeocodedWaypoints().size());
-            double d = 0;
-            for (DirectionsLeg g : e.getRoutes().get(0).getLegs()) {
-                d += g.getDistance().getValue();
-                System.out.println("DISTANCE " + g.getDistance().getValue());
-            }
-            try {
-                LOGGER.info("Distance total = " + e.getRoutes().get(0).getLegs().get(0).getDistance().getText());
-            } catch (Exception ex) {
-                LOGGER.error("ERROR: " + ex.getMessage());
-            }
-
+//            LOGGER.info("Directions was found");
+            DirectionsResult directionsResult = results;
+            GeocodingService geocodingService = new GeocodingService();
+//            LOGGER.info("SIZE ROUTES: " + directionsResult.getRoutes().size() + "\n" + "ORIGIN: " + directionsResult.getRoutes().get(0).getLegs().get(0).getStartLocation());
+            geocodingService.reverseGeocode(directionsResult.getRoutes().get(0).getLegs().get(0).getStartLocation().getLatitude(), directionsResult.getRoutes().get(0).getLegs().get(0).getStartLocation().getLongitude(), this);
+//            LOGGER.info("LEGS SIZE: " + directionsResult.getRoutes().get(0).getLegs().size());
+//            LOGGER.info("WAYPOINTS " + directionsResult.getGeocodedWaypoints().size());
+//            double d = 0;
+//            for (DirectionsLeg g : directionsResult.getRoutes().get(0).getLegs()) {
+//                d += g.getDistance().getValue();
+//                System.out.println("DISTANCE " + g.getDistance().getValue());
+//            }
+//            try {
+//                LOGGER.info("Distance total = " + directionsResult.getRoutes().get(0).getLegs().get(0).getDistance().getText());
+//            } catch (Exception ex) {
+//                LOGGER.error("ERROR: " + ex.getMessage());
+//            }
         }
     }
 

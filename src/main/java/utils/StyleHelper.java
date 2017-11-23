@@ -14,6 +14,7 @@ public class StyleHelper {
     private final static Logger LOGGER = LoggerFactory.getLogger(StyleHelper.class);
 
     private static final String styleRetro = "/css/byGoogleDemoRetro.json";
+    private static final String styleNight = "/css/byGoogleDemoNight.css";
     private static final String styleGray = "/css/grayMap.json";
 
     public String getStyleForMap(StyleList retro) {
@@ -27,6 +28,10 @@ public class StyleHelper {
                 case GRAY:
                     content = IOUtils.toString(this.getClass().getResourceAsStream(styleGray), "UTF-8");
                     LOGGER.info("Use " + styleGray + " as stylesheet");
+                    break;
+                case NIGHT:
+                    content = IOUtils.toString(this.getClass().getResourceAsStream(styleNight), "UTF-8");
+                    LOGGER.info("Use " + styleNight + " as stylesheet");
                     break;
             }
         } catch (IOException e) {
