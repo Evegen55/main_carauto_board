@@ -24,13 +24,10 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.StyleHelper;
 import utils.StyleList;
-
-import java.io.IOException;
 
 /**
  * @author (created on 10/20/2017).
