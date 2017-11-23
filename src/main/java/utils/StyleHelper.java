@@ -14,7 +14,7 @@ public class StyleHelper {
     private final static Logger LOGGER = LoggerFactory.getLogger(StyleHelper.class);
 
     private static final String styleRetro = "/css/byGoogleDemoRetro.json";
-    private static final String styleNight = "/css/byGoogleDemoNight.css";
+    private static final String styleNight = "/css/byGoogleDemoNight.json";
     private static final String styleGray = "/css/grayMap.json";
 
     public String getStyleForMap(StyleList retro) {
