@@ -128,6 +128,10 @@ public class MainController {
     @FXML
     private ImageView imgWebCamCapturedImage1;
 
+    //elements for facebook
+    @FXML
+    private Tab tab_with_facebook;
+
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -172,5 +176,10 @@ public class MainController {
                 new WebCamPreviewController(btnStartCamera1, btnStopCamera1, btnDisposeCamera1,
                         cbCameraOptions1, bpWebCamPaneHolder1, fpBottomPane1, imgWebCamCapturedImage1);
         webCamPreviewController1.initialize(null, null); //just because fxml loader is already used
+    }
+
+    public void initFacebookPlugin() {
+        FacebookController facebookController = new FacebookController(tab_with_facebook);
+        facebookController.initLoginFlow();
     }
 }
