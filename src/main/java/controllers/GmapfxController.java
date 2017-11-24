@@ -8,7 +8,6 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.service.directions.DirectionStatus;
-import com.lynden.gmapsfx.service.directions.DirectionsLeg;
 import com.lynden.gmapsfx.service.directions.DirectionsRenderer;
 import com.lynden.gmapsfx.service.directions.DirectionsRequest;
 import com.lynden.gmapsfx.service.directions.DirectionsResult;
@@ -19,6 +18,7 @@ import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
 import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
+import controllers.mapListeners.MouseClckForGetCoordListenerImpl;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
@@ -42,6 +42,8 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
     private DirectionsRenderer directionsRenderer;
     private DirectionsService directionsService;
 
+    private static final MouseClckForGetCoordListenerImpl MOUSE_CLCK_FOR_GET_COORD_LISTENER = new MouseClckForGetCoordListenerImpl();
+
     /**
      * @param tab
      * @param btn_clear_directions
@@ -61,11 +63,12 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
         //generates google map with some defaults and put it into top pane
         mapComponent = new GoogleMapView("/html/maps.html");
         mapComponent.addMapInializedListener(this);
+        mapComponent.addMapReadyListener(MOUSE_CLCK_FOR_GET_COORD_LISTENER);
 
         initControls(btn_clear_directions, btn_show_directions, btn_find_path, btn_clear_path, path_choice_pane,
                 btn_get_coords_find_path, txt_from, txt_to);
-        mapComponent.getChildren().addAll(flowPane, path_choice_pane);
 
+        mapComponent.getChildren().addAll(flowPane, path_choice_pane);
         tab.setContent(mapComponent);
     }
 
@@ -90,13 +93,14 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
                 .styleString(styleString); // TODO: 28.10.2017 add the theme to a menu
         //it returns control for created map
         map = mapComponent.createMap(options);
+        MOUSE_CLCK_FOR_GET_COORD_LISTENER.setMap(map);
     }
 
     @Override
     public void directionsReceived(DirectionsResult results, DirectionStatus status) {
         if (status.equals(DirectionStatus.OK)) {
             mapComponent.getMap().showDirectionsPane();
-//            LOGGER.info("Directions was found");
+            LOGGER.info("Directions was found");
             DirectionsResult directionsResult = results;
             GeocodingService geocodingService = new GeocodingService();
 //            LOGGER.info("SIZE ROUTES: " + directionsResult.getRoutes().size() + "\n" + "ORIGIN: " + directionsResult.getRoutes().get(0).getLegs().get(0).getStartLocation());
@@ -122,8 +126,8 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
             for (GeocodingResult e : results) {
                 LOGGER.info(e.getVariableName());
                 LOGGER.info("GEOCODE: " + e.getFormattedAddress() + "\n" + e.toString());
+                // TODO: 11/24/2017 do smth with results
             }
-
         }
     }
 
@@ -140,9 +144,7 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
             map.hideDirectionsPane();
         });
 
-        btn_show_directions.setOnAction(action -> {
-            map.showDirectionsPane();
-        });
+        btn_show_directions.setOnAction(action -> map.showDirectionsPane());
 
         //clear directions
         //clear route
@@ -157,7 +159,11 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
 
             //text fields are always not null but "" because we invoked clear()
             btn_get_coords_find_path.setOnAction(btn_action ->
-                    getCoordinatesCalculatePathShowDirectionsAndHidePanel(path_choice_pane, txt_from, txt_to, btn_get_coords_find_path));
+                    getCoordinatesCalculatePathShowDirectionsAndHidePanel(path_choice_pane, txt_from,
+                            txt_to, btn_get_coords_find_path));
+
+            MOUSE_CLCK_FOR_GET_COORD_LISTENER.setTxt_from(txt_from);
+            MOUSE_CLCK_FOR_GET_COORD_LISTENER.setTxt_to(txt_to);
         });
 
         btn_clear_path.setOnAction(action -> clearPath());
@@ -167,13 +173,16 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
         if (directionsRenderer != null) {
             directionsRenderer.clearDirections();
         }
-        map.hideDirectionsPane();
+        if (map != null) {
+            map.hideDirectionsPane();
+        }
     }
 
     // TODO: 11/23/2017 pass Travel mode from UI
     private void getCoordinatesCalculatePathShowDirectionsAndHidePanel(final Pane path_choice_pane,
                                                                        final TextField txt_from, final TextField txt_to,
                                                                        final Button btn_get_coords_find_path) {
+
         final String addressOrigin = txt_from.getText();
         final String addressDestination = txt_to.getText();
 
