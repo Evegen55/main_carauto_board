@@ -184,7 +184,15 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
                                                                        final Button btn_get_coords_find_path) {
 
         final String addressOrigin = txt_from.getText();
+        final LatLong latLongOrigin = MOUSE_CLCK_FOR_GET_COORD_LISTENER.getLatLongOrigin();
         final String addressDestination = txt_to.getText();
+        final LatLong latLongDestination = MOUSE_CLCK_FOR_GET_COORD_LISTENER.getLatLongDestination();
+
+        System.out.println(latLongOrigin);
+        System.out.println(latLongDestination);
+//        LatLong LL1 = new LatLong(34.423195, -119.29504);
+//        LatLong LL2 = new LatLong(34.139088, -119.10004);
+
 
         final DirectionsRequest directionsRequest =
                 new DirectionsRequest(addressOrigin, addressDestination, TravelModes.DRIVING);

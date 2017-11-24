@@ -20,6 +20,9 @@ public class MouseClckForGetCoordListenerImpl implements MapReadyListener {
     private TextField txt_from;
     private TextField txt_to;
 
+    private LatLong latLongOrigin;
+    private LatLong latLongDestination;
+
     public void setMap(GoogleMap map) {
         this.map = map;
     }
@@ -32,14 +35,23 @@ public class MouseClckForGetCoordListenerImpl implements MapReadyListener {
         this.txt_to = txt_to;
     }
 
+    public LatLong getLatLongOrigin() {
+        return latLongOrigin;
+    }
+
+    public LatLong getLatLongDestination() {
+        return latLongDestination;
+    }
+
     @Override
     public void mapReady() {
         map.addUIEventHandler(UIEventType.click, (JSObject obj) -> {
-            LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
-            System.out.println("LatLong: lat: " + ll.getLatitude() + " lng: " + ll.getLongitude());
-            txt_from.setText(ll.toString());
+            latLongOrigin = new LatLong((JSObject) obj.getMember("latLng"));
+            txt_from.setText(latLongOrigin.toString());
+            latLongDestination = new LatLong((JSObject) obj.getMember("latLng"));
+            txt_to.setText(latLongDestination.toString());
         });
-        LOGGER.info("ui event handler added");
+        LOGGER.info("UI eventhandler added");
     }
 
 
