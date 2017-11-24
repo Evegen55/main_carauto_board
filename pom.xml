@@ -76,8 +76,58 @@
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attached</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
+            <!--&lt;!&ndash; LAUNCH4J &ndash;&gt;-->
+            <!--<plugin>-->
+                <!--<groupId>com.akathist.maven.plugins.launch4j</groupId>-->
+                <!--<artifactId>launch4j-maven-plugin</artifactId>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>l4j-clui</id>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>launch4j</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<headerType>console</headerType>-->
+                            <!--<jar>target/main_carauto_board-1.0-SNAPSHOT-jar-with-dependencies.jar</jar>-->
+                            <!--<outfile>target/main_carauto_board.exe</outfile>-->
+                            <!--<downloadUrl>http://java.com/download</downloadUrl>-->
+                            <!--<classPath>-->
+                                <!--<mainClass>app.CarControlBoard</mainClass>-->
+                            <!--</classPath>-->
+                            <!--<jre>-->
+                                <!--<bundledJre64Bit>false</bundledJre64Bit>-->
+                                <!--<bundledJreAsFallback>false</bundledJreAsFallback>-->
+                                <!--<minVersion>1.8.0</minVersion>-->
+                                <!--<jdkPreference>preferJre</jdkPreference>-->
+                                <!--<runtimeBits>64</runtimeBits>-->
+                            <!--</jre>-->
+                            <!--<versionInfo>-->
+                                <!--<fileVersion>1.0.0.0</fileVersion>-->
+                                <!--<txtFileVersion>car_control</txtFileVersion>-->
+                                <!--<fileDescription>car_control</fileDescription>-->
+                                <!--<copyright>C</copyright>-->
+                                <!--<productVersion>1.0.0.0</productVersion>-->
+                                <!--<txtProductVersion>1.0.0.0</txtProductVersion>-->
+                                <!--<productName>car_control</productName>-->
+                                <!--<internalName>AppName</internalName>-->
+                                <!--<originalFilename>main_carauto_board.exe</originalFilename>-->
+                            <!--</versionInfo>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 
