@@ -20,8 +20,8 @@ Here is the screen capture for the main ideas:
 
 **Maps (styled by retro)**:
 
-![**Maps (styled by retro)**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/retro1.PNG)
-![**Maps (styled by retro)**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/retro2.PNG)
+![**Maps (styled by retro)**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/retro1.png)
+![**Maps (styled by retro)**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/retro2.png)
 
 **Audio panel**:
 
