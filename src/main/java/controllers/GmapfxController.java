@@ -77,7 +77,7 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
         // TODO: 11/23/2017 move it into global settings
         final LatLong center = new LatLong(34.0219, -118.4814);
         final StyleHelper styleHelper = new StyleHelper();
-        final String styleString = styleHelper.getStyleForMap(StyleList.NIGHT);
+        final String styleString = styleHelper.getStyleForMap(StyleList.RETRO);
         final MapOptions options = new MapOptions()
                 .center(center)
                 .mapType(MapTypeIdEnum.ROADMAP)
@@ -162,6 +162,7 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
                     getCoordinatesCalculatePathShowDirectionsAndHidePanel(path_choice_pane, txt_from,
                             txt_to, btn_get_coords_find_path));
 
+            //add text fields to a listener
             MOUSE_CLCK_FOR_GET_COORD_LISTENER.setTxt_from(txt_from);
             MOUSE_CLCK_FOR_GET_COORD_LISTENER.setTxt_to(txt_to);
         });
@@ -178,11 +179,9 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
         }
     }
 
-    // TODO: 11/23/2017 pass Travel mode from UI
     private void getCoordinatesCalculatePathShowDirectionsAndHidePanel(final Pane path_choice_pane,
                                                                        final TextField txt_from, final TextField txt_to,
                                                                        final Button btn_get_coords_find_path) {
-
         final String addressOrigin = txt_from.getText();
         final String addressDestination = txt_to.getText();
 

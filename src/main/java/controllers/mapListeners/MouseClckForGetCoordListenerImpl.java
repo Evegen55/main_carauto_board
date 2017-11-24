@@ -36,10 +36,10 @@ public class MouseClckForGetCoordListenerImpl implements MapReadyListener {
     public void mapReady() {
         map.addUIEventHandler(UIEventType.click, (JSObject obj) -> {
             LatLong ll = new LatLong((JSObject) obj.getMember("latLng"));
-            System.out.println("LatLong: lat: " + ll.getLatitude() + " lng: " + ll.getLongitude());
+            LOGGER.info("LatLong: lat: " + ll.getLatitude() + " lng: " + ll.getLongitude());
             txt_from.setText(ll.toString());
         });
-        LOGGER.info("ui event handler added");
+        LOGGER.info("UI event-handler added");
     }
 
 
