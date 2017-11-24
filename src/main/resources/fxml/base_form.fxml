@@ -245,7 +245,7 @@
                             </content>
                         </Tab>
                         <Tab text="Files" />
-                  <Tab text="WebSocketChat">
+                  <Tab text="Chat">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
