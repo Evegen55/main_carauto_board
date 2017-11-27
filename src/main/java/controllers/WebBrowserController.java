@@ -9,13 +9,16 @@ import javafx.scene.web.WebView;
  */
 public class WebBrowserController {
 
-    public void createSimpleBrowse(final Pane pane) {
+    private static final String PREDEFINED_URL_CNN = "http://edition.cnn.com/";
+
+    public Pane createSimpleBrowse(final Pane pane) {
         final WebView browser = new WebView();
         final WebEngine webEngine = browser.getEngine();
-        String url = "https://www.google.com/";
-        webEngine.load(url);
+
+        webEngine.load(PREDEFINED_URL_CNN);
         browser.setMaxWidth(pane.getWidth());
         browser.setMinHeight(pane.getHeight());
         pane.getChildren().add(browser);
+        return pane;
     }
 }

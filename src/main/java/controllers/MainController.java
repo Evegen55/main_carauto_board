@@ -150,10 +150,8 @@ public class MainController {
     }
 
     public void initWebView() {
-        tab_with_web.setOnSelectionChanged(action -> {
-            WebBrowserController webBrowserController = new WebBrowserController();
-            webBrowserController.createSimpleBrowse(pane_with_web);
-        });
+        WebBrowserController webBrowserController = new WebBrowserController();
+        tab_with_web.setContent(webBrowserController.createSimpleBrowse(pane_with_web));
     }
 
     public void initVideo() {
