@@ -20,7 +20,7 @@ public class WebBrowserController {
      * @param backButton
      * @param forwardButton
      */
-    public static void createBrowser(final Pane pane, final Button backButton, Button forwardButton) {
+    public static void createBrowser(final Pane pane, final Button backButton, final Button forwardButton) {
         LOGGER.info("Start initialization for a web page");
         final WebView browser = new WebView();
         final WebEngine webEngine = browser.getEngine();
@@ -40,6 +40,7 @@ public class WebBrowserController {
                 webEngine.getHistory().go(-1);
             }
         });
+        // TODO: 11/28/2017 it doesn't work properly
         forwardButton.setOnAction(e -> {
             if (webEngine.getHistory().getCurrentIndex() > 0) {
                 webEngine.getHistory().go(1);

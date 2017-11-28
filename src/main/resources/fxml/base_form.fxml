@@ -135,13 +135,31 @@
                             <content>
                         <AnchorPane fx:id="anchor_pane_web">
                            <children>
-                              <HBox layoutY="-1.0" prefHeight="17.0" prefWidth="766.0">
-                                 <children>
-                                    <Button fx:id="backButton" mnemonicParsing="false" text="&lt;&lt;--" />
-                                    <Button fx:id="forwardButton" mnemonicParsing="false" text="--&gt;&gt;" />
-                                 </children>
-                              </HBox>
-                                      <Pane fx:id="pane_with_web" layoutY="24.0" prefHeight="957.0" prefWidth="766.0" />
+                              <BorderPane prefHeight="17.0" prefWidth="766.0">
+                                 <left>
+                                    <Button fx:id="backButton" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="48.0" BorderPane.alignment="CENTER">
+                                       <graphic>
+                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="http://icons.iconarchive.com/icons/kyo-tux/soft/48/Back-icon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </left>
+                                 <right>
+                                    <Button fx:id="forwardButton" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="48.0" BorderPane.alignment="CENTER">
+                                       <graphic>
+                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="http://icons.iconarchive.com/icons/kyo-tux/soft/48/Forward-icon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </right>
+                              </BorderPane>
+                                      <Pane fx:id="pane_with_web" layoutY="28.0" prefHeight="956.0" prefWidth="766.0" />
                            </children>
                         </AnchorPane>
                             </content>
