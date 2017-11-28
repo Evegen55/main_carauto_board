@@ -133,7 +133,17 @@
                         </Tab>
                         <Tab fx:id="tab_with_web" text="Web">
                             <content>
-                                <Pane fx:id="pane_with_web" prefHeight="200.0" prefWidth="200.0" />
+                        <AnchorPane fx:id="anchor_pane_web">
+                           <children>
+                              <HBox layoutY="-1.0" prefHeight="17.0" prefWidth="766.0">
+                                 <children>
+                                    <Button fx:id="backButton" mnemonicParsing="false" text="&lt;&lt;--" />
+                                    <Button fx:id="forwardButton" mnemonicParsing="false" text="--&gt;&gt;" />
+                                 </children>
+                              </HBox>
+                                      <Pane fx:id="pane_with_web" layoutY="24.0" prefHeight="957.0" prefWidth="766.0" />
+                           </children>
+                        </AnchorPane>
                             </content>
                         </Tab>
                         <Tab text="Video">

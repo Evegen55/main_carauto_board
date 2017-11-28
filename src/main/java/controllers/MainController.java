@@ -72,10 +72,16 @@ public class MainController {
     private Button btn_pick_folder;
 
     //elements with web
+//    @FXML
+//    private Tab tab_with_web;
+//    @FXML
+//    private AnchorPane anchor_pane_web;
     @FXML
     private Pane pane_with_web;
     @FXML
-    private Tab tab_with_web;
+    private Button backButton;
+    @FXML
+    private Button forwardButton;
 
     //video
     @FXML
@@ -150,8 +156,8 @@ public class MainController {
     }
 
     public void initWebView() {
-        WebBrowserController webBrowserController = new WebBrowserController();
-        tab_with_web.setContent(webBrowserController.createSimpleBrowse(pane_with_web));
+//        WebBrowserController webBrowserController = new WebBrowserController();
+        WebBrowserController.createBrowser(pane_with_web, backButton, forwardButton);
     }
 
     public void initVideo() {
