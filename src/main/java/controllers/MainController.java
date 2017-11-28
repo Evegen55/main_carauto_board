@@ -134,6 +134,10 @@ public class MainController {
     @FXML
     private ImageView imgWebCamCapturedImage1;
 
+    //settings
+    @FXML
+    private ComboBox<String> listStyles;
+
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -179,6 +183,6 @@ public class MainController {
     }
 
     public void initApplicationSettings() {
-        ApplicationSettingsController.initSettings();
+        ApplicationSettingsController.initSettings(listStyles);
     }
 }

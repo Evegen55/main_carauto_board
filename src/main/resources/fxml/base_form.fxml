@@ -89,46 +89,50 @@
                      </content></Tab>
                         <Tab fx:id="tab_with_music" text="Music">
                             <content>
-                                <Pane fx:id="pane_with_music" prefHeight="200.0" prefWidth="200.0" styleClass="pane">
-                                    <children>
-                              <ImageView fitHeight="720.0" fitWidth="673.0" opacity="0.15" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../pic/chester.jpg" />
-                                 </image>
-                              </ImageView>
-                                        <!--<AnchorPane fx:id="audioItem" layoutX="14.0" layoutY="404.0" minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="661.0">-->
-                                        <!--<children>-->
-                                        <!--<Button fx:id="btn_play_music" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">-->
-                                        <!--<graphic>-->
-                                        <!--<ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />-->
-                                        <!--</graphic></Button>-->
-                                        <!--<Label fx:id="lbl_with_music" layoutX="84.0" layoutY="14.0" prefHeight="17.0" prefWidth="493.0" text="Label" />-->
-                                        <!--<Slider layoutX="78.0" layoutY="33.0" prefHeight="14.0" prefWidth="504.0" />-->
-                                        <!--<Label layoutX="302.0" layoutY="47.0" prefHeight="25.0" prefWidth="57.0" text="Label" />-->
-                                        <!--<Button fx:id="btn_stop_music" layoutX="584.0" layoutY="8.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="stop audio" />-->
-                                        <!--</children>-->
-                                        <!--</AnchorPane>-->
-                                        <Button fx:id="btn_choose_music" layoutX="684.0" layoutY="95.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
-                                            <graphic>
-                                                <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                                    <image>
-                                                        <Image url="http://icons.iconarchive.com/icons/wwalczyszyn/iwindows/64/Music-Library-icon.png" />
-                                                    </image>
-                                                </ImageView>
-                                            </graphic>
-                                        </Button>
-                                        <Button fx:id="btn_pick_folder" layoutX="684.0" layoutY="14.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
-                                            <graphic>
-                                                <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                                                    <image>
-                                                        <Image url="http://icons.iconarchive.com/icons/uriy1966/steel-system/64/Music-icon.png" />
-                                                    </image>
-                                                </ImageView>
-                                            </graphic>
-                                        </Button>
-                              <Slider fx:id="volume_audio_slider_music" layoutX="686.0" layoutY="178.0" minorTickCount="5" orientation="VERTICAL" prefHeight="396.0" prefWidth="64.0" showTickLabels="true" showTickMarks="true" value="70.0" />
-                                    </children>
-                                </Pane>
+                        <ScrollPane prefViewportHeight="984.0" prefViewportWidth="766.0">
+                           <content>
+                                      <Pane fx:id="pane_with_music" prefHeight="200.0" prefWidth="200.0" styleClass="pane">
+                                          <children>
+                                    <ImageView fitHeight="720.0" fitWidth="673.0" opacity="0.15" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../pic/chester.jpg" />
+                                       </image>
+                                    </ImageView>
+                                              <!--<AnchorPane fx:id="audioItem" layoutX="14.0" layoutY="404.0" minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="661.0">-->
+                                              <!--<children>-->
+                                              <!--<Button fx:id="btn_play_music" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">-->
+                                              <!--<graphic>-->
+                                              <!--<ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />-->
+                                              <!--</graphic></Button>-->
+                                              <!--<Label fx:id="lbl_with_music" layoutX="84.0" layoutY="14.0" prefHeight="17.0" prefWidth="493.0" text="Label" />-->
+                                              <!--<Slider layoutX="78.0" layoutY="33.0" prefHeight="14.0" prefWidth="504.0" />-->
+                                              <!--<Label layoutX="302.0" layoutY="47.0" prefHeight="25.0" prefWidth="57.0" text="Label" />-->
+                                              <!--<Button fx:id="btn_stop_music" layoutX="584.0" layoutY="8.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" text="stop audio" />-->
+                                              <!--</children>-->
+                                              <!--</AnchorPane>-->
+                                              <Button fx:id="btn_choose_music" layoutX="684.0" layoutY="95.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                                  <graphic>
+                                                      <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                                          <image>
+                                                              <Image url="http://icons.iconarchive.com/icons/wwalczyszyn/iwindows/64/Music-Library-icon.png" />
+                                                          </image>
+                                                      </ImageView>
+                                                  </graphic>
+                                              </Button>
+                                              <Button fx:id="btn_pick_folder" layoutX="684.0" layoutY="14.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                                  <graphic>
+                                                      <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                                          <image>
+                                                              <Image url="http://icons.iconarchive.com/icons/uriy1966/steel-system/64/Music-icon.png" />
+                                                          </image>
+                                                      </ImageView>
+                                                  </graphic>
+                                              </Button>
+                                    <Slider fx:id="volume_audio_slider_music" layoutX="686.0" layoutY="178.0" minorTickCount="5" orientation="VERTICAL" prefHeight="396.0" prefWidth="64.0" showTickLabels="true" showTickMarks="true" value="70.0" />
+                                          </children>
+                                      </Pane>
+                           </content>
+                        </ScrollPane>
                             </content>
                         </Tab>
                         <Tab fx:id="tab_with_web" text="Web">
@@ -280,7 +284,11 @@
                   </Tab>
                   <Tab text="Settings">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ComboBox fx:id="listStyles" layoutX="14.0" layoutY="35.0" prefHeight="25.0" prefWidth="134.0" promptText="Select the theme" />
+                           </children>
+                        </AnchorPane>
                     </content>
                   </Tab>
                     </tabs>
