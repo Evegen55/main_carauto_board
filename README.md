@@ -29,7 +29,7 @@ Here is the screen capture for the main ideas:
 
 **Browser**:
 
-![**Browser**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/3.PNG)
+![**Browser**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/web.PNG)
 
 **Video panel with carcams**:
 
