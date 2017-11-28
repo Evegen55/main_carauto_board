@@ -177,4 +177,8 @@ public class MainController {
                         cbCameraOptions1, bpWebCamPaneHolder1, fpBottomPane1, imgWebCamCapturedImage1);
         webCamPreviewController1.initialize(null, null); //just because fxml loader is already used
     }
+
+    public void initApplicationSettings() {
+        ApplicationSettingsController.initSettings();
+    }
 }

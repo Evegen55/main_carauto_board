@@ -44,6 +44,7 @@ public class CarControlBoard extends Application {
         mainController.initWebView();
         mainController.initVideo();
         mainController.initWebcams();
+        mainController.initApplicationSettings();
     }
 
     @Override
