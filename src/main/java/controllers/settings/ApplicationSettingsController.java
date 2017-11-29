@@ -55,9 +55,11 @@ public class ApplicationSettingsController {
     }
 
     public static String styleForMap() {
+        LOGGER.info("Retrieving style for map from settings file ...");
         final StyleHelper styleHelper = new StyleHelper();
-        final String styleString = styleHelper.getStyleForMap(StyleList.RETRO);
-        // TODO: 11/29/2017 add an action to read style theme from a text file
+        final StyleList styleForMapFromProperties = PropertiesHelper.getStyleForMapFromProperties();
+        final String styleString = styleHelper.getStyleForMap(styleForMapFromProperties);
+        LOGGER.info("Style for map retrieved from settings file");
         return styleString;
     }
 }
