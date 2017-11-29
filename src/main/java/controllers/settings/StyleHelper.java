@@ -17,10 +17,10 @@ public class StyleHelper {
     private static final String STYLE_NIGHT = "/css/byGoogleDemoNight.json";
     private static final String STYLE_GRAY = "/css/grayMap.json";
 
-    public String getStyleForMap(StyleList retro) {
+    public String getStyleForMap(StyleList styleList) {
         String content = null;
         try {
-            switch (retro) {
+            switch (styleList) {
                 case RETRO:
                     content = IOUtils.toString(this.getClass().getResourceAsStream(STYLE_RETRO), "UTF-8");
                     LOGGER.info("Use " + STYLE_RETRO + " as stylesheet");
