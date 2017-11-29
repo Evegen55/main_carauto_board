@@ -2,6 +2,7 @@ package controllers.settings;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ public class ApplicationSettingsController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ApplicationSettingsController.class);
 
-    public static void initSettings(final ComboBox<String> listStyles) {
+    public static void initSettings(final ComboBox<String> listStyles, final ComboBox<String> listLanguages, Button btnApplySettings) {
         LOGGER.info("Application settings tab is initialising ...");
 
         //prior Java8 - simple and fast for small amount of data
@@ -34,8 +35,21 @@ public class ApplicationSettingsController {
                 .collect(collectingAndThen(toList(), FXCollections::observableArrayList));
 
         listStyles.setItems(stylesList);
+
+
+        final ObservableList<String> langList = FXCollections.observableArrayList();
+        final LanguageList[] valuesLang = LanguageList.values();
+        for (int i = 0; i < valuesLang.length; i++) {
+            langList.add(valuesLang[i].toString());
+        }
+        listLanguages.setItems(langList);
+
         // TODO: 11/29/2017 add an action to write preferred style to a text file
         // TODO: 11/29/2017 or suggest to reload map (routes will be erased)
+        btnApplySettings.setOnAction(action -> {
+            System.out.println("Pressed");
+        });
+
 
         LOGGER.info("Application settings tab initialised");
     }

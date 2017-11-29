@@ -138,6 +138,10 @@ public class MainController {
     //settings
     @FXML
     private ComboBox<String> listStyles;
+    @FXML
+    private ComboBox<String> listLanguages;
+    @FXML
+    private Button btnApplySettings;
 
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -184,6 +188,6 @@ public class MainController {
     }
 
     public void initApplicationSettings() {
-        ApplicationSettingsController.initSettings(listStyles);
+        ApplicationSettingsController.initSettings(listStyles, listLanguages, btnApplySettings);
     }
 }
