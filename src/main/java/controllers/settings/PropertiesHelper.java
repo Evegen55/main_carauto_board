@@ -68,8 +68,8 @@ public class PropertiesHelper {
         StyleList style = null;
         try {
             final Configuration config = FILE_BASED_CONFIGURATION_BUILDER.getConfiguration();
-            final String styleName = config.getString("style");
-            style = StyleList.valueOf(styleName.toUpperCase());
+            final String styleName = config.getString(PropertyList.STYLE.toString());
+            style = StyleList.valueOf(styleName);
         } catch (ConfigurationException cex) {
             LOGGER.error("\n" + cex.getCause());
             cex.printStackTrace();
@@ -77,26 +77,10 @@ public class PropertiesHelper {
         return style;
     }
 
-    /**
-     *
-     * @param style
-     */
-    public static void setStyleForMapIntoProperties(final String style) {
+    public static void setProperty(final PropertyList property, final String value) {
         try {
             Configuration config = FILE_BASED_CONFIGURATION_BUILDER.getConfiguration();
-            config.setProperty("style", style);
-            FILE_BASED_CONFIGURATION_BUILDER.save();
-        } catch (ConfigurationException cex) {
-            LOGGER.error("\n" + cex.getCause());
-            cex.printStackTrace();
-        }
-    }
-
-
-    public static void setLanguageForMapIntoProperties(final String language) {
-        try {
-            Configuration config = FILE_BASED_CONFIGURATION_BUILDER.getConfiguration();
-            config.setProperty("language", language);
+            config.setProperty(property.toString(), value);
             FILE_BASED_CONFIGURATION_BUILDER.save();
         } catch (ConfigurationException cex) {
             LOGGER.error("\n" + cex.getCause());

@@ -44,10 +44,10 @@ public class ApplicationSettingsController {
             final String styleValueFromComboBox = listStylesBox.getValue();
             final String languagesValueFromComboBox = listLanguages.getValue();
             if (styleValueFromComboBox != null) {
-                PropertiesHelper.setStyleForMapIntoProperties(styleValueFromComboBox);
+                PropertiesHelper.setProperty(PropertyList.STYLE, styleValueFromComboBox);
             }
             if (languagesValueFromComboBox != null) {
-                PropertiesHelper.setLanguageForMapIntoProperties(languagesValueFromComboBox);
+                PropertiesHelper.setProperty(PropertyList.LANGUAGE, languagesValueFromComboBox);
             }
         });
 
