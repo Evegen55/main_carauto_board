@@ -35,6 +35,7 @@ public class ApplicationSettingsController {
 
         listStyles.setItems(stylesList);
         // TODO: 11/29/2017 add an action to write preferred style to a text file
+        // TODO: 11/29/2017 or suggest to reload map (routes will be erased)
 
         LOGGER.info("Application settings tab initialised");
     }

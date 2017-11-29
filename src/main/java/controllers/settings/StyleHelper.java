@@ -13,25 +13,25 @@ public class StyleHelper {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(StyleHelper.class);
 
-    private static final String styleRetro = "/css/byGoogleDemoRetro.json";
-    private static final String styleNight = "/css/byGoogleDemoNight.json";
-    private static final String styleGray = "/css/grayMap.json";
+    private static final String STYLE_RETRO = "/css/byGoogleDemoRetro.json";
+    private static final String STYLE_NIGHT = "/css/byGoogleDemoNight.json";
+    private static final String STYLE_GRAY = "/css/grayMap.json";
 
     public String getStyleForMap(StyleList retro) {
         String content = null;
         try {
             switch (retro) {
                 case RETRO:
-                    content = IOUtils.toString(this.getClass().getResourceAsStream(styleRetro), "UTF-8");
-                    LOGGER.info("Use " + styleRetro + " as stylesheet");
+                    content = IOUtils.toString(this.getClass().getResourceAsStream(STYLE_RETRO), "UTF-8");
+                    LOGGER.info("Use " + STYLE_RETRO + " as stylesheet");
                     break;
                 case GRAY:
-                    content = IOUtils.toString(this.getClass().getResourceAsStream(styleGray), "UTF-8");
-                    LOGGER.info("Use " + styleGray + " as stylesheet");
+                    content = IOUtils.toString(this.getClass().getResourceAsStream(STYLE_GRAY), "UTF-8");
+                    LOGGER.info("Use " + STYLE_GRAY + " as stylesheet");
                     break;
                 case NIGHT:
-                    content = IOUtils.toString(this.getClass().getResourceAsStream(styleNight), "UTF-8");
-                    LOGGER.info("Use " + styleNight + " as stylesheet");
+                    content = IOUtils.toString(this.getClass().getResourceAsStream(STYLE_NIGHT), "UTF-8");
+                    LOGGER.info("Use " + STYLE_NIGHT + " as stylesheet");
                     break;
             }
         } catch (IOException e) {
