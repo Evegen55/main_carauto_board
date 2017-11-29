@@ -39,10 +39,15 @@ public class ApplicationSettingsController {
         populateComboBoxWithLanguages(listLanguages);
 
         // TODO: 11/29/2017 pop-up window or suggest to reload map (routes will be erased if reloaded)
+        //it retrieves all settings from all fields and boxes and write them into EXTERNAL file only.
         btnApplySettings.setOnAction(action -> {
-            final String styleValuefromComboBox = listStylesBox.getValue();
-            if (styleValuefromComboBox != null) {
-                PropertiesHelper.setStyleForMapIntoProperties(styleValuefromComboBox);
+            final String styleValueFromComboBox = listStylesBox.getValue();
+            final String languagesValueFromComboBox = listLanguages.getValue();
+            if (styleValueFromComboBox != null) {
+                PropertiesHelper.setStyleForMapIntoProperties(styleValueFromComboBox);
+            }
+            if (languagesValueFromComboBox != null) {
+                PropertiesHelper.setLanguageForMapIntoProperties(languagesValueFromComboBox);
             }
         });
 

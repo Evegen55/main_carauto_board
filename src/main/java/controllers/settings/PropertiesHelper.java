@@ -93,4 +93,14 @@ public class PropertiesHelper {
     }
 
 
+    public static void setLanguageForMapIntoProperties(final String language) {
+        try {
+            Configuration config = FILE_BASED_CONFIGURATION_BUILDER.getConfiguration();
+            config.setProperty("language", language);
+            FILE_BASED_CONFIGURATION_BUILDER.save();
+        } catch (ConfigurationException cex) {
+            LOGGER.error("\n" + cex.getCause());
+            cex.printStackTrace();
+        }
+    }
 }
