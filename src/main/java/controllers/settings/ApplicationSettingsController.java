@@ -19,9 +19,46 @@ public class ApplicationSettingsController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ApplicationSettingsController.class);
 
-    public static void initSettings(final ComboBox<String> listStylesBox, final ComboBox<String> listLanguages, Button btnApplySettings) {
-        LOGGER.info("Application settings tab is initialising ...");
+    /**
+     * It does big job to create right name for style file, then retrieves data from file (.json) as string
+     * @return
+     */
+    public static String doBigMagicToRetrieveStyleForMap() {
+        LOGGER.info("Retrieving style for map from settings file ...");
+        final StyleHelper styleHelper = new StyleHelper();
+        final StyleList styleForMapFromProperties = PropertiesHelper.getStyleForMapFromProperties();
+        final String styleString = styleHelper.getStyleForMap(styleForMapFromProperties);
+        LOGGER.info("Style for map retrieved from settings file");
+        return styleString;
+    }
 
+    public static void initSettings(final ComboBox<String> listStylesBox, final ComboBox<String> listLanguages,
+                                    final Button btnApplySettings) {
+        LOGGER.info("Application settings tab is initialising ...");
+        populateComboBoxWithStyles(listStylesBox);
+        populateComboBoxWithLanguages(listLanguages);
+
+        // TODO: 11/29/2017 pop-up window or suggest to reload map (routes will be erased if reloaded)
+        btnApplySettings.setOnAction(action -> {
+            final String styleValuefromComboBox = listStylesBox.getValue();
+            if (styleValuefromComboBox != null) {
+                PropertiesHelper.setStyleForMapIntoProperties(styleValuefromComboBox);
+            }
+        });
+
+        LOGGER.info("Application settings tab initialised");
+    }
+
+    private static void populateComboBoxWithLanguages(ComboBox<String> listLanguages) {
+        final ObservableList<String> langList = FXCollections.observableArrayList();
+        final LanguageList[] valuesLang = LanguageList.values();
+        for (int i = 0; i < valuesLang.length; i++) {
+            langList.add(valuesLang[i].toString());
+        }
+        listLanguages.setItems(langList);
+    }
+
+    private static void populateComboBoxWithStyles(ComboBox<String> listStylesBox) {
         //prior Java8 - simple and fast for small amount of data
         final ObservableList<String> stylesList = FXCollections.observableArrayList();
         final StyleList[] values = StyleList.values();
@@ -35,32 +72,7 @@ public class ApplicationSettingsController {
                 .collect(collectingAndThen(toList(), FXCollections::observableArrayList));
 
         listStylesBox.setItems(stylesList);
-
-
-        final ObservableList<String> langList = FXCollections.observableArrayList();
-        final LanguageList[] valuesLang = LanguageList.values();
-        for (int i = 0; i < valuesLang.length; i++) {
-            langList.add(valuesLang[i].toString());
-        }
-        listLanguages.setItems(langList);
-
-        // TODO: 11/29/2017 pop-up window or suggest to reload map (routes will be erased if reloaded)
-        btnApplySettings.setOnAction(action -> {
-            final String listStylesBoxValue = listStylesBox.getValue();
-            if (listStylesBoxValue != null) {
-                PropertiesHelper.setStyleForMapIntoProperties(listStylesBoxValue);
-            }
-        });
-
-        LOGGER.info("Application settings tab initialised");
     }
 
-    public static String styleForMap() {
-        LOGGER.info("Retrieving style for map from settings file ...");
-        final StyleHelper styleHelper = new StyleHelper();
-        final StyleList styleForMapFromProperties = PropertiesHelper.getStyleForMapFromProperties();
-        final String styleString = styleHelper.getStyleForMap(styleForMapFromProperties);
-        LOGGER.info("Style for map retrieved from settings file");
-        return styleString;
-    }
+
 }

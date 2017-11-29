@@ -87,7 +87,7 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
                 .streetViewControl(false)
                 .zoom(8)
                 .zoomControl(true)
-                .styleString(ApplicationSettingsController.styleForMap());
+                .styleString(ApplicationSettingsController.doBigMagicToRetrieveStyleForMap());
         //it returns control for created map
         map = mapComponent.createMap(options);
         MOUSE_CLCK_FOR_GET_COORD_LISTENER.setMap(map);
