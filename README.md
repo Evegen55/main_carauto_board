@@ -35,6 +35,10 @@ Here is the screen capture for the main ideas:
 
 ![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/4.PNG)
 
+**Settings panel**:
+
+![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/settings.PNG)
+
 **Build and run:**
 
 `mvn assembly:assembly`
