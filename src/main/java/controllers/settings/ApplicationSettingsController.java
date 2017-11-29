@@ -19,7 +19,7 @@ public class ApplicationSettingsController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ApplicationSettingsController.class);
 
-    public static void initSettings(final ComboBox<String> listStyles, final ComboBox<String> listLanguages, Button btnApplySettings) {
+    public static void initSettings(final ComboBox<String> listStylesBox, final ComboBox<String> listLanguages, Button btnApplySettings) {
         LOGGER.info("Application settings tab is initialising ...");
 
         //prior Java8 - simple and fast for small amount of data
@@ -34,7 +34,7 @@ public class ApplicationSettingsController {
                 .map(Enum::toString)
                 .collect(collectingAndThen(toList(), FXCollections::observableArrayList));
 
-        listStyles.setItems(stylesList);
+        listStylesBox.setItems(stylesList);
 
 
         final ObservableList<String> langList = FXCollections.observableArrayList();
@@ -44,12 +44,13 @@ public class ApplicationSettingsController {
         }
         listLanguages.setItems(langList);
 
-        // TODO: 11/29/2017 add an action to write preferred style to a text file
-        // TODO: 11/29/2017 or suggest to reload map (routes will be erased)
+        // TODO: 11/29/2017 pop-up window or suggest to reload map (routes will be erased if reloaded)
         btnApplySettings.setOnAction(action -> {
-            System.out.println("Pressed");
+            final String listStylesBoxValue = listStylesBox.getValue();
+            if (listStylesBoxValue != null) {
+                PropertiesHelper.setStyleForMapIntoProperties(listStylesBoxValue);
+            }
         });
-
 
         LOGGER.info("Application settings tab initialised");
     }
