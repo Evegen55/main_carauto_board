@@ -1,11 +1,10 @@
-package controllers;
+package controllers.settings;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.StyleList;
 
 /**
  * @author (created on 11/28/2017).
@@ -23,7 +22,11 @@ public class ApplicationSettingsController {
             stylesList.add(values[i].toString());
         }
         listStyles.setItems(stylesList);
+    }
 
-
+    public static String styleForMap() {
+        final StyleHelper styleHelper = new StyleHelper();
+        final String styleString = styleHelper.getStyleForMap(StyleList.RETRO);
+        return styleString;
     }
 }

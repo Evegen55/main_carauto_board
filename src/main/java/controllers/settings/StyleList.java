@@ -1,4 +1,4 @@
-package utils;
+package controllers.settings;
 
 /**
  * @author (created on 11/23/2017).

@@ -19,6 +19,7 @@ import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
 import controllers.mapListeners.MouseClckForGetCoordListenerImpl;
+import controllers.settings.ApplicationSettingsController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
@@ -26,8 +27,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.StyleHelper;
-import utils.StyleList;
 
 /**
  * @author (created on 10/20/2017).
@@ -76,8 +75,6 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
     public void mapInitialized() {
         // TODO: 11/23/2017 move it into global settings
         final LatLong center = new LatLong(34.0219, -118.4814);
-        final StyleHelper styleHelper = new StyleHelper();
-        final String styleString = styleHelper.getStyleForMap(StyleList.RETRO);
         final MapOptions options = new MapOptions()
                 .center(center)
                 .mapType(MapTypeIdEnum.ROADMAP)
@@ -90,7 +87,7 @@ public class GmapfxController implements MapComponentInitializedListener, Direct
                 .streetViewControl(false)
                 .zoom(8)
                 .zoomControl(true)
-                .styleString(styleString); // TODO: 28.10.2017 add the theme to a menu
+                .styleString(ApplicationSettingsController.styleForMap());
         //it returns control for created map
         map = mapComponent.createMap(options);
         MOUSE_CLCK_FOR_GET_COORD_LISTENER.setMap(map);
