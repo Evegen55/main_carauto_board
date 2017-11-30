@@ -136,7 +136,16 @@
                                               </FlowPane>
                                  </children>
                               </Pane>
-                                        <VBox layoutX="92.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Pane prefHeight="984.0" prefWidth="766.0" AnchorPane.bottomAnchor="308.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="95.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fitHeight="674.0" fitWidth="807.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../pic/chester.jpg" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </Pane>
+                                        <VBox layoutX="92.0" opacity="0.89" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
                                                 <ScrollPane fx:id="scroll_for_music" hbarPolicy="NEVER" layoutX="92.0" prefHeight="984.0" prefViewportHeight="984.0" prefViewportWidth="766.0" prefWidth="674.0" VBox.vgrow="ALWAYS">
                                                     <content>

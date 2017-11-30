@@ -57,7 +57,6 @@ public class AudioController {
      * It reads and plays a single audio file
      *
      * @param buttonToOpen
-     * @param pane
      */
     private void setInitialStateForSingleAudioItem(final Button buttonToOpen, final VBox vboxPlaylist) {
         buttonToOpen.setOnAction(action -> {
