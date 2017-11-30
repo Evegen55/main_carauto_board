@@ -1,7 +1,7 @@
 # Multimedia panel for a car (prototype)
 ## Here is the sketch for car panel. 
 
-Thank you very much:
+Thanks for this guys very much:
 - [Rob Terpilowski](https://github.com/rterp) with his [Google maps api for JavaFX](https://github.com/rterp/GMapsFX) and
 - [Bartosz Firyn](https://github.com/sarxos) with his [webcam library](https://github.com/sarxos/webcam-capture).
 
