@@ -31,10 +31,6 @@ public class AudioController {
     private static final String MP3 = "mp3";
     private static final String M4A = "m4A";
 
-    private static double layUotX = 0.0;
-    private static double layUotY = 0.0;
-    private static double bias = 80.0;
-
     //one for all sounds
     private boolean alreadyPlaying = false;
 
@@ -42,11 +38,11 @@ public class AudioController {
         this.primaryStage = primaryStage;
     }
 
-    // TODO: 10/30/2017 list of audio items from folder to a scroll pane
-
     /**
+     * Here is the main method after invoking constructor
      * @param btn_pick_folder
      * @param btn_choose_music
+     * @param vboxPlaylist
      */
     public void setInitState(final Button btn_pick_folder, final Button btn_choose_music, final VBox vboxPlaylist) {
         setInitialStateForSingleAudioItem(btn_choose_music, vboxPlaylist);
@@ -74,9 +70,7 @@ public class AudioController {
 
     private void readFileAndSetInitialStateForAudioItem(final File singleFileFromOpenedDialog, final VBox vboxPlaylist)
             throws IOException {
-        final AudioItem audioItem = new AudioItem(layUotX, layUotY);
-        layUotX = audioItem.getLayoutX();
-        layUotY = audioItem.getLayoutY() + bias;
+        final AudioItem audioItem = new AudioItem();
         final String openDialogFilePath = singleFileFromOpenedDialog.getPath();
         LOGGER.info("Now is opening: " + openDialogFilePath);
         final String baseName = FilenameUtils.getName(openDialogFilePath);
@@ -95,6 +89,7 @@ public class AudioController {
             mediaPlayer.stop();
             alreadyPlaying = false;
         });
+
         audioItem.getPlay().setOnAction(action -> {
             if (!alreadyPlaying) {
                 final String formatted = formatDurationForMedia(mediaSound.getDuration());
@@ -134,6 +129,7 @@ public class AudioController {
         });
     }
 
+    // TODO: 11/30/2017 it would be able to read from folders with writing delimiter to a playlist
     private void pickAndReadAudioFilesFromFolder(final Stage primaryStage, final VBox vboxPlaylist) {
         final DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Find a folder with audio files");
