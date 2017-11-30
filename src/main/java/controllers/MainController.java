@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -71,6 +72,8 @@ public class MainController {
     private Button btn_choose_music;
     @FXML
     private Button btn_pick_folder;
+    @FXML
+    private VBox vboxPlaylist;
 
     //elements with web
 //    @FXML
@@ -161,7 +164,7 @@ public class MainController {
 
     public void initMusic() {
         final AudioController audioController = new AudioController(primaryStage);
-        audioController.setInitState(btn_pick_folder, btn_choose_music, pane_with_music);
+        audioController.setInitState(btn_pick_folder, btn_choose_music, vboxPlaylist);
     }
 
     public void initWebView() {
