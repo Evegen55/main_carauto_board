@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -46,11 +47,10 @@ public class AudioController {
     /**
      * @param btn_pick_folder
      * @param btn_choose_music
-     * @param pane_with_music
      */
-    public void setInitState(final Button btn_pick_folder, final Button btn_choose_music, final Pane pane_with_music) {
-        setInitialStateForSingleAudioItem(btn_choose_music, pane_with_music);
-        setInitialStateForListOfAudioItems(btn_pick_folder, pane_with_music);
+    public void setInitState(final Button btn_pick_folder, final Button btn_choose_music, final VBox vboxPlaylist) {
+        setInitialStateForSingleAudioItem(btn_choose_music, vboxPlaylist);
+        setInitialStateForListOfAudioItems(btn_pick_folder, vboxPlaylist);
     }
 
     /**
@@ -59,12 +59,12 @@ public class AudioController {
      * @param buttonToOpen
      * @param pane
      */
-    private void setInitialStateForSingleAudioItem(final Button buttonToOpen, final Pane pane) {
+    private void setInitialStateForSingleAudioItem(final Button buttonToOpen, final VBox vboxPlaylist) {
         buttonToOpen.setOnAction(action -> {
             final File singleFileFromOpenedDialog = getFileChooserForMusic(primaryStage);
             if (singleFileFromOpenedDialog != null) {
                 try {
-                    readFileAndSetInitialStateForAudioItem(singleFileFromOpenedDialog, pane);
+                    readFileAndSetInitialStateForAudioItem(singleFileFromOpenedDialog, vboxPlaylist);
                 } catch (IOException e1) {
                     LOGGER.error("Second exception");
                     e1.printStackTrace();
@@ -73,7 +73,7 @@ public class AudioController {
         });
     }
 
-    private void readFileAndSetInitialStateForAudioItem(final File singleFileFromOpenedDialog, final Pane pane)
+    private void readFileAndSetInitialStateForAudioItem(final File singleFileFromOpenedDialog, final VBox vboxPlaylist)
             throws IOException {
         final AudioItem audioItem = new AudioItem(layUotX, layUotY);
         layUotX = audioItem.getLayoutX();
@@ -91,7 +91,6 @@ public class AudioController {
 
         audioItem.getLabel_for_name().setText(baseName);
         audioItem.getChildren().addAll(mediaView);
-        pane.getChildren().add(audioItem);
 
         audioItem.getStop().setOnAction(action -> {
             mediaPlayer.stop();
@@ -106,9 +105,11 @@ public class AudioController {
             }
         });
 
+        vboxPlaylist.getChildren().add(audioItem);
+
     }
 
-    private void setupTimeSliderDependsOnMediaPlayer(final Slider slider, final Label label_for_time, MediaPlayer mediaPlayer) {
+    private void setupTimeSliderDependsOnMediaPlayer(final Slider slider, final Label label_for_time, final MediaPlayer mediaPlayer) {
         slider.valueProperty().addListener(event -> {
             if (slider.isValueChanging() || slider.isPressed()) {
                 mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(slider.getValue() / 100));
@@ -128,13 +129,13 @@ public class AudioController {
         return fileChooser.showOpenDialog(primaryStage);
     }
 
-    private void setInitialStateForListOfAudioItems(final Button btn_pick_folder, final Pane pane_with_music) {
+    private void setInitialStateForListOfAudioItems(final Button btn_pick_folder, final VBox vboxPlaylist) {
         btn_pick_folder.setOnAction(action -> {
-            pickAndReadAudioFilesFromFolder(primaryStage, pane_with_music);
+            pickAndReadAudioFilesFromFolder(primaryStage, vboxPlaylist);
         });
     }
 
-    private void pickAndReadAudioFilesFromFolder(final Stage primaryStage, final Pane pane) {
+    private void pickAndReadAudioFilesFromFolder(final Stage primaryStage, final VBox vboxPlaylist) {
         final DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Find a folder with audio files");
         final File selectedDirectory = directoryChooser.showDialog(primaryStage);
@@ -151,7 +152,7 @@ public class AudioController {
                         .forEach(file -> {
                             LOGGER.info("Trying to load from the file: " + file.getPath());
                             try {
-                                readFileAndSetInitialStateForAudioItem(file, pane);
+                                readFileAndSetInitialStateForAudioItem(file, vboxPlaylist);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

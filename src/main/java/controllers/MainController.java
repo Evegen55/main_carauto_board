@@ -65,21 +65,13 @@ public class MainController {
     @FXML
     private Tab tab_with_music;
     @FXML
-    private Pane pane_with_music;
-    @FXML
-    private ScrollPane scroll_for_music;
+    private VBox vboxPlaylist;
     @FXML
     private Button btn_choose_music;
     @FXML
     private Button btn_pick_folder;
-    @FXML
-    private VBox vboxPlaylist;
 
     //elements with web
-//    @FXML
-//    private Tab tab_with_web;
-//    @FXML
-//    private AnchorPane anchor_pane_web;
     @FXML
     private Pane pane_with_web;
     @FXML
