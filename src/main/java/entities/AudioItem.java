@@ -81,12 +81,6 @@ public class AudioItem extends Pane {
         this.getChildren().addAll(play, stop, label_for_name, label_for_time, slider);
     }
 
-    public AudioItem(double layOutX, double layOutY) {
-        this();
-        super.setLayoutX(layOutX);
-        super.setLayoutY(layOutY);
-    }
-
     public Button getPlay() {
         return play;
     }
