@@ -8,6 +8,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
 
@@ -16,7 +17,7 @@ import javafx.scene.shape.Circle;
  *
  * @author (created on 10/30/2017).
  */
-public class AudioItem extends AnchorPane {
+public class AudioItem extends Pane {
 
     private final Button play = new Button();
     private final Button pause = new Button();
