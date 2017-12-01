@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
@@ -27,8 +26,8 @@ public class AudioItem extends Pane {
     private final Label label_for_name = new Label();
     private final Label label_for_time = new Label();
 
-    private static Image imagePlay = new Image("http://icons.iconarchive.com/icons/hopstarter/soft-scraps/48/Button-Play-icon.png");
-    private static Image imageStop = new Image("http://icons.iconarchive.com/icons/icons-land/play-stop-pause/48/Stop-Normal-icon.png");
+    private static final Image IMAGE_PLAY = new Image("http://icons.iconarchive.com/icons/hopstarter/soft-scraps/48/Button-Play-icon.png");
+    private static final Image IMAGE_STOP = new Image("http://icons.iconarchive.com/icons/icons-land/play-stop-pause/48/Stop-Normal-icon.png");
     private static final double RADIUS_IMAGE_VIEW_BUTTON = Math.sqrt(Math.pow(50.0 / 2, 2) * 2);
 
     public AudioItem() {
@@ -36,13 +35,13 @@ public class AudioItem extends Pane {
         super.setPrefHeight(80.0);
         super.setPrefWidth(661.0);
 
-        final ImageView imageViewPlayButton = new ImageView(imagePlay);
+        final ImageView imageViewPlayButton = new ImageView(IMAGE_PLAY);
         imageViewPlayButton.setFitHeight(50.0);
         imageViewPlayButton.setFitWidth(50.0);
         imageViewPlayButton.setPreserveRatio(true);
         imageViewPlayButton.setPickOnBounds(true);
 
-        final ImageView imageViewStopButton = new ImageView(imageStop);
+        final ImageView imageViewStopButton = new ImageView(IMAGE_STOP);
         imageViewStopButton.setFitHeight(50.0);
         imageViewStopButton.setFitWidth(50.0);
         imageViewStopButton.setPreserveRatio(true);
