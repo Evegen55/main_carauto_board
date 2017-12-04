@@ -50,7 +50,7 @@ import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GmapfxController implements MapComponentInitializedListener, DirectionsServiceCallback, GeocodingServiceCallback {
+public final class GmapfxController implements MapComponentInitializedListener, DirectionsServiceCallback, GeocodingServiceCallback {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(GmapfxController.class);
 

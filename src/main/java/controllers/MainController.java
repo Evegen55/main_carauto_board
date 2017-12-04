@@ -39,7 +39,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class MainController {
+public final class MainController {
 
     private final Stage primaryStage;
 
