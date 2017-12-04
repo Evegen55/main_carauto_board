@@ -203,4 +203,8 @@ public final class MainController {
     public void initApplicationSettings() {
         ApplicationSettingsController.initSettings(listStyles, listLanguages, btnApplySettings);
     }
+
+    public void initPhotoTab() {
+        ImageViewController imageViewController = new ImageViewController();
+    }
 }
