@@ -307,6 +307,36 @@
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                             </content>
                         </Tab>
+                  <Tab text="Photos">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                          <children>
+                                <FlowPane prefHeight="129.0" prefWidth="71.0" AnchorPane.rightAnchor="10.0">
+                                    <children>
+                                        <Button fx:id="btn_pick_folder_photo" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                            <graphic>
+                                                <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="http://icons.iconarchive.com/icons/gakuseisean/aire/64/Pictures-icon.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <Button fx:id="btn_choose_photo" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
+                                            <graphic>
+                                                <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="http://icons.iconarchive.com/icons/gakuseisean/aire/64/Images-icon.png" />
+                                             </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                    </children>
+                                </FlowPane>
+                          </children>
+                      </AnchorPane>
+                    </content>
+                  </Tab>
                         <Tab text="Settings">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
