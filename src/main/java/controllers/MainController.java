@@ -22,6 +22,7 @@
 
 package controllers;
 
+import controllers.imageViewer.ImageViewController;
 import controllers.settings.ApplicationSettingsController;
 import entities.WebCamInfo;
 import javafx.fxml.FXML;

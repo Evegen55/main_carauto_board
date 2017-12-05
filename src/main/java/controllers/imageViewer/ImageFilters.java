@@ -1,4 +1,4 @@
-package controllers;
+package controllers.imageViewer;
 
 /**
  * @author (created on 12/5/2017).

@@ -1,4 +1,4 @@
-package controllers;
+package controllers.imageViewer;
 
 import entities.ImageIconPreview;
 import javafx.embed.swing.SwingFXUtils;
@@ -57,6 +57,7 @@ public class ImageViewController {
 
         vboxPhotoList.getChildren().clear();
         vboxPhotoList.setAlignment(Pos.CENTER);
+        // TODO: 12/5/2017 use GridPane
 
         final DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Find a folder with audio files");
