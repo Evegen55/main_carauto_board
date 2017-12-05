@@ -67,6 +67,7 @@ public class VideoController {
         pane.getChildren().add(mediaView);
     }
 
+    // TODO: 12/5/2017 mutual method with image and audio
     private File getFileChooserForVideo(final Stage primaryStage) {
         final FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter mp4Filter =
