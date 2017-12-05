@@ -47,7 +47,7 @@ public class ImageViewController {
     }
 
     private void retriveImageFromFileAndFitToBox(final VBox vboxPhotoList, final File singleFileFromOpenedDialog) {
-        LOGGER.info("Open image: ", singleFileFromOpenedDialog.toURI());
+        LOGGER.info("Open image: ", singleFileFromOpenedDialog.toURI().getPath());
         BufferedImage bufferedImage = null;
         try {
             bufferedImage = ImageIO.read(singleFileFromOpenedDialog);
