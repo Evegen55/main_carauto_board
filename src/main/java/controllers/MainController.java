@@ -161,6 +161,8 @@ public final class MainController {
     private VBox vboxPhotoList;
     @FXML
     private Button btn_choose_photo;
+    @FXML
+    private Button btn_pick_folder_photo;
 
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -212,6 +214,6 @@ public final class MainController {
 
     public void initPhotoTab() {
         ImageViewController imageViewController = new ImageViewController(primaryStage);
-        imageViewController.initStartView(vboxPhotoList, btn_choose_photo);
+        imageViewController.initStartView(vboxPhotoList, btn_choose_photo, btn_pick_folder_photo);
     }
 }
