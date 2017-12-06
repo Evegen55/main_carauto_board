@@ -37,11 +37,11 @@ Here is the screen capture for the main ideas:
 
 **Photo viewer**:
 
-![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/4.PNG)
+![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/Photos.PNG)
 
 **Settings panel**:
 
-![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/for_readme/Photos.PNG)
+![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/settings.PNG)
 
 **Build and run:**
 
