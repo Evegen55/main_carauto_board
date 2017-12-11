@@ -31,7 +31,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -44,15 +43,8 @@ public final class MainController {
 
     private final Stage primaryStage;
 
-    //elements with map
-    @FXML
-    private AnchorPane myPaneWithMapsAndOtherFeatures;
-    @FXML
-    private TabPane tabPaneWithMap;
     @FXML
     private Tab tab_with_map;
-    @FXML
-    private Pane paneWithMap;
     @FXML
     private FlowPane flowpaneWithMapButtons;
     @FXML
@@ -80,9 +72,6 @@ public final class MainController {
     @FXML
     private Label lbl_with_temperature;
 
-    //elements with music
-    @FXML
-    private Tab tab_with_music;
     @FXML
     private VBox vboxPlaylist;
     @FXML
