@@ -22,6 +22,7 @@
 
 package controllers;
 
+import controllers.imageViewer.ImageViewController;
 import controllers.settings.ApplicationSettingsController;
 import entities.WebCamInfo;
 import javafx.fxml.FXML;
@@ -145,6 +146,14 @@ public final class MainController {
     @FXML
     private Button btnApplySettings;
 
+    //photo viewer
+    @FXML
+    private VBox vboxPhotoList;
+    @FXML
+    private Button btn_choose_photo;
+    @FXML
+    private Button btn_pick_folder_photo;
+
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -191,5 +200,10 @@ public final class MainController {
 
     public void initApplicationSettings() {
         ApplicationSettingsController.initSettings(listStyles, listLanguages, btnApplySettings);
+    }
+
+    public void initPhotoTab() {
+        ImageViewController imageViewController = new ImageViewController(primaryStage);
+        imageViewController.initStartView(vboxPhotoList, btn_choose_photo, btn_pick_folder_photo);
     }
 }

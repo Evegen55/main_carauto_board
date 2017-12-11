@@ -112,6 +112,7 @@ public class AudioController {
         mediaPlayer.currentTimeProperty().addListener(event -> updateValuesForSliderDependsOnPlayer(slider, label_for_time, mediaPlayer));
     }
 
+    // TODO: 12/5/2017 mutual method with image and audio
     private static File getFileChooserForMusic(final Stage primaryStage) {
         final FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter mp3Filter =

@@ -64,6 +64,7 @@ public final class CarControlBoard extends Application {
         mainController.initVideo();
         mainController.initWebcams();
         mainController.initApplicationSettings();
+        mainController.initPhotoTab();
     }
 
     @Override

@@ -145,7 +145,7 @@
                                     </ImageView>
                                  </children>
                               </Pane>
-                                        <VBox layoutX="92.0" opacity="0.89" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <VBox fx:id="hbox_pack_roll_music" layoutX="92.0" opacity="0.89" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
                                                 <ScrollPane fx:id="scroll_for_music" hbarPolicy="NEVER" layoutX="92.0" prefHeight="984.0" prefViewportHeight="984.0" prefViewportWidth="766.0" prefWidth="674.0" VBox.vgrow="ALWAYS">
                                                     <content>
@@ -333,6 +333,15 @@
                                         </Button>
                                     </children>
                                 </FlowPane>
+                              <VBox fx:id="hbox_pack_roll_photo" layoutX="92.0" opacity="0.89" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                  <children>
+                                      <ScrollPane fx:id="scroll_for_photo" layoutX="92.0" pannable="true" prefHeight="984.0" prefViewportHeight="984.0" prefViewportWidth="766.0" prefWidth="674.0" VBox.vgrow="ALWAYS">
+                                          <content>
+                                              <VBox fx:id="vboxPhotoList" prefHeight="982.0" prefWidth="674.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          </content>
+                                      </ScrollPane>
+                                  </children>
+                              </VBox>
                           </children>
                       </AnchorPane>
                     </content>
