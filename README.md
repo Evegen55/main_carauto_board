@@ -45,9 +45,21 @@ Here is the screen capture for the main ideas:
 
 **Build and run:**
 
-`mvn assembly:assembly`
+Download [https://opencv.org/releases.html](OpenCV) and unpack it to a <path-to-installed-opencv-331>
 
-`java -jar <Path-to-your-jar>/main_carauto_board-1.0-SNAPSHOT-jar-with-dependencies.jar`
+`mvn install:install-file -Dfile=<path-to-installed-opencv-331>\build\java\opencv-331.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.3.1 -Dpackaging=jar`
+
+or
+
+`mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\opencv-331.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.3.1 -Dpackaging=jar`
+
+then assembly distributive:
+
+`mvn assembly:assembly -Dmaven.test.skip=true`
+
+and run it
+
+`java -Djava.library.path=<path-to-installed-opencv-331>\build\java\x64 -jar <Path-to-your-jar>/main_carauto_board-1.1-SNAPSHOT-jar-with-dependencies.jar`
 
 ## License
 
