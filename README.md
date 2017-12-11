@@ -45,7 +45,7 @@ Here is the screen capture for the main ideas:
 
 **Build and run:**
 
-Download [https://opencv.org/releases.html](OpenCV) and unpack it to a <path-to-installed-opencv-331>
+Download [https://opencv.org/releases.html](OpenCV) and unpack it to a `<path-to-installed-opencv-331>`
 
 `mvn install:install-file -Dfile=<path-to-installed-opencv-331>\build\java\opencv-331.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.3.1 -Dpackaging=jar`
 
