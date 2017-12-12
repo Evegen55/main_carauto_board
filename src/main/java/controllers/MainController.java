@@ -23,15 +23,11 @@
 package controllers;
 
 import controllers.imageViewer.ImageViewController;
+import controllers.openvc.ImageRecognizer;
 import controllers.settings.ApplicationSettingsController;
 import entities.WebCamInfo;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -154,6 +150,18 @@ public final class MainController {
     @FXML
     private Button btn_pick_folder_photo;
 
+    //Intel Tab
+    @FXML
+    private ImageView imageViewForOpenCV;
+    @FXML
+    private Button btnOpenCVStartCamera;
+    @FXML
+    private CheckBox grayscale;
+    @FXML
+    private CheckBox checkBoxhaarClassifier;
+    @FXML
+    private CheckBox checkBoxlbpClassifier;
+
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -187,12 +195,12 @@ public final class MainController {
     }
 
     public void initWebcams() {
-        WebCamPreviewController webCamPreviewController =
+        final WebCamPreviewController webCamPreviewController =
                 new WebCamPreviewController(btnStartCamera, btnStopCamera, btnDisposeCamera,
                         cbCameraOptions, bpWebCamPaneHolder, fpBottomPane, imgWebCamCapturedImage);
         webCamPreviewController.initialize(null, null); //just because fxml loader is already used
 
-        WebCamPreviewController webCamPreviewController1 =
+        final WebCamPreviewController webCamPreviewController1 =
                 new WebCamPreviewController(btnStartCamera1, btnStopCamera1, btnDisposeCamera1,
                         cbCameraOptions1, bpWebCamPaneHolder1, fpBottomPane1, imgWebCamCapturedImage1);
         webCamPreviewController1.initialize(null, null); //just because fxml loader is already used
@@ -203,7 +211,13 @@ public final class MainController {
     }
 
     public void initPhotoTab() {
-        ImageViewController imageViewController = new ImageViewController(primaryStage);
+        final ImageViewController imageViewController = new ImageViewController(primaryStage);
         imageViewController.initStartView(vboxPhotoList, btn_choose_photo, btn_pick_folder_photo);
+    }
+
+    public void initOpenCVTab() {
+        final ImageRecognizer imageRecognizer = new ImageRecognizer(primaryStage, btnOpenCVStartCamera,
+                grayscale, checkBoxhaarClassifier, checkBoxlbpClassifier);
+        imageRecognizer.showSimpleCamera(imageViewForOpenCV);
     }
 }

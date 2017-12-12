@@ -64,6 +64,16 @@
             <scope>test</scope>
         </dependency>
 
+        <!--INSTALL THIS JAR INTO MAVEN REPOSITORY BEFORE DEVELOP-->
+        <!--mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\opencv-331.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.3.1 -Dpackaging=jar-->
+        <!--THEN YOU NEED TO RUN APPLICATION WITH THE NEXT PARAM-->
+        <!---Djava.library.path=<path-to-installed-opencv-331>\build\java\x64-->
+        <dependency>
+            <groupId>org.opencv</groupId>
+            <artifactId>opencv.win10_64</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

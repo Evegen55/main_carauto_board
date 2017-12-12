@@ -4,6 +4,7 @@
 Thanks for this guys very much:
 - [Rob Terpilowski](https://github.com/rterp) with his [Google maps api for JavaFX](https://github.com/rterp/GMapsFX) and
 - [Bartosz Firyn](https://github.com/sarxos) with his [webcam library](https://github.com/sarxos/webcam-capture).
+- [Luigi Derussis](https://github.com/luigidr) with his really cool and helpful [examples](https://github.com/opencv-java/getting-started) and [articles](http://opencv-java-tutorials.readthedocs.io/en/latest/03-first-javafx-application-with-opencv.html)
 
 
 There will be the next attempt to create by using [Qt platform](https://www.qt.io/) but this project is suitable to rapid prototyping the main idea.
@@ -39,19 +40,34 @@ Here is the screen capture for the main ideas:
 
 ![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/Photos.PNG)
 
-**Settings panel**:
+**Magic tab**:
 
-![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/settings.PNG)
+![**Recognize**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/opencv_recognize_color.PNG)
+![**Don't recognized gray**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/opencv_NOrecognize_gray.PNG)
 
 **Build and run:**
 
-`mvn assembly:assembly`
+Download [OpenCV](https://opencv.org/releases.html) and unpack it to a `<path-to-installed-opencv-331>`
 
-`java -jar <Path-to-your-jar>/main_carauto_board-1.0-SNAPSHOT-jar-with-dependencies.jar`
+Note: now application supports OpenCV ver.3.3.1
+
+`mvn install:install-file -Dfile=<path-to-installed-opencv-331>\build\java\opencv-331.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.3.1 -Dpackaging=jar`
+
+or
+
+`mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\opencv-331.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.3.1 -Dpackaging=jar`
+
+then assembly distributive:
+
+`mvn assembly:assembly -Dmaven.test.skip=true`
+
+and run it
+
+`java -Djava.library.path=<path-to-installed-opencv-331>\build\java\x64 -jar <Path-to-your-jar>/main_carauto_board-1.1-SNAPSHOT-jar-with-dependencies.jar`
 
 ## License
 
-Copyright (C) 2017 - 2017 Evgenii Lartcev (https://github.com/Evegen55/) and contributors
+Copyright (C) 2017 - 2017 [Evgenii Lartcev](https://github.com/Evegen55/) and contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
