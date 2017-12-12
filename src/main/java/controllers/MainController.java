@@ -161,6 +161,10 @@ public final class MainController {
     private CheckBox checkBoxhaarClassifier;
     @FXML
     private CheckBox checkBoxlbpClassifier;
+    @FXML
+    private CheckBox checkBoxFaceDetector;
+    @FXML
+    private CheckBox checkBoxPlatesDetector;
 
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -217,7 +221,7 @@ public final class MainController {
 
     public void initOpenCVTab() {
         final ImageRecognizer imageRecognizer = new ImageRecognizer(primaryStage, btnOpenCVStartCamera,
-                grayscale, checkBoxhaarClassifier, checkBoxlbpClassifier);
+                grayscale, checkBoxhaarClassifier, checkBoxlbpClassifier, checkBoxFaceDetector, checkBoxPlatesDetector);
         imageRecognizer.showSimpleCamera(imageViewForOpenCV);
     }
 }

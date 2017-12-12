@@ -38,22 +38,43 @@ public class ImageRecognizer {
     private final CheckBox checkBoxGrayscale;
     private final CheckBox checkBoxhaarClassifier;
     private final CheckBox checkBoxlbpClassifier;
+    private final CheckBox checkBoxFaceDetector;
+    private final CheckBox checkBoxPlatesDetector;
     // face cascade classifier
     private static final CascadeClassifier FACE_CASCADE = new CascadeClassifier();
     private int absoluteFaceSize = 0;
 
     public ImageRecognizer(final Stage primaryStage, Button btnOpenCVStartCamera, final CheckBox checkBoxGrayscale,
-                           final CheckBox checkBoxhaarClassifier, final CheckBox checkBoxlbpClassifier) {
+                           final CheckBox checkBoxhaarClassifier, final CheckBox checkBoxlbpClassifier,
+                           final CheckBox checkBoxFaceDetector, final CheckBox checkBoxPlatesDetector) {
         this.primaryStage = primaryStage;
         this.btnOpenCVStartCamera = btnOpenCVStartCamera;
         this.checkBoxGrayscale = checkBoxGrayscale;
         this.checkBoxhaarClassifier = checkBoxhaarClassifier;
         this.checkBoxlbpClassifier = checkBoxlbpClassifier;
+        this.checkBoxFaceDetector = checkBoxFaceDetector;
+        this.checkBoxPlatesDetector = checkBoxPlatesDetector;
     }
 
     public void showSimpleCamera(final ImageView imageViewForOpenCV) {
         LOGGER.info("Start showing a stream captured from camera");
         primaryStage.setOnCloseRequest((windowEvent -> setClosed()));
+
+        checkBoxPlatesDetector.setOnAction(event -> {
+                    if (checkBoxFaceDetector.isSelected())
+                        checkBoxFaceDetector.setSelected(false);
+                    //WARN!!!
+                    checkboxSelection("trainedNN/opencv/haarcascades/haarcascade_russian_plate_number.xml");
+                    // TODO: 12/12/2017 use only one checkbox - haar or lbp
+                }
+        );
+
+        checkBoxFaceDetector.setOnAction(event -> {
+                    if (checkBoxPlatesDetector.isSelected())
+                        checkBoxPlatesDetector.setSelected(false);
+//                    checkboxSelection("trainedNN/opencv/haarcascades/haarcascade_russian_plate_number.xml");
+                }
+        );
 
         checkBoxhaarClassifier.setOnAction(event -> {
                     if (checkBoxlbpClassifier.isSelected())
@@ -65,7 +86,7 @@ public class ImageRecognizer {
         checkBoxlbpClassifier.setOnAction(event -> {
             if (checkBoxhaarClassifier.isSelected())
                 checkBoxhaarClassifier.setSelected(false);
-            checkboxSelection("trainedNN/opencv//lbpcascades/lbpcascade_frontalface.xml");
+            checkboxSelection("trainedNN/opencv/lbpcascades/lbpcascade_frontalface.xml");
         });
 
         imageViewForOpenCV.setPreserveRatio(true);
@@ -78,7 +99,7 @@ public class ImageRecognizer {
     private void checkboxSelection(final String classifierPath) {
         // load the classifier(s)
         boolean load = FACE_CASCADE.load(classifierPath);
-        if(load) {
+        if (load) {
             LOGGER.info("Classifier loaded");
         } else {
             LOGGER.warn("Classifier wasn't loaded");
