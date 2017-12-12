@@ -40,9 +40,9 @@ Here is the screen capture for the main ideas:
 
 ![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/Photos.PNG)
 
-**Settings panel**:
-
-![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/settings.PNG)
+**Magic tab**:
+![**Recognize**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/opencv_recognize_color.PNG)
+![**Don't recognized gray**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/opencv_NOrecognize_gray.PNG)
 
 **Build and run:**
 
