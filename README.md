@@ -4,7 +4,7 @@
 Thanks for this guys very much:
 - [Rob Terpilowski](https://github.com/rterp) with his [Google maps api for JavaFX](https://github.com/rterp/GMapsFX) and
 - [Bartosz Firyn](https://github.com/sarxos) with his [webcam library](https://github.com/sarxos/webcam-capture).
-- [Luigi Derussis](https://github.com/luigidr) with his really cool and helpful examples and articles
+- [Luigi Derussis](https://github.com/luigidr) with his really cool and helpful [examples](https://github.com/opencv-java/getting-started) and [articles](http://opencv-java-tutorials.readthedocs.io/en/latest/03-first-javafx-application-with-opencv.html)
 
 
 There will be the next attempt to create by using [Qt platform](https://www.qt.io/) but this project is suitable to rapid prototyping the main idea.
