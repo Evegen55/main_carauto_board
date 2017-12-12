@@ -23,6 +23,7 @@
 package controllers;
 
 import controllers.imageViewer.ImageViewController;
+import controllers.openvc.ImageRecognizer;
 import controllers.settings.ApplicationSettingsController;
 import entities.WebCamInfo;
 import javafx.fxml.FXML;
@@ -154,6 +155,12 @@ public final class MainController {
     @FXML
     private Button btn_pick_folder_photo;
 
+    //opencv frame
+    @FXML
+    private ImageView imageViewForOpenCV;
+    @FXML
+    private Button btnOpenCVStartCamera;
+
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -205,5 +212,10 @@ public final class MainController {
     public void initPhotoTab() {
         ImageViewController imageViewController = new ImageViewController(primaryStage);
         imageViewController.initStartView(vboxPhotoList, btn_choose_photo, btn_pick_folder_photo);
+    }
+
+    public void initOpenCVTab() {
+        ImageRecognizer imageRecognizer = new ImageRecognizer(primaryStage);
+        imageRecognizer.showSimpleCamera(imageViewForOpenCV, btnOpenCVStartCamera);
     }
 }

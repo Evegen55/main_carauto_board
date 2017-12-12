@@ -30,6 +30,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.opencv.core.Core;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -65,6 +66,10 @@ public final class CarControlBoard extends Application {
         mainController.initWebcams();
         mainController.initApplicationSettings();
         mainController.initPhotoTab();
+
+        //conflict with mainController.initWebcams() just because it uses it own version of an opencv lib?
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        mainController.initOpenCVTab();
     }
 
     @Override
