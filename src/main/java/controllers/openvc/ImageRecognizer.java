@@ -77,7 +77,12 @@ public class ImageRecognizer {
 
     private void checkboxSelection(final String classifierPath) {
         // load the classifier(s)
-        FACE_CASCADE.load(classifierPath);
+        boolean load = FACE_CASCADE.load(classifierPath);
+        if(load) {
+            LOGGER.info("Classifier loaded");
+        } else {
+            LOGGER.warn("Classifier wasn't loaded");
+        }
         // now the video capture can start
         btnOpenCVStartCamera.setDisable(false);
     }
@@ -147,12 +152,12 @@ public class ImageRecognizer {
                 // if the frame is not empty, process it
                 if (!frame.empty()) {
 
-//                    if (checkBoxGrayscale != null && checkBoxGrayscale.isSelected()) {
-//                        Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2GRAY);
-//                    }
-
-                    detectAndDisplay(frame);
-
+                    if (checkBoxGrayscale != null && checkBoxGrayscale.isSelected()) {
+                        Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2GRAY);
+                        detectAndDisplay(frame, true);
+                    } else {
+                        detectAndDisplay(frame, false);
+                    }
                 }
 
             } catch (Exception e) {
@@ -164,12 +169,18 @@ public class ImageRecognizer {
         return frame;
     }
 
-    private void detectAndDisplay(final Mat frame) {
+    // TODO: 12/12/2017 recognise faces with gray scale stream
+    private void detectAndDisplay(final Mat frame, boolean grayIsAlreadySelected) {
         MatOfRect faces = new MatOfRect();
         Mat grayFrame = new Mat();
 
-        // convert the frame in gray scale
-        Imgproc.cvtColor(frame, grayFrame, Imgproc.COLOR_BGR2GRAY);
+        if (grayIsAlreadySelected) {
+            LOGGER.warn("TODO IT :-)");
+        } else {
+            // convert the frame in gray scale
+            Imgproc.cvtColor(frame, grayFrame, Imgproc.COLOR_BGR2GRAY);
+        }
+
         // equalize the frame histogram to improve the result
         Imgproc.equalizeHist(grayFrame, grayFrame);
 
