@@ -1,6 +1,7 @@
 package controllers.openvc;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -30,11 +31,16 @@ public class ImageRecognizer {
     // the id of the camera to be used
     private static int cameraId = 0;
 
+
+    private CheckBox grayscale;//dummy way
+
     public ImageRecognizer(final Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
-    public void showSimpleCamera(final ImageView imageViewForOpenCV, Button btnOpenCVStartCamera) {
+    public void showSimpleCamera(final ImageView imageViewForOpenCV, Button btnOpenCVStartCamera,
+                                 final CheckBox grayscale) {
+        this.grayscale = grayscale;
         LOGGER.info("Start showing a stream captured from camera");
         primaryStage.setOnCloseRequest((windowEvent -> setClosed()));
         btnOpenCVStartCamera.setOnAction(event -> {
@@ -98,7 +104,11 @@ public class ImageRecognizer {
 
                 // if the frame is not empty, process it
                 if (!frame.empty()) {
-                    Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2GRAY);
+
+                    if (grayscale != null && grayscale.isSelected()) {
+                        Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2GRAY);
+                    }
+
                 }
 
             } catch (Exception e) {

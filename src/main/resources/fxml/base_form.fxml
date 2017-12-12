@@ -373,6 +373,7 @@
                                  <children>
                                     <Button fx:id="btnOpenCVStartCamera" layoutX="274.0" layoutY="480.0" mnemonicParsing="false" text="Push it!" />
                                     <ImageView fx:id="imageViewForOpenCV" fitHeight="480.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="504.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="83.0" AnchorPane.topAnchor="50.0" />
+                                    <CheckBox fx:id="grayscale" layoutX="421.0" layoutY="483.0" mnemonicParsing="false" text="Gray scale" />
                                  </children>
                               </Pane>
                            </children>

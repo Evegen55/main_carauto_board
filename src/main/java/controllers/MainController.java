@@ -27,12 +27,7 @@ import controllers.openvc.ImageRecognizer;
 import controllers.settings.ApplicationSettingsController;
 import entities.WebCamInfo;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -160,6 +155,8 @@ public final class MainController {
     private ImageView imageViewForOpenCV;
     @FXML
     private Button btnOpenCVStartCamera;
+    @FXML
+    private CheckBox grayscale;
 
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -216,6 +213,6 @@ public final class MainController {
 
     public void initOpenCVTab() {
         ImageRecognizer imageRecognizer = new ImageRecognizer(primaryStage);
-        imageRecognizer.showSimpleCamera(imageViewForOpenCV, btnOpenCVStartCamera);
+        imageRecognizer.showSimpleCamera(imageViewForOpenCV, btnOpenCVStartCamera, grayscale);
     }
 }
