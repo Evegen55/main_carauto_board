@@ -56,6 +56,7 @@ Plates recognition:
 Download [OpenCV](https://opencv.org/releases.html) and unpack it to a `<path-to-installed-opencv-331>`
 
 Note: now application supports OpenCV ver.3.3.1
+Note: now there is a conflict with came at video tab and intel tab. Choose only one way to get video stream from cams
 
 `mvn install:install-file -Dfile=<path-to-installed-opencv-331>\build\java\opencv-331.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.3.1 -Dpackaging=jar`
 
