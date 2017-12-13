@@ -369,18 +369,16 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <VBox layoutX="353.0" layoutY="598.0">
+                              <VBox layoutX="308.0" layoutY="571.0" prefHeight="69.0" prefWidth="150.0">
                                  <children>
-                                    <CheckBox fx:id="checkBoxFaceDetector" mnemonicParsing="false" text="Face detection" />
-                                    <CheckBox fx:id="checkBoxPlatesDetector" mnemonicParsing="false" text="Car plates detection" />
-                                    <CheckBox fx:id="checkBoxhaarClassifier" mnemonicParsing="false" text="Haar Classifier" />
-                                    <CheckBox fx:id="checkBoxlbpClassifier" mnemonicParsing="false" text="LBP Classifier" />
+                                    <ComboBox fx:id="comboBoxForTypeOfDetection" prefWidth="150.0" promptText="type of detection" />
+                                    <ComboBox fx:id="comboBoxForTypeOfClassifier" prefWidth="150.0" promptText="type of classifier" />
                                     <CheckBox fx:id="grayscale" mnemonicParsing="false" text="Gray scale" />
                                  </children>
                               </VBox>
                               <Pane layoutX="83.0" layoutY="50.0">
                                  <children>
-                                    <Button fx:id="btnOpenCVStartCamera" disable="true" layoutX="274.0" layoutY="480.0" mnemonicParsing="false" text="Push it!" />
+                                    <Button fx:id="btnOpenCVStartCamera" layoutX="274.0" layoutY="480.0" mnemonicParsing="false" text="Push it!" />
                                     <ImageView fx:id="imageViewForOpenCV" fitHeight="480.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="504.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="83.0" AnchorPane.topAnchor="50.0" />
                                  </children>
                               </Pane>
