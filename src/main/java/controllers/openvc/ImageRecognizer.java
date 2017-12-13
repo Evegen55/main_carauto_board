@@ -80,7 +80,6 @@ public final class ImageRecognizer {
     }
 
     public ImageRecognizer init() {
-        LOGGER.info("Start showing a stream captured from camera");
         primaryStage.setOnCloseRequest((windowEvent -> setClosed()));
         LOGGER.info("Application settings tab is initialising ...");
         populateComboBoxWithTypeOfDetection();
@@ -92,6 +91,7 @@ public final class ImageRecognizer {
     public void showSimpleCameraInto(final ImageView imageViewForOpenCV) {
         imageViewForOpenCV.setPreserveRatio(true);
         btnOpenCVStartCamera.setOnAction(event -> {
+            LOGGER.info("Start showing a stream captured from camera to a " + imageViewForOpenCV.getId());
             RecognizingTypeOfDetection typeOfDetectionValue = comboBoxForTypeOfDetection.getValue();
             RecognizingTypeOfClassifier typeOfClassifierValue = comboBoxForTypeOfClassifier.getValue();
             if (typeOfClassifierValue != null && typeOfDetectionValue != null) {
@@ -117,7 +117,7 @@ public final class ImageRecognizer {
 
     private void retrieveSettingsAndLoadClassifier(final RecognizingTypeOfDetection typeOfDetectionValue,
                                                    final RecognizingTypeOfClassifier typeOfClassifierValue) {
-        //two cases:
+        //two cases when the video capture can start:
         if (typeOfDetectionValue.equals(RecognizingTypeOfDetection.face)) {
             if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.haar)) {
                 loadClassifier("trainedNN/opencv/haarcascades/haarcascade_frontalface_alt.xml");
@@ -145,8 +145,6 @@ public final class ImageRecognizer {
         } else {
             LOGGER.warn("Classifier wasn't loaded");
         }
-        // now the video capture can start
-        btnOpenCVStartCamera.setDisable(false);
     }
 
     private void startCamera(final ImageView imageViewForOpenCV) {
