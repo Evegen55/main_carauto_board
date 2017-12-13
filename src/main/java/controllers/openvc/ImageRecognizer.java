@@ -44,7 +44,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class ImageRecognizer {
+public final class ImageRecognizer {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ImageRecognizer.class);
 
