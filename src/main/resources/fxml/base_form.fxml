@@ -369,13 +369,17 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
+                              <VBox layoutX="308.0" layoutY="571.0" prefHeight="69.0" prefWidth="150.0">
+                                 <children>
+                                    <ComboBox fx:id="comboBoxForTypeOfDetection" prefWidth="150.0" promptText="type of detection" />
+                                    <ComboBox fx:id="comboBoxForTypeOfClassifier" prefWidth="150.0" promptText="type of classifier" />
+                                    <CheckBox fx:id="grayscale" mnemonicParsing="false" text="Gray scale" />
+                                 </children>
+                              </VBox>
                               <Pane layoutX="83.0" layoutY="50.0">
                                  <children>
-                                    <Button fx:id="btnOpenCVStartCamera" disable="true" layoutX="274.0" layoutY="480.0" mnemonicParsing="false" text="Push it!" />
+                                    <Button fx:id="btnOpenCVStartCamera" layoutX="274.0" layoutY="480.0" mnemonicParsing="false" text="Push it!" />
                                     <ImageView fx:id="imageViewForOpenCV" fitHeight="480.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="504.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="83.0" AnchorPane.topAnchor="50.0" />
-                                    <CheckBox fx:id="grayscale" layoutX="421.0" layoutY="483.0" mnemonicParsing="false" text="Gray scale" />
-                                    <CheckBox fx:id="checkBoxhaarClassifier" layoutX="14.0" layoutY="484.0" mnemonicParsing="false" text="Haar Classifier" />
-                                    <CheckBox fx:id="checkBoxlbpClassifier" layoutX="130.0" layoutY="483.0" mnemonicParsing="false" text="LBP Classifier" />
                                  </children>
                               </Pane>
                            </children>

@@ -1,7 +1,10 @@
 package controllers.openvc;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -14,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.UtilsOpenCV;
 
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -30,55 +34,91 @@ public class ImageRecognizer {
     private static final VideoCapture VIDEO_CAPTURE = new VideoCapture();
     private final Button btnOpenCVStartCamera;
     // a flag to change the button behavior
-    private boolean cameraActive = false;
+    private boolean isCameraActive = false;
     // the id of the camera to be used
     private static int cameraId = 0;
 
-    //face recognition
+    //recognition
     private final CheckBox checkBoxGrayscale;
-    private final CheckBox checkBoxhaarClassifier;
-    private final CheckBox checkBoxlbpClassifier;
-    // face cascade classifier
-    private static final CascadeClassifier FACE_CASCADE = new CascadeClassifier();
-    private int absoluteFaceSize = 0;
+    private ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection;
+    private ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier;
 
-    public ImageRecognizer(final Stage primaryStage, Button btnOpenCVStartCamera, final CheckBox checkBoxGrayscale,
-                           final CheckBox checkBoxhaarClassifier, final CheckBox checkBoxlbpClassifier) {
+    //cascade classifier
+    private static final CascadeClassifier CASCADE_CLASSIFIER = new CascadeClassifier();
+    private int absoluteAreaSize = 0;
+
+    public ImageRecognizer(final Stage primaryStage, final Button btnOpenCVStartCamera, final CheckBox grayscale,
+                           final ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection,
+                           final ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier) {
         this.primaryStage = primaryStage;
         this.btnOpenCVStartCamera = btnOpenCVStartCamera;
-        this.checkBoxGrayscale = checkBoxGrayscale;
-        this.checkBoxhaarClassifier = checkBoxhaarClassifier;
-        this.checkBoxlbpClassifier = checkBoxlbpClassifier;
+        this.comboBoxForTypeOfDetection = comboBoxForTypeOfDetection;
+        this.comboBoxForTypeOfClassifier = comboBoxForTypeOfClassifier;
+        this.checkBoxGrayscale = grayscale;
     }
 
-    public void showSimpleCamera(final ImageView imageViewForOpenCV) {
+    public ImageRecognizer init() {
         LOGGER.info("Start showing a stream captured from camera");
         primaryStage.setOnCloseRequest((windowEvent -> setClosed()));
-
-        checkBoxhaarClassifier.setOnAction(event -> {
-                    if (checkBoxlbpClassifier.isSelected())
-                        checkBoxlbpClassifier.setSelected(false);
-                    checkboxSelection("trainedNN/opencv/haarcascades/haarcascade_frontalface_alt.xml");
-                }
-        );
-
-        checkBoxlbpClassifier.setOnAction(event -> {
-            if (checkBoxhaarClassifier.isSelected())
-                checkBoxhaarClassifier.setSelected(false);
-            checkboxSelection("trainedNN/opencv//lbpcascades/lbpcascade_frontalface.xml");
-        });
-
-        imageViewForOpenCV.setPreserveRatio(true);
-        btnOpenCVStartCamera.setOnAction(event -> {
-            startCamera(imageViewForOpenCV, btnOpenCVStartCamera);
-        });
-
+        LOGGER.info("Application settings tab is initialising ...");
+        populateComboBoxWithTypeOfDetection();
+        populateComboBoxWithTypeofclassifiers();
+        LOGGER.info("Application settings tab initialised");
+        return this;
     }
 
-    private void checkboxSelection(final String classifierPath) {
+    public void showSimpleCameraInto(final ImageView imageViewForOpenCV) {
+        imageViewForOpenCV.setPreserveRatio(true);
+        btnOpenCVStartCamera.setOnAction(event -> {
+            RecognizingTypeOfDetection typeOfDetectionValue = comboBoxForTypeOfDetection.getValue();
+            RecognizingTypeOfClassifier typeOfClassifierValue = comboBoxForTypeOfClassifier.getValue();
+            if (typeOfClassifierValue != null && typeOfDetectionValue != null) {
+                retrieveSettingsAndLoadClassifier(typeOfDetectionValue, typeOfClassifierValue);
+                startCamera(imageViewForOpenCV);
+            }
+        });
+    }
+
+    private void populateComboBoxWithTypeofclassifiers() {
+        final ObservableList<RecognizingTypeOfClassifier> detections = FXCollections.observableArrayList();
+        final RecognizingTypeOfClassifier[] values = RecognizingTypeOfClassifier.values();
+        detections.addAll(Arrays.asList(values));
+        comboBoxForTypeOfClassifier.setItems(detections);
+    }
+
+    private void populateComboBoxWithTypeOfDetection() {
+        final ObservableList<RecognizingTypeOfDetection> detections = FXCollections.observableArrayList();
+        final RecognizingTypeOfDetection[] values = RecognizingTypeOfDetection.values();
+        detections.addAll(Arrays.asList(values));
+        comboBoxForTypeOfDetection.setItems(detections);
+    }
+
+    private void retrieveSettingsAndLoadClassifier(final RecognizingTypeOfDetection typeOfDetectionValue,
+                                                   final RecognizingTypeOfClassifier typeOfClassifierValue) {
+        //two cases:
+        if (typeOfDetectionValue.equals(RecognizingTypeOfDetection.face)) {
+            if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.haar)) {
+                loadClassifier("trainedNN/opencv/haarcascades/haarcascade_frontalface_alt.xml");
+            }
+            if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.lbp)) {
+                loadClassifier("trainedNN/opencv/lbpcascades/lbpcascade_frontalface.xml");
+            }
+        }
+        if (typeOfDetectionValue.equals(RecognizingTypeOfDetection.plates_rus)) {
+            if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.haar)) {
+                loadClassifier("trainedNN/opencv/haarcascades/haarcascade_russian_plate_number.xml");
+            }
+            if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.lbp)) {
+//                loadClassifier("trainedNN/opencv/lbpcascades/lbpcascade_frontalface.xml");
+                LOGGER.warn("Nothing to load!!");
+            }
+        }
+    }
+
+    private void loadClassifier(final String classifierPath) {
         // load the classifier(s)
-        boolean load = FACE_CASCADE.load(classifierPath);
-        if(load) {
+        boolean load = CASCADE_CLASSIFIER.load(classifierPath);
+        if (load) {
             LOGGER.info("Classifier loaded");
         } else {
             LOGGER.warn("Classifier wasn't loaded");
@@ -87,19 +127,14 @@ public class ImageRecognizer {
         btnOpenCVStartCamera.setDisable(false);
     }
 
-    private void startCamera(final ImageView imageViewForOpenCV, final Button btnOpenCVStartCamera) {
-        if (!cameraActive) {
-
-            // disable setting checkboxes
-            checkBoxhaarClassifier.setDisable(true);
-            checkBoxlbpClassifier.setDisable(true);
-
+    private void startCamera(final ImageView imageViewForOpenCV) {
+        if (!isCameraActive) {
             // start the video capture
             VIDEO_CAPTURE.open(cameraId);
 
             // is the video stream available?
             if (VIDEO_CAPTURE.isOpened()) {
-                cameraActive = true;
+                isCameraActive = true;
 
                 // grab a frame every 33 ms (30 frames/sec)
                 Runnable frameGrabber = () -> {
@@ -121,13 +156,9 @@ public class ImageRecognizer {
             }
         } else {
             // the camera is not active at this point
-            cameraActive = false;
+            isCameraActive = false;
             // update again the button content
             btnOpenCVStartCamera.setText("Start Camera");
-
-            // enable classifiers checkboxes
-            checkBoxhaarClassifier.setDisable(false);
-            checkBoxlbpClassifier.setDisable(false);
 
             // stop the timer
             stopAcquisition();
@@ -185,16 +216,16 @@ public class ImageRecognizer {
         Imgproc.equalizeHist(grayFrame, grayFrame);
 
         // compute minimum face size (20% of the frame height, in our case)
-        if (absoluteFaceSize == 0) {
+        if (absoluteAreaSize == 0) {
             int height = grayFrame.rows();
             if (Math.round(height * 0.2f) > 0) {
-                absoluteFaceSize = Math.round(height * 0.2f);
+                absoluteAreaSize = Math.round(height * 0.2f);
             }
         }
 
         // detect faces
-        FACE_CASCADE.detectMultiScale(grayFrame, faces, 1.1, 2, 0 | Objdetect.CASCADE_SCALE_IMAGE,
-                new Size(this.absoluteFaceSize, this.absoluteFaceSize), new Size());
+        CASCADE_CLASSIFIER.detectMultiScale(grayFrame, faces, 1.1, 2, 0 | Objdetect.CASCADE_SCALE_IMAGE,
+                new Size(this.absoluteAreaSize, this.absoluteAreaSize), new Size());
 
         // each rectangle in faces is a face: draw them!
         Rect[] facesArray = faces.toArray();

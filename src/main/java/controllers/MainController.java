@@ -24,6 +24,8 @@ package controllers;
 
 import controllers.imageViewer.ImageViewController;
 import controllers.openvc.ImageRecognizer;
+import controllers.openvc.RecognizingTypeOfClassifier;
+import controllers.openvc.RecognizingTypeOfDetection;
 import controllers.settings.ApplicationSettingsController;
 import entities.WebCamInfo;
 import javafx.fxml.FXML;
@@ -158,9 +160,9 @@ public final class MainController {
     @FXML
     private CheckBox grayscale;
     @FXML
-    private CheckBox checkBoxhaarClassifier;
+    private ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier;
     @FXML
-    private CheckBox checkBoxlbpClassifier;
+    private ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection;
 
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -217,7 +219,8 @@ public final class MainController {
 
     public void initOpenCVTab() {
         final ImageRecognizer imageRecognizer = new ImageRecognizer(primaryStage, btnOpenCVStartCamera,
-                grayscale, checkBoxhaarClassifier, checkBoxlbpClassifier);
-        imageRecognizer.showSimpleCamera(imageViewForOpenCV);
+                grayscale, comboBoxForTypeOfDetection, comboBoxForTypeOfClassifier);
+        imageRecognizer.init()
+                .showSimpleCameraInto(imageViewForOpenCV);
     }
 }
