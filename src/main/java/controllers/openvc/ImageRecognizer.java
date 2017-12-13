@@ -202,7 +202,6 @@ public final class ImageRecognizer {
 
                 // if the frame is not empty, process it
                 if (!frame.empty()) {
-
                     if (checkBoxGrayscale != null && checkBoxGrayscale.isSelected()) {
                         Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2GRAY);
                         detectAndDisplay(frame, true);
@@ -210,11 +209,9 @@ public final class ImageRecognizer {
                         detectAndDisplay(frame, false);
                     }
                 }
-
             } catch (Exception e) {
                 // log the error
-                LOGGER.error("Exception during the image elaboration: " + e);
-            }
+                LOGGER.error("Exception during the image elaboration: " + e);            }
         }
 
         return frame;
@@ -228,7 +225,7 @@ public final class ImageRecognizer {
         if (grayIsAlreadySelected) {
             LOGGER.warn("TODO IT :-)");
         } else {
-            // convert the frame in gray scale
+            // convert the frame in gray scale to ANOTHER frame
             Imgproc.cvtColor(frame, grayFrame, Imgproc.COLOR_BGR2GRAY);
         }
 

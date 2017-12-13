@@ -54,7 +54,7 @@ public final class UtilsOpenCV {
     }
 
     /**
-     * Support for the {@link mat2image()} method
+     * Support for the {@link this.mat2Image()} method
      *
      * @param original the {@link Mat} object in BGR or grayscale
      * @return the corresponding {@link BufferedImage}
