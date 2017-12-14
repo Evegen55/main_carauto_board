@@ -23,7 +23,7 @@ public class StyleHelper {
             switch (styleList) {
                 case RETRO:
                     content = IOUtils.toString(this.getClass().getResourceAsStream(STYLE_RETRO), "UTF-8");
-                    LOGGER.info("Use " + STYLE_RETRO + " as stylesheet");
+                    LOGGER.info("Use " + STYLE_RETRO + " as stylesheet for maps");
                     break;
                 case GRAY:
                     content = IOUtils.toString(this.getClass().getResourceAsStream(STYLE_GRAY), "UTF-8");
