@@ -69,6 +69,9 @@ public final class ImageRecognizer {
     private static final CascadeClassifier CASCADE_CLASSIFIER = new CascadeClassifier();
     private int absoluteAreaSize = 0;
 
+    //just for fun
+    private int faceCounter = 0;
+
     public ImageRecognizer(final Stage primaryStage, final Button btnOpenCVStartCamera, final CheckBox grayscale,
                            final ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection,
                            final ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier) {
@@ -182,6 +185,9 @@ public final class ImageRecognizer {
 
             // stop the timer
             stopAcquisition();
+
+            //print number of faces
+            LOGGER.info("The maximum number of detected faces is: " + faceCounter);
         }
     }
 
@@ -268,8 +274,15 @@ public final class ImageRecognizer {
         The last parameter just set the thickness of the rectangle’s border.
          */
         final Rect[] facesArray = faces.toArray();
+        countFaces(facesArray.length);
         for (Rect aFacesArray : facesArray)
             Imgproc.rectangle(frame, aFacesArray.tl(), aFacesArray.br(), new Scalar(0, 255, 0, 255), 3);
+    }
+
+    private void countFaces(final int length) {
+        if (length > faceCounter) {
+            faceCounter = length;
+        }
     }
 
     /**
