@@ -211,13 +211,17 @@ public final class ImageRecognizer {
                 }
             } catch (Exception e) {
                 // log the error
-                LOGGER.error("Exception during the image elaboration: " + e);            }
+                LOGGER.error("Exception during the image elaboration: " + e);
+            }
         }
 
         return frame;
     }
 
     // TODO: 12/12/2017 recognise faces with gray scale stream
+    /*
+    Detect faces at each frame
+     */
     private void detectAndDisplay(final Mat frame, boolean grayIsAlreadySelected) {
         MatOfRect faces = new MatOfRect();
         Mat grayFrame = new Mat();
@@ -241,13 +245,31 @@ public final class ImageRecognizer {
         }
 
         // detect faces
-        CASCADE_CLASSIFIER.detectMultiScale(grayFrame, faces, 1.1, 2, 0 | Objdetect.CASCADE_SCALE_IMAGE,
-                new Size(this.absoluteAreaSize, this.absoluteAreaSize), new Size());
+        /*
+        The detectMultiScale function detects objects of different sizes in the input image.
+        The detected objects are returned as a list of rectangles. The parameters are:
+            image Matrix of the type CV_8U containing an image where objects are detected.
+            objects Vector of rectangles where each rectangle contains the detected object.
+            scaleFactor Parameter specifying how much the image size is reduced at each image scale.
+            minNeighbors Parameter specifying how many neighbors each candidate rectangle should have to retain it.
+            flags Parameter with the same meaning for an old cascade as in the function cvHaarDetectObjects. It is not used for a new cascade.
+            minSize Minimum possible object size. Objects smaller than that are ignored.
+            maxSize Maximum possible object size. Objects larger than that are ignored.
+        So the result of the detection is going to be in the objects parameter or in our case faces.
+         */
+        CASCADE_CLASSIFIER.detectMultiScale(grayFrame, faces, 1.1, 2,
+                0 | Objdetect.CASCADE_SCALE_IMAGE, new Size(absoluteAreaSize, absoluteAreaSize), new Size());
 
-        // each rectangle in faces is a face: draw them!
-        Rect[] facesArray = faces.toArray();
-        for (int i = 0; i < facesArray.length; i++)
-            Imgproc.rectangle(frame, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0), 3);
+        /*
+        each rectangle in faces is a face: draw them!
+        Let’s put this result in an array of rects and draw them on the frame, by doing so we can display the detected face are.
+        As you can see we selected the color green with a transparent background: Scalar(0, 255, 0, 255).
+        .tl() and .br() stand for top-left and bottom-right and they represents the two opposite vertexes.
+        The last parameter just set the thickness of the rectangle’s border.
+         */
+        final Rect[] facesArray = faces.toArray();
+        for (Rect aFacesArray : facesArray)
+            Imgproc.rectangle(frame, aFacesArray.tl(), aFacesArray.br(), new Scalar(0, 255, 0, 255), 3);
     }
 
     /**
