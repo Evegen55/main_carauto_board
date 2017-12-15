@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -369,17 +370,57 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <VBox layoutX="308.0" layoutY="571.0" prefHeight="69.0" prefWidth="150.0">
+                              <VBox alignment="CENTER" layoutX="203.0" layoutY="569.0" prefHeight="127.0" prefWidth="361.0" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="202.0">
                                  <children>
-                                    <ComboBox fx:id="comboBoxForTypeOfDetection" prefWidth="150.0" promptText="type of detection" />
-                                    <ComboBox fx:id="comboBoxForTypeOfClassifier" prefWidth="150.0" promptText="type of classifier" />
-                                    <CheckBox fx:id="grayscale" mnemonicParsing="false" text="Gray scale" />
+                                    <HBox>
+                                       <children>
+                                          <CheckBox fx:id="grayscale" mnemonicParsing="false" text="Gray scale" />
+                                       </children>
+                                    </HBox>
+                                    <Separator prefWidth="200.0" />
+                                    <HBox>
+                                       <children>
+                                          <ComboBox fx:id="comboBoxForTypeOfDetection" prefWidth="150.0" promptText="type of detection" />
+                                       </children>
+                                    </HBox>
+                                    <Separator prefWidth="200.0" />
+                                    <HBox fx:id="hboxHidden1" alignment="CENTER_LEFT">
+                                       <children>
+                                          <ComboBox fx:id="comboBoxForTypeOfClassifier" prefWidth="150.0" promptText="type of classifier" />
+                                       </children>
+                                    </HBox>
+                                    <Separator prefWidth="200.0" />
+                                    <HBox fx:id="hboxHidden2" alignment="CENTER_LEFT" spacing="10.0">
+                                       <children>
+                                          <CheckBox fx:id="canny" text="Edge detection" /><!--onAction="#cannySelected"-->
+                                          <Label text="Canny Threshold" />
+                                          <Slider fx:id="threshold" disable="true" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </padding>
+                                    </HBox>
+                                    <Separator prefWidth="200.0" />
+                                    <HBox fx:id="hboxHidden3" alignment="CENTER_LEFT" spacing="10.0">
+                                       <children>
+                                          <CheckBox fx:id="dilateErode" text="Background removal" /><!--onAction="#dilateErodeSelected"-->
+                                          <CheckBox fx:id="inverse" disable="true" text="Invert" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </padding>
+                                    </HBox>
                                  </children>
                               </VBox>
                               <Pane layoutX="83.0" layoutY="50.0">
                                  <children>
-                                    <Button fx:id="btnOpenCVStartCamera" layoutX="274.0" layoutY="480.0" mnemonicParsing="false" text="Push it!" />
-                                    <ImageView fx:id="imageViewForOpenCV" fitHeight="480.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="504.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="83.0" AnchorPane.topAnchor="50.0" />
+                                    <HBox layoutX="222.0" layoutY="479.0">
+                                       <children>
+                                          <Button fx:id="btnActivateCamera" layoutX="222.0" layoutY="480.0" mnemonicParsing="false" text="Activate camera" />
+                                          <Button fx:id="btnOpenCVStartCamera" layoutX="335.0" layoutY="479.0" mnemonicParsing="false" text="Push it!" />
+                                       </children>
+                                    </HBox>
+                                    <ImageView fx:id="imageViewForOpenCV" fitHeight="480.0" fitWidth="600.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="323.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="182.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </Pane>
                            </children>
