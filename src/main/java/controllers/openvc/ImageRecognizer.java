@@ -27,8 +27,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
@@ -72,14 +74,36 @@ public final class ImageRecognizer {
     //just for fun
     private int faceCounter = 0;
 
+    //edge detection and hide unappropriated functionality
+    private final HBox hboxHidden1;
+    private final HBox hboxHidden2;
+    private final HBox hboxHidden3;
+    private final CheckBox canny;
+    private final Slider threshold;
+    private final CheckBox dilateErode;
+    private final CheckBox inverse;
+    private final Button btnActivateCamera;
+
     public ImageRecognizer(final Stage primaryStage, final Button btnOpenCVStartCamera, final CheckBox grayscale,
                            final ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection,
-                           final ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier) {
+                           final ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier,
+                           final HBox hboxHidden1, final HBox hboxHidden2, final HBox hboxHidden3, final CheckBox canny,
+                           final Slider threshold, final CheckBox dilateErode, final CheckBox inverse, Button btnActivateCamera) {
         this.primaryStage = primaryStage;
         this.btnOpenCVStartCamera = btnOpenCVStartCamera;
         this.comboBoxForTypeOfDetection = comboBoxForTypeOfDetection;
         this.comboBoxForTypeOfClassifier = comboBoxForTypeOfClassifier;
         this.checkBoxGrayscale = grayscale;
+
+        //edge detection and hide unappropriated functionality
+        this.hboxHidden1 = hboxHidden1;
+        this.hboxHidden2 = hboxHidden2;
+        this.hboxHidden3 = hboxHidden3;
+        this.canny = canny;
+        this.threshold = threshold;
+        this.dilateErode = dilateErode;
+        this.inverse = inverse;
+        this.btnActivateCamera = btnActivateCamera;
     }
 
     public ImageRecognizer init() {
@@ -87,21 +111,61 @@ public final class ImageRecognizer {
         LOGGER.info("Application settings tab is initialising ...");
         populateComboBoxWithTypeOfDetection();
         populateComboBoxWithTypeofclassifiers();
+        btnOpenCVStartCamera.setDisable(true);
+        hboxHidden1.setDisable(true);
+        hboxHidden2.setDisable(true);
+        hboxHidden3.setDisable(true);
         LOGGER.info("Application settings tab initialised");
         return this;
     }
 
+    //first action from combo box, second - from button
     public void showSimpleCameraInto(final ImageView imageViewForOpenCV) {
         imageViewForOpenCV.setPreserveRatio(true);
-        btnOpenCVStartCamera.setOnAction(event -> {
-            LOGGER.info("Start showing a stream captured from camera to a " + imageViewForOpenCV.getId());
-            RecognizingTypeOfDetection typeOfDetectionValue = comboBoxForTypeOfDetection.getValue();
-            RecognizingTypeOfClassifier typeOfClassifierValue = comboBoxForTypeOfClassifier.getValue();
-            if (typeOfClassifierValue != null && typeOfDetectionValue != null) {
-                retrieveSettingsAndLoadClassifier(typeOfDetectionValue, typeOfClassifierValue);
-                startCamera(imageViewForOpenCV);
+
+        comboBoxForTypeOfDetection.setOnAction(event -> {
+            final RecognizingTypeOfDetection typeOfDetection = comboBoxForTypeOfDetection.getValue();
+            if (typeOfDetection != null) {
+                LOGGER.info("Type of detection: " + typeOfDetection);
+                switch (typeOfDetection) {
+                    case face: hboxHidden1.setDisable(false); hboxHidden2.setDisable(true); hboxHidden3.setDisable(true); break;
+                    case plates_rus: hboxHidden1.setDisable(false); hboxHidden2.setDisable(true); hboxHidden3.setDisable(true); break;
+                    case edges: hboxHidden1.setDisable(true); hboxHidden2.setDisable(false); hboxHidden3.setDisable(false); break;
+                }
             }
         });
+
+        btnActivateCamera.setOnAction(event -> {
+            final RecognizingTypeOfDetection typeOfDetection = comboBoxForTypeOfDetection.getValue();
+            if (typeOfDetection != null) {
+                switch (typeOfDetection) {
+                    case face: doWithClassifiers(typeOfDetection, imageViewForOpenCV); break;
+                    case plates_rus: doWithClassifiers(typeOfDetection, imageViewForOpenCV); break;
+                    case edges: doForEdges(typeOfDetection, imageViewForOpenCV); break;
+                }
+            }
+        });
+
+    }
+
+    private void doForEdges(final RecognizingTypeOfDetection typeOfDetection, ImageView imageViewForOpenCV) {
+        // TODO: 12/15/2017  
+    }
+
+    private void doWithClassifiers(final RecognizingTypeOfDetection typeOfDetection, ImageView imageViewForOpenCV) {
+        final RecognizingTypeOfClassifier typeOfClassifierValue = comboBoxForTypeOfClassifier.getValue();
+        if (typeOfClassifierValue != null) {
+            final boolean success = retrieveSettingsAndLoadClassifier(typeOfDetection, typeOfClassifierValue);
+            if (success) {
+                btnOpenCVStartCamera.setDisable(false);
+                btnOpenCVStartCamera.setOnAction(event1 -> {
+                    LOGGER.info("Start showing a stream captured from camera to a " + imageViewForOpenCV.getId());
+                    startCamera(imageViewForOpenCV);
+                });
+            } else {
+                LOGGER.warn("Settings weren't setup");
+            }
+        }
     }
 
     private void populateComboBoxWithTypeofclassifiers() {
@@ -118,26 +182,37 @@ public final class ImageRecognizer {
         comboBoxForTypeOfDetection.setItems(detections);
     }
 
-    private void retrieveSettingsAndLoadClassifier(final RecognizingTypeOfDetection typeOfDetectionValue,
-                                                   final RecognizingTypeOfClassifier typeOfClassifierValue) {
+    private boolean retrieveSettingsAndLoadClassifier(final RecognizingTypeOfDetection typeOfDetectionValue,
+                                                      final RecognizingTypeOfClassifier typeOfClassifierValue) {
+        boolean result = false;
         //two cases when the video capture can start:
         if (typeOfDetectionValue.equals(RecognizingTypeOfDetection.face)) {
-            if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.haar)) {
-                loadClassifier("trainedNN/opencv/haarcascades/haarcascade_frontalface_alt.xml");
+            if (typeOfClassifierValue != null) {
+                if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.haar)) {
+                    loadClassifier("trainedNN/opencv/haarcascades/haarcascade_frontalface_alt.xml");
+                    result = true;
+                }
+                if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.lbp)) {
+                    loadClassifier("trainedNN/opencv/lbpcascades/lbpcascade_frontalface.xml");
+                    result = true;
+                }
             }
-            if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.lbp)) {
-                loadClassifier("trainedNN/opencv/lbpcascades/lbpcascade_frontalface.xml");
-            }
+
         }
         if (typeOfDetectionValue.equals(RecognizingTypeOfDetection.plates_rus)) {
-            if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.haar)) {
-                loadClassifier("trainedNN/opencv/haarcascades/haarcascade_russian_plate_number.xml");
-            }
-            if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.lbp)) {
+            if (typeOfClassifierValue != null) {
+                if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.haar)) {
+                    loadClassifier("trainedNN/opencv/haarcascades/haarcascade_russian_plate_number.xml");
+                    result = true;
+                }
+                if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.lbp)) {
 //                loadClassifier("trainedNN/opencv/lbpcascades/lbpcascade_frontalface.xml");
-                LOGGER.warn("Nothing to load!!");
+                    LOGGER.warn("Nothing to load!!");
+                    result = true;
+                }
             }
         }
+        return result;
     }
 
     private void loadClassifier(final String classifierPath) {
