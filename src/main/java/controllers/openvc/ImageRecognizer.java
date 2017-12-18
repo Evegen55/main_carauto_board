@@ -173,11 +173,20 @@ public final class ImageRecognizer {
 
     }
 
+    /*
+    It overrides behaviour for btnOpenCVStartCamera
+     */
     private void doForEdges(ImageView imageViewForOpenCV) {
         btnOpenCVStartCamera.setDisable(false);
-        btnOpenCVStartCamera.setOnAction(event -> startCameraEdges(imageViewForOpenCV));
+        btnOpenCVStartCamera.setOnAction(event -> {
+            LOGGER.info("Start detecting edges from a stream captured from camera to a " + imageViewForOpenCV.getId());
+            startCameraEdges(imageViewForOpenCV);
+        });
     }
 
+    /*
+    It overrides behaviour for btnOpenCVStartCamera
+     */
     private void doWithClassifiers(final RecognizingTypeOfDetection typeOfDetection, ImageView imageViewForOpenCV) {
         final RecognizingTypeOfClassifier typeOfClassifierValue = comboBoxForTypeOfClassifier.getValue();
         if (typeOfClassifierValue != null) {
