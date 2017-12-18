@@ -27,6 +27,8 @@ import controllers.openvc.ImageRecognizer;
 import controllers.openvc.RecognizingTypeOfClassifier;
 import controllers.openvc.RecognizingTypeOfDetection;
 import controllers.settings.ApplicationSettingsController;
+import controllers.settings.LanguageList;
+import controllers.settings.StyleList;
 import entities.WebCamInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -135,9 +137,9 @@ public final class MainController {
 
     //settings
     @FXML
-    private ComboBox<String> listStyles;
+    private ComboBox<StyleList> listStyles;
     @FXML
-    private ComboBox<String> listLanguages;
+    private ComboBox<LanguageList> listLanguages;
     @FXML
     private Button btnApplySettings;
 

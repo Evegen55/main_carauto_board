@@ -52,7 +52,7 @@ public final class ApplicationSettingsController {
         return styleString;
     }
 
-    public static void initSettings(final ComboBox<String> listStylesBox, final ComboBox<String> listLanguages,
+    public static void initSettings(final ComboBox<StyleList> listStylesBox, final ComboBox<LanguageList> listLanguages,
                                     final Button btnApplySettings) {
         LOGGER.info("Application settings tab is initialising ...");
         populateComboBoxWithStyles(listStylesBox);
@@ -61,8 +61,8 @@ public final class ApplicationSettingsController {
         // TODO: 11/29/2017 pop-up window or suggest to reload map (routes will be erased if reloaded)
         //it retrieves all settings from all fields and boxes and write them into EXTERNAL file only.
         btnApplySettings.setOnAction(action -> {
-            final String styleValueFromComboBox = listStylesBox.getValue();
-            final String languagesValueFromComboBox = listLanguages.getValue();
+            final String styleValueFromComboBox = listStylesBox.getValue().toString();
+            final String languagesValueFromComboBox = listLanguages.getValue().toString();
             if (styleValueFromComboBox != null) {
                 PropertiesHelper.setProperty(PropertyList.STYLE, styleValueFromComboBox);
             }
@@ -74,21 +74,21 @@ public final class ApplicationSettingsController {
         LOGGER.info("Application settings tab initialised");
     }
 
-    private static void populateComboBoxWithLanguages(ComboBox<String> listLanguages) {
-        final ObservableList<String> langList = FXCollections.observableArrayList();
+    private static void populateComboBoxWithLanguages(ComboBox<LanguageList> listLanguages) {
+        final ObservableList<LanguageList> langList = FXCollections.observableArrayList();
         final LanguageList[] valuesLang = LanguageList.values();
         for (int i = 0; i < valuesLang.length; i++) {
-            langList.add(valuesLang[i].toString());
+            langList.add(valuesLang[i]);
         }
         listLanguages.setItems(langList);
     }
 
-    private static void populateComboBoxWithStyles(ComboBox<String> listStylesBox) {
+    private static void populateComboBoxWithStyles(ComboBox<StyleList> listStylesBox) {
         //prior Java8 - simple and fast for small amount of data
-        final ObservableList<String> stylesList = FXCollections.observableArrayList();
+        final ObservableList<StyleList> stylesList = FXCollections.observableArrayList();
         final StyleList[] values = StyleList.values();
         for (int i = 0; i < values.length; i++) {
-            stylesList.add(values[i].toString());
+            stylesList.add(values[i]);
         }
 
         //Java8 - hard to write but can be fast for big amount of data
