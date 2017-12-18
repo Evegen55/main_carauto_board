@@ -51,6 +51,13 @@ Face recognition:
 Plates recognition:
 ![**Recognize plates**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/opencv_recognize_plates.PNG)
 
+Edges detection:
+![**Edge detection**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/edges.PNG)
+
+Remove background:
+![**Remove background**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/background_rem.PNG)
+![**Remove background**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/background_rem_invert.PNG)
+
 **Build and run:**
 
 Download [OpenCV](https://opencv.org/releases.html) and unpack it to a `<path-to-installed-opencv-331>`

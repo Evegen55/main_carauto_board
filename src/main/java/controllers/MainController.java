@@ -27,14 +27,13 @@ import controllers.openvc.ImageRecognizer;
 import controllers.openvc.RecognizingTypeOfClassifier;
 import controllers.openvc.RecognizingTypeOfDetection;
 import controllers.settings.ApplicationSettingsController;
+import controllers.settings.LanguageList;
+import controllers.settings.StyleList;
 import entities.WebCamInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public final class MainController {
@@ -138,9 +137,9 @@ public final class MainController {
 
     //settings
     @FXML
-    private ComboBox<String> listStyles;
+    private ComboBox<StyleList> listStyles;
     @FXML
-    private ComboBox<String> listLanguages;
+    private ComboBox<LanguageList> listLanguages;
     @FXML
     private Button btnApplySettings;
 
@@ -158,11 +157,28 @@ public final class MainController {
     @FXML
     private Button btnOpenCVStartCamera;
     @FXML
+    private Button btnActivateCamera;
+    @FXML
     private CheckBox grayscale;
+    @FXML
+    private ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection;
+    @FXML
+    private HBox hboxHidden1;
     @FXML
     private ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier;
     @FXML
-    private ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection;
+    private HBox hboxHidden2;
+    @FXML
+    private CheckBox canny;
+    @FXML
+    private Slider threshold;// canny threshold value
+    @FXML
+    private HBox hboxHidden3;
+    @FXML
+    private CheckBox dilateErode;// checkbox for enabling/disabling background removal
+    @FXML
+    private CheckBox inverse;// inverse the threshold value for background removal
+
 
     public MainController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -219,7 +235,8 @@ public final class MainController {
 
     public void initOpenCVTab() {
         final ImageRecognizer imageRecognizer = new ImageRecognizer(primaryStage, btnOpenCVStartCamera,
-                grayscale, comboBoxForTypeOfDetection, comboBoxForTypeOfClassifier);
+                grayscale, comboBoxForTypeOfDetection, comboBoxForTypeOfClassifier,
+                hboxHidden1, hboxHidden2, hboxHidden3, canny, threshold, dilateErode, inverse, btnActivateCamera);
         imageRecognizer.init()
                 .showSimpleCameraInto(imageViewForOpenCV);
     }
