@@ -48,9 +48,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public final class ImageRecognizer {
+public final class MagicTabController {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ImageRecognizer.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(MagicTabController.class);
 
     private final Stage primaryStage;
 
@@ -88,11 +88,11 @@ public final class ImageRecognizer {
     Point clickedPoint = new Point(0, 0);
     Mat oldFrame;
 
-    public ImageRecognizer(final Stage primaryStage, final Button btnOpenCVStartCamera, final CheckBox grayscale,
-                           final ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection,
-                           final ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier,
-                           final HBox hboxHidden1, final HBox hboxHidden2, final HBox hboxHidden3, final CheckBox canny,
-                           final Slider threshold, final CheckBox dilateErode, final CheckBox inverse, Button btnActivateCamera) {
+    public MagicTabController(final Stage primaryStage, final Button btnOpenCVStartCamera, final CheckBox grayscale,
+                              final ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection,
+                              final ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier,
+                              final HBox hboxHidden1, final HBox hboxHidden2, final HBox hboxHidden3, final CheckBox canny,
+                              final Slider threshold, final CheckBox dilateErode, final CheckBox inverse, Button btnActivateCamera) {
         this.primaryStage = primaryStage;
         this.btnOpenCVStartCamera = btnOpenCVStartCamera;
         this.comboBoxForTypeOfDetection = comboBoxForTypeOfDetection;
@@ -110,7 +110,7 @@ public final class ImageRecognizer {
         this.btnActivateCamera = btnActivateCamera;
     }
 
-    public ImageRecognizer init() {
+    public MagicTabController init() {
         primaryStage.setOnCloseRequest((windowEvent -> setClosed()));
         LOGGER.info("Application settings tab is initialising ...");
         populateComboBoxWithTypeOfDetection();

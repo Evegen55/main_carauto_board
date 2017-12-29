@@ -23,7 +23,7 @@
 package controllers;
 
 import controllers.imageViewer.ImageViewController;
-import controllers.openvc.ImageRecognizer;
+import controllers.openvc.MagicTabController;
 import controllers.openvc.RecognizingTypeOfClassifier;
 import controllers.openvc.RecognizingTypeOfDetection;
 import controllers.settings.ApplicationSettingsController;
@@ -236,10 +236,10 @@ public final class MainController {
     }
 
     public void initOpenCVTab() {
-        final ImageRecognizer imageRecognizer = new ImageRecognizer(primaryStage, btnOpenCVStartCamera,
+        final MagicTabController magicTabController = new MagicTabController(primaryStage, btnOpenCVStartCamera,
                 grayscale, comboBoxForTypeOfDetection, comboBoxForTypeOfClassifier,
                 hboxHidden1, hboxHidden2, hboxHidden3, canny, threshold, dilateErode, inverse, btnActivateCamera);
-        imageRecognizer.init()
+        magicTabController.init()
                 .showSimpleCameraInto(imageViewForOpenCV);
     }
 }
