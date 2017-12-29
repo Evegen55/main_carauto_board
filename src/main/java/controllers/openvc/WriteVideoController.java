@@ -47,6 +47,10 @@ public class WriteVideoController {
         return savedFile;
     }
 
+    public VideoWriter getWriter() {
+        return writer;
+    }
+
     /**
      * @param folder
      * @param amountOfFrames can be Float.POSITIVE_INFINITY in case of unknown writing time
@@ -63,7 +67,7 @@ public class WriteVideoController {
             Mat frame = new Mat();
             while (true) {
                 if (camera.read(frame)) {
-                    System.out.println("Captured Frame Width " + frame.width() + " Height " + frame.height());
+                    LOGGER.info("Captured Frame Width " + frame.width() + " Height " + frame.height());
                     writer.write(frame);
                     try {
                         Thread.currentThread().sleep(66);
@@ -78,6 +82,10 @@ public class WriteVideoController {
                 frame.release();
             }
         }
+        releaseResources();
+    }
+
+    public void releaseResources() {
         writer.release();
         camera.release();
     }

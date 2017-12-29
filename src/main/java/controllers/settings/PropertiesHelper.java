@@ -77,6 +77,18 @@ public class PropertiesHelper {
         return style;
     }
 
+    public static String getVideoFolderFromProperties() {
+        String videoFolder = null;
+        try {
+            final Configuration config = FILE_BASED_CONFIGURATION_BUILDER.getConfiguration();
+            videoFolder = config.getString(PropertyList.VIDEO_FOLDER.toString());
+        } catch (ConfigurationException cex) {
+            LOGGER.error("\n" + cex.getCause());
+            cex.printStackTrace();
+        }
+        return videoFolder;
+    }
+
     public static void setProperty(final PropertyList property, final String value) {
         try {
             Configuration config = FILE_BASED_CONFIGURATION_BUILDER.getConfiguration();

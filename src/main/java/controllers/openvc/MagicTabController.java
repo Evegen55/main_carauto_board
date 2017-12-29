@@ -22,6 +22,7 @@
 
 package controllers.openvc;
 
+import controllers.settings.PropertiesHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -88,6 +89,8 @@ public final class MagicTabController {
     private final Button btnOpenCVWriteVideo;
     Point clickedPoint = new Point(0, 0);
     Mat oldFrame;
+
+    private WriteVideoController writeVideoController;
 
     public MagicTabController(final Stage primaryStage, final Button btnOpenCVStartCamera, final CheckBox grayscale,
                               final ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection,
@@ -172,9 +175,56 @@ public final class MagicTabController {
                     case edges:
                         doForEdges(imageViewForOpenCV);
                         break;
+                    case write_video:
+                        writeVideo();
+                        break;
                 }
             }
         });
+
+    }
+
+    private void writeVideo() {
+        final String videoFolderFromProperties = PropertiesHelper.getVideoFolderFromProperties();
+
+        if (!isCameraActive) {
+            // start the video capture
+            VIDEO_CAPTURE.open(cameraId);
+
+            // is the video stream available?
+            if (VIDEO_CAPTURE.isOpened()) {
+                isCameraActive = true;
+
+//                final Mat frame = new Mat();
+//                VIDEO_CAPTURE.read(frame); //here is default minimum resolution
+
+                btnOpenCVWriteVideo.setOnAction(event -> {
+                    writeVideoController = new WriteVideoController(VIDEO_CAPTURE, 1280, 720);
+                    writeVideoController.writeFromCameraToFolder(videoFolderFromProperties, Float.POSITIVE_INFINITY, 15);
+                    // update the button content
+                    btnOpenCVWriteVideo.setText("Stop writing");
+                });
+
+            } else {
+                // log the error
+                LOGGER.error("Impossible to open the camera connection...");
+            }
+        } else {
+            // the camera is not active at this point
+            isCameraActive = false;
+            // update again the button content
+            btnOpenCVWriteVideo.setText("Start writing");
+
+            // stop the timer
+            stopAcquisition();
+
+            // TODO: 12/29/2017 implement release
+            //release writer
+            writeVideoController.releaseResources();
+            if (writeVideoController != null) {
+                writeVideoController.releaseResources();
+            }
+        }
 
     }
 
