@@ -26,6 +26,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +54,7 @@ public final class ApplicationSettingsController {
     }
 
     public static void initSettings(final ComboBox<StyleList> listStylesBox, final ComboBox<LanguageList> listLanguages,
-                                    final Button btnApplySettings) {
+                                    TextField txtFieldPathToVideo, final Button btnApplySettings) {
         LOGGER.info("Application settings tab is initialising ...");
         populateComboBoxWithStyles(listStylesBox);
         populateComboBoxWithLanguages(listLanguages);
@@ -61,13 +62,19 @@ public final class ApplicationSettingsController {
         // TODO: 11/29/2017 pop-up window or suggest to reload map (routes will be erased if reloaded)
         //it retrieves all settings from all fields and boxes and write them into EXTERNAL file only.
         btnApplySettings.setOnAction(action -> {
-            final String styleValueFromComboBox = listStylesBox.getValue().toString();
-            final String languagesValueFromComboBox = listLanguages.getValue().toString();
+
+            final String styleValueFromComboBox = listStylesBox.getValue().toString(); // TODO: 12/29/2017 check NULL listStylesBox.getValue()
+            final String languagesValueFromComboBox = listLanguages.getValue().toString(); // TODO: 12/29/2017 check NULL listLanguages.getValue()
+            final String pathToVideoFolder = txtFieldPathToVideo.getText();
+
             if (styleValueFromComboBox != null) {
                 PropertiesHelper.setProperty(PropertyList.STYLE, styleValueFromComboBox);
             }
             if (languagesValueFromComboBox != null) {
                 PropertiesHelper.setProperty(PropertyList.LANGUAGE, languagesValueFromComboBox);
+            }
+            if (pathToVideoFolder != null) {
+                PropertiesHelper.setProperty(PropertyList.VIDEO_FOLDER, pathToVideoFolder);
             }
         });
 

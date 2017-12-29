@@ -141,6 +141,8 @@ public final class MainController {
     @FXML
     private ComboBox<LanguageList> listLanguages;
     @FXML
+    private TextField txtFieldPathToVideo;
+    @FXML
     private Button btnApplySettings;
 
     //photo viewer
@@ -225,7 +227,7 @@ public final class MainController {
     }
 
     public void initApplicationSettings() {
-        ApplicationSettingsController.initSettings(listStyles, listLanguages, btnApplySettings);
+        ApplicationSettingsController.initSettings(listStyles, listLanguages, txtFieldPathToVideo, btnApplySettings);
     }
 
     public void initPhotoTab() {
