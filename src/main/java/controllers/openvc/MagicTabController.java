@@ -85,6 +85,7 @@ public final class MagicTabController {
     private final CheckBox dilateErode;
     private final CheckBox inverse;
     private final Button btnActivateCamera;
+    private final Button btnOpenCVWriteVideo;
     Point clickedPoint = new Point(0, 0);
     Mat oldFrame;
 
@@ -92,7 +93,8 @@ public final class MagicTabController {
                               final ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection,
                               final ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier,
                               final HBox hboxHidden1, final HBox hboxHidden2, final HBox hboxHidden3, final CheckBox canny,
-                              final Slider threshold, final CheckBox dilateErode, final CheckBox inverse, Button btnActivateCamera) {
+                              final Slider threshold, final CheckBox dilateErode, final CheckBox inverse,
+                              final Button btnActivateCamera, final Button btnOpenCVWriteVideo) {
         this.primaryStage = primaryStage;
         this.btnOpenCVStartCamera = btnOpenCVStartCamera;
         this.comboBoxForTypeOfDetection = comboBoxForTypeOfDetection;
@@ -108,6 +110,9 @@ public final class MagicTabController {
         this.dilateErode = dilateErode;
         this.inverse = inverse;
         this.btnActivateCamera = btnActivateCamera;
+
+        //write video with OpenCV
+        this.btnOpenCVWriteVideo = btnOpenCVWriteVideo;
     }
 
     public MagicTabController init() {

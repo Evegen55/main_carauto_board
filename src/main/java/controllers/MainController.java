@@ -161,6 +161,8 @@ public final class MainController {
     @FXML
     private Button btnActivateCamera;
     @FXML
+    private Button btnOpenCVWriteVideo;
+    @FXML
     private CheckBox grayscale;
     @FXML
     private ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection;
@@ -238,7 +240,7 @@ public final class MainController {
     public void initOpenCVTab() {
         final MagicTabController magicTabController = new MagicTabController(primaryStage, btnOpenCVStartCamera,
                 grayscale, comboBoxForTypeOfDetection, comboBoxForTypeOfClassifier,
-                hboxHidden1, hboxHidden2, hboxHidden3, canny, threshold, dilateErode, inverse, btnActivateCamera);
+                hboxHidden1, hboxHidden2, hboxHidden3, canny, threshold, dilateErode, inverse, btnActivateCamera, btnOpenCVWriteVideo);
         magicTabController.init()
                 .showSimpleCameraInto(imageViewForOpenCV);
     }
