@@ -75,6 +75,7 @@ public final class CarControlBoard extends Application {
     @Override
     public void stop() throws Exception {
         EXECUTOR_SERVICE.shutdownNow();
+        // TODO: 1/12/2018 release all resources
         System.exit(0);
     }
 
