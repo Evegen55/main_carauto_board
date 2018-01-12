@@ -176,7 +176,7 @@ public final class MagicTabController {
                         doForEdges(imageViewForOpenCV);
                         break;
                     case write_video:
-                        writeVideo();
+                        writeVideoToFileAndShowInFrame(imageViewForOpenCV);
                         break;
                 }
             }
@@ -184,8 +184,10 @@ public final class MagicTabController {
 
     }
 
-    private void writeVideo() {
+    private void writeVideoToFileAndShowInFrame(final ImageView imageViewForOpenCV) {
         final String videoFolderFromProperties = PropertiesHelper.getVideoFolderFromProperties();
+        // TODO: 1/12/2018
+//        checkFolderExistence(videoFolderFromProperties);
 
         if (!isCameraActive) {
             // start the video capture
@@ -198,9 +200,29 @@ public final class MagicTabController {
 //                final Mat frame = new Mat();
 //                VIDEO_CAPTURE.read(frame); //here is default minimum resolution
 
+                // every 33 ms (30 frames/sec)
+                // every 66 ms (15 frames/sec)
+                final int timeToRefresh = 66;
+
+                //activate the button to write video
                 btnOpenCVWriteVideo.setOnAction(event -> {
                     writeVideoController = new WriteVideoController(VIDEO_CAPTURE, 1280, 720);
+
+                    // TODO: 1/12/2018 asyncroniously
                     writeVideoController.writeFromCameraToFolder(videoFolderFromProperties, Float.POSITIVE_INFINITY, 15);
+
+                    // grab a frame:
+                    Runnable frameGrabber = () -> {
+                        // effectively grab and process a single frame
+                        final Mat frame = writeVideoController.getCurrentframe();
+                        // convert and show the frame
+                        final Image imageToShow = UtilsOpenCV.mat2Image(frame);
+                        updateImageView(imageViewForOpenCV, imageToShow);
+                    };
+
+                    timer = Executors.newSingleThreadScheduledExecutor();
+                    timer.scheduleAtFixedRate(frameGrabber, 0, timeToRefresh, TimeUnit.MILLISECONDS);
+
                     // update the button content
                     btnOpenCVWriteVideo.setText("Stop writing");
                 });
@@ -218,9 +240,7 @@ public final class MagicTabController {
             // stop the timer
             stopAcquisition();
 
-            // TODO: 12/29/2017 implement release
             //release writer
-            writeVideoController.releaseResources();
             if (writeVideoController != null) {
                 writeVideoController.releaseResources();
             }

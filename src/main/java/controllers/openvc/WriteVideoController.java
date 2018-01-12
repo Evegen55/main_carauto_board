@@ -27,6 +27,8 @@ public class WriteVideoController {
 
     private String savedFile;
 
+    private Mat currentFrame;
+
     public WriteVideoController(int cameraIndex, int width, int heigth) {
         this.camera = new VideoCapture(cameraIndex);
         this.width = width;
@@ -47,8 +49,8 @@ public class WriteVideoController {
         return savedFile;
     }
 
-    public VideoWriter getWriter() {
-        return writer;
+    public Mat getCurrentframe() {
+        return currentFrame;
     }
 
     /**
@@ -69,6 +71,7 @@ public class WriteVideoController {
                 if (camera.read(frame)) {
                     LOGGER.info("Captured Frame Width " + frame.width() + " Height " + frame.height());
                     writer.write(frame);
+                    currentFrame = frame;
                     try {
                         Thread.currentThread().sleep(66);
                     } catch (InterruptedException e) {
