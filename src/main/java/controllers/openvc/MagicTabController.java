@@ -49,6 +49,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static app.CarControlBoard.EXECUTOR_SERVICE;
+
 public final class MagicTabController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(MagicTabController.class);
@@ -208,8 +210,10 @@ public final class MagicTabController {
                 btnOpenCVWriteVideo.setOnAction(event -> {
                     writeVideoController = new WriteVideoController(VIDEO_CAPTURE, 1280, 720);
 
-                    // TODO: 1/12/2018 asyncroniously
-                    writeVideoController.writeFromCameraToFolder(videoFolderFromProperties, Float.POSITIVE_INFINITY, 15);
+                    // TODO: 1/12/2018 works unstable try to find why
+                    EXECUTOR_SERVICE.submit(() -> {
+                        writeVideoController.writeFromCameraToFolder(videoFolderFromProperties, Float.POSITIVE_INFINITY, 15);
+                    });
 
                     // grab a frame:
                     Runnable frameGrabber = () -> {
