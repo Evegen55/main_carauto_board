@@ -873,6 +873,9 @@ public final class MagicTabController {
                 LOGGER.error("Something went wrong" + e);
                 e.printStackTrace();
             }
+        } else {
+            LOGGER.info("The folder for storing video EXISTS");
+            return true;
         }
         return false;
     }

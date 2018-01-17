@@ -1,5 +1,7 @@
 package controllers.openvc;
 
+import javafx.util.converter.LocalDateTimeStringConverter;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.videoio.VideoCapture;
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class WriteVideoController {
 
@@ -94,10 +97,14 @@ public class WriteVideoController {
     }
 
     private String getVideoFileName(final String folder) {
+        final String timeMark = LocalDateTime.now().toString();
+        final String timeMarkprepared = timeMark
+                .replace(':', '-');
+
         savedFile = new StringBuilder().append(folder)
                 .append(FILE_SEPARATOR).append(VIDEO_FILE_NAME_ROOT)
                 .append("_")
-                .append(LocalDate.now()) // TODO: 12/29/2017 add time with no :
+                .append(timeMarkprepared)
                 .append("_")
                 .append(VIDEO_FILE_NAME_EXTENSION).toString();
         return savedFile;
