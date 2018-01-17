@@ -43,6 +43,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.UtilsOpenCV;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -235,11 +239,14 @@ public final class MagicTabController {
     */
     private void doWritingActions(final ImageView imageViewForOpenCV) {
         final String videoFolderFromProperties = PropertiesHelper.getVideoFolderFromProperties();
-        checkFolderExistence(videoFolderFromProperties);
-        //activate the button to write video
-        btnOpenCVWriteVideo.setDisable(false);
-        // TODO: 1/17/2018 pass imageView to action
-        btnOpenCVWriteVideo.setOnAction(event -> startWriteOnBackground(videoFolderFromProperties));
+        //we can write a video only if folder exists
+        if (checkFolderExistence(videoFolderFromProperties)) {
+            //activate the button to write video
+            btnOpenCVWriteVideo.setDisable(false);
+            // TODO: 1/17/2018 pass imageView to action
+            btnOpenCVWriteVideo.setOnAction(event -> startWriteOnBackground(videoFolderFromProperties));
+        }
+
     }
 
     //=================================                                            =====================================
@@ -855,7 +862,18 @@ public final class MagicTabController {
     /*
     it check a folder. If it doesn't exist - method creates one.
      */
-    private void checkFolderExistence(final String videoFolderFromProperties) {
-        // TODO: 1/17/2018
+    private boolean checkFolderExistence(final String videoFolderFromProperties) {
+        final Path path = Paths.get(videoFolderFromProperties);
+        if (!Files.exists(path)) {
+            LOGGER.warn("The folder for storing video DOESN'T exists and will be created");
+            try {
+                Files.createDirectory(path); //we can return the full path if it needs
+                return true;
+            } catch (IOException e) {
+                LOGGER.error("Something went wrong" + e);
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 }
