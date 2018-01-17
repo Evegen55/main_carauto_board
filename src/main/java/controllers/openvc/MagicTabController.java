@@ -50,8 +50,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static app.CarControlBoard.EXECUTOR_SERVICE;
-
 public final class MagicTabController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(MagicTabController.class);
@@ -179,98 +177,31 @@ public final class MagicTabController {
                         doForEdges(imageViewForOpenCV);
                         break;
                     case write_video:
-                        writeVideoToFileAndShowInFrame(imageViewForOpenCV);
+                        doWritingActions(imageViewForOpenCV);
                         break;
                 }
             }
         });
-
     }
 
-    private void writeVideoToFileAndShowInFrame(final ImageView imageViewForOpenCV) {
-        final String videoFolderFromProperties = PropertiesHelper.getVideoFolderFromProperties();
-        // TODO: 1/12/2018
-//        checkFolderExistence(videoFolderFromProperties);
-
-        if (!isCameraActive) {
-            // start the video capture
-            VIDEO_CAPTURE.open(cameraId);
-
-            // is the video stream available?
-            if (VIDEO_CAPTURE.isOpened()) {
-                isCameraActive = true;
-
-//                final Mat frame = new Mat();
-//                VIDEO_CAPTURE.read(frame); //here is default minimum resolution
-
-                // every 33 ms (30 frames/sec)
-                // every 66 ms (15 frames/sec)
-                final int timeToRefresh = 66;
-
-                //activate the button to write video
-                btnOpenCVWriteVideo.setOnAction(event -> {
-                    writeVideoController = new WriteVideoController(VIDEO_CAPTURE, 1280, 720);
-
-                    // TODO: 1/12/2018 works unstable try to find why
-                    EXECUTOR_SERVICE.submit(() -> {
-                        writeVideoController.writeFromCameraToFolder(videoFolderFromProperties, Float.POSITIVE_INFINITY, 15);
-                    });
-
-                    // grab a frame:
-                    Runnable frameGrabber = () -> {
-                        // effectively grab and process a single frame
-//                        final Mat frame = writeVideoController.getCurrentframe();
-//                        if (frame != null) {
-//                            // convert and show the frame
-//                            final Image imageToShow = UtilsOpenCV.mat2Image(frame);
-//                            updateImageView(imageViewForOpenCV, imageToShow);
-//                        }
-//
-                    };
-
-                    timer = Executors.newSingleThreadScheduledExecutor();
-                    timer.scheduleAtFixedRate(frameGrabber, 0, timeToRefresh, TimeUnit.MILLISECONDS);
-//                    timer.scheduleAtFixedRate(frameWriter, 1, timeToRefresh, TimeUnit.MILLISECONDS);
-
-                    // update the button content
-                    btnOpenCVWriteVideo.setText("Stop writing");
-                });
-
-            } else {
-                // log the error
-                LOGGER.error("Impossible to open the camera connection...");
-            }
-        } else {
-            // the camera is not active at this point
-            isCameraActive = false;
-            // update again the button content
-            btnOpenCVWriteVideo.setText("Start writing");
-
-            // stop the timer
-            stopAcquisition();
-
-            //release writer
-            if (writeVideoController != null) {
-                writeVideoController.releaseResources();
-            }
-        }
-
+    private void populateComboBoxWithTypeofclassifiers() {
+        final ObservableList<RecognizingTypeOfClassifier> detections = FXCollections.observableArrayList();
+        final RecognizingTypeOfClassifier[] values = RecognizingTypeOfClassifier.values();
+        detections.addAll(Arrays.asList(values));
+        comboBoxForTypeOfClassifier.setItems(detections);
     }
 
+    private void populateComboBoxWithTypeOfDetection() {
+        final ObservableList<RecognizingTypeOfDetection> detections = FXCollections.observableArrayList();
+        final RecognizingTypeOfDetection[] values = RecognizingTypeOfDetection.values();
+        detections.addAll(Arrays.asList(values));
+        comboBoxForTypeOfDetection.setItems(detections);
+    }
+
+    //=================================================== assign button's behavior =====================================
     /*
     It overrides behaviour for btnOpenCVStartCamera
-     */
-    private void doForEdges(ImageView imageViewForOpenCV) {
-        btnOpenCVStartCamera.setDisable(false);
-        btnOpenCVStartCamera.setOnAction(event -> {
-            LOGGER.info("Start detecting edges from a stream captured from camera to a " + imageViewForOpenCV.getId());
-            startCameraEdges(imageViewForOpenCV);
-        });
-    }
-
-    /*
-    It overrides behaviour for btnOpenCVStartCamera
-     */
+    */
     private void doWithClassifiers(final RecognizingTypeOfDetection typeOfDetection, ImageView imageViewForOpenCV) {
         final RecognizingTypeOfClassifier typeOfClassifierValue = comboBoxForTypeOfClassifier.getValue();
         if (typeOfClassifierValue != null) {
@@ -287,19 +218,32 @@ public final class MagicTabController {
         }
     }
 
-    private void populateComboBoxWithTypeofclassifiers() {
-        final ObservableList<RecognizingTypeOfClassifier> detections = FXCollections.observableArrayList();
-        final RecognizingTypeOfClassifier[] values = RecognizingTypeOfClassifier.values();
-        detections.addAll(Arrays.asList(values));
-        comboBoxForTypeOfClassifier.setItems(detections);
+    /*
+    It overrides behaviour for btnOpenCVStartCamera
+     */
+    private void doForEdges(ImageView imageViewForOpenCV) {
+        btnOpenCVStartCamera.setDisable(false);
+        btnOpenCVStartCamera.setOnAction(event -> {
+            LOGGER.info("Start detecting edges from a stream captured from camera to a " + imageViewForOpenCV.getId());
+            startCameraEdges(imageViewForOpenCV);
+        });
     }
 
-    private void populateComboBoxWithTypeOfDetection() {
-        final ObservableList<RecognizingTypeOfDetection> detections = FXCollections.observableArrayList();
-        final RecognizingTypeOfDetection[] values = RecognizingTypeOfDetection.values();
-        detections.addAll(Arrays.asList(values));
-        comboBoxForTypeOfDetection.setItems(detections);
+    /*
+    It overrides behaviour for btnOpenCVWriteVideo
+    */
+    private void doWritingActions(final ImageView imageViewForOpenCV) {
+        final String videoFolderFromProperties = PropertiesHelper.getVideoFolderFromProperties();
+        // TODO: 1/12/2018
+//        checkFolderExistence(videoFolderFromProperties);
+        //activate the button to write video
+        btnOpenCVWriteVideo.setDisable(false);
+        btnOpenCVWriteVideo.setOnAction(event -> startWriteOnBackground(videoFolderFromProperties));
     }
+
+    //=================================                                            =====================================
+    //===============================  core logic can be moved to another controller  ==================================
+    //=================================                                            =====================================
 
     private boolean retrieveSettingsAndLoadClassifier(final RecognizingTypeOfDetection typeOfDetectionValue,
                                                       final RecognizingTypeOfClassifier typeOfClassifierValue) {
@@ -843,5 +787,67 @@ public final class MagicTabController {
 
         // now the capture can start
         btnOpenCVStartCamera.setDisable(false);
+    }
+
+    //==================================================   writing a videofile  ========================================
+    /*
+    TODO: 1/17/2018 now it can write video without showing it on the display.
+    TODO: In order to do it needs a thread-safe buffer
+    */
+    private void startWriteOnBackground(String videoFolderFromProperties) {
+        if (!isCameraActive) {
+            // start the video capture
+            VIDEO_CAPTURE.open(cameraId);
+
+            // is the video stream available?
+            if (VIDEO_CAPTURE.isOpened()) {
+                isCameraActive = true;
+
+//                final Mat frame = new Mat();
+//                VIDEO_CAPTURE.read(frame); //here is default minimum resolution
+
+                // every 33 ms (30 frames/sec)
+                // every 66 ms (15 frames/sec)
+                final int timeToRefresh = 66;
+                writeVideoController = new WriteVideoController(VIDEO_CAPTURE, 1280, 720);
+
+                Runnable frameWriter = () -> {
+                    writeVideoController.writeFromCameraToFolder(videoFolderFromProperties, Float.POSITIVE_INFINITY, 15);
+                };
+
+                // grab a frame:
+                Runnable frameGrabber = () -> {
+                    // effectively grab and process a single frame
+//                        final Mat frame = writeVideoController.getCurrentframe();
+//                        if (frame != null) {
+//                            // convert and show the frame
+//                            final Image imageToShow = UtilsOpenCV.mat2Image(frame);
+//                            updateImageView(imageViewForOpenCV, imageToShow);
+//                        }
+//
+                };
+
+                timer = Executors.newSingleThreadScheduledExecutor();
+//                    timer.scheduleAtFixedRate(frameGrabber, 0, timeToRefresh, TimeUnit.MILLISECONDS);
+                timer.scheduleAtFixedRate(frameWriter, 0, timeToRefresh, TimeUnit.MILLISECONDS);
+
+                // update the button content
+                btnOpenCVWriteVideo.setText("Stop writing");
+            } else {
+                // log the error
+                LOGGER.error("Impossible to open the camera connection...");
+            }
+        } else {
+            // the camera is not active at this point
+            isCameraActive = false;
+            // update again the button content
+            btnOpenCVWriteVideo.setText("Start writing");
+            // stop the timer
+            stopAcquisition();
+            //release writer
+            if (writeVideoController != null) {
+                writeVideoController.releaseResources();
+            }
+        }
     }
 }
