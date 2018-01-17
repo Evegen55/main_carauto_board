@@ -235,10 +235,10 @@ public final class MagicTabController {
     */
     private void doWritingActions(final ImageView imageViewForOpenCV) {
         final String videoFolderFromProperties = PropertiesHelper.getVideoFolderFromProperties();
-        // TODO: 1/12/2018
-//        checkFolderExistence(videoFolderFromProperties);
+        checkFolderExistence(videoFolderFromProperties);
         //activate the button to write video
         btnOpenCVWriteVideo.setDisable(false);
+        // TODO: 1/17/2018 pass imageView to action
         btnOpenCVWriteVideo.setOnAction(event -> startWriteOnBackground(videoFolderFromProperties));
     }
 
@@ -850,5 +850,12 @@ public final class MagicTabController {
                 writeVideoController.releaseResources();
             }
         }
+    }
+
+    /*
+    it check a folder. If it doesn't exist - method creates one.
+     */
+    private void checkFolderExistence(final String videoFolderFromProperties) {
+        // TODO: 1/17/2018
     }
 }
