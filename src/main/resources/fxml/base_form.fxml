@@ -376,7 +376,28 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <VBox alignment="CENTER" layoutX="203.0" layoutY="569.0" prefHeight="127.0" prefWidth="361.0" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="202.0">
+                              <VBox layoutX="233.0" layoutY="494.0">
+                                 <children>
+                                    <VBox fx:id="vboxHidden2" prefHeight="48.0" prefWidth="301.0">
+                                       <children>
+                                          <CheckBox fx:id="canny" text="Edge detection" /><!--onAction="#cannySelected"-->
+                                          <Label text="Canny Threshold" />
+                                          <Slider fx:id="threshold" disable="true" />
+                                       </children>
+                                    </VBox>
+                                    <Separator prefWidth="200.0" />
+                                    <HBox fx:id="hboxHidden3" alignment="CENTER_LEFT" spacing="10.0">
+                                       <children>
+                                          <CheckBox fx:id="dilateErode" text="Background removal" /><!--onAction="#dilateErodeSelected"-->
+                                          <CheckBox fx:id="inverse" disable="true" text="Invert" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" layoutX="14.0" layoutY="492.0" prefHeight="76.0" prefWidth="152.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="600.0">
                                  <children>
                                     <HBox>
                                        <children>
@@ -396,38 +417,18 @@
                                        </children>
                                     </HBox>
                                     <Separator prefWidth="200.0" />
-                                    <HBox fx:id="hboxHidden2" alignment="CENTER_LEFT" spacing="10.0">
-                                       <children>
-                                          <CheckBox fx:id="canny" text="Edge detection" /><!--onAction="#cannySelected"-->
-                                          <Label text="Canny Threshold" />
-                                          <Slider fx:id="threshold" disable="true" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" top="10.0" />
-                                       </padding>
-                                    </HBox>
-                                    <Separator prefWidth="200.0" />
-                                    <HBox fx:id="hboxHidden3" alignment="CENTER_LEFT" spacing="10.0">
-                                       <children>
-                                          <CheckBox fx:id="dilateErode" text="Background removal" /><!--onAction="#dilateErodeSelected"-->
-                                          <CheckBox fx:id="inverse" disable="true" text="Invert" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" top="10.0" />
-                                       </padding>
-                                    </HBox>
                                  </children>
                               </VBox>
-                              <Pane layoutX="83.0" layoutY="50.0">
+                              <VBox layoutX="652.0" layoutY="493.0" prefHeight="75.0" prefWidth="101.0">
                                  <children>
-                                    <HBox layoutX="222.0" layoutY="479.0">
-                                       <children>
-                                          <Button fx:id="btnActivateCamera" layoutX="222.0" layoutY="480.0" mnemonicParsing="false" text="Activate camera" />
-                                          <Button fx:id="btnOpenCVStartCamera" layoutX="335.0" layoutY="479.0" mnemonicParsing="false" text="Push it!" />
-                                          <Button fx:id="btnOpenCVWriteVideo" mnemonicParsing="false" text="Start writing" />
-                                       </children>
-                                    </HBox>
-                                    <ImageView fx:id="imageViewForOpenCV" fitHeight="480.0" fitWidth="600.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="323.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="182.0" AnchorPane.topAnchor="0.0" />
+                                    <Button fx:id="btnActivateCamera" layoutX="222.0" layoutY="480.0" mnemonicParsing="false" prefWidth="110.0" text="Activate camera" />
+                                    <Button fx:id="btnOpenCVStartCamera" mnemonicParsing="false" prefWidth="110.0" text="Do Magic!" />
+                                    <Button fx:id="btnOpenCVWriteVideo" mnemonicParsing="false" prefWidth="110.0" text="Start writing" />
+                                 </children>
+                              </VBox>
+                              <Pane layoutX="113.0" layoutY="14.0" prefHeight="480.0" prefWidth="640.0">
+                                 <children>
+                                    <ImageView fx:id="imageViewForOpenCV" fitHeight="480.0" fitWidth="640.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="323.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="182.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </Pane>
                            </children>
