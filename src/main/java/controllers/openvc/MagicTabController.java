@@ -125,6 +125,7 @@ public final class MagicTabController {
         populateComboBoxWithTypeOfDetection();
         populateComboBoxWithTypeofclassifiers();
         btnOpenCVStartCamera.setDisable(true);
+        btnOpenCVWriteVideo.setDisable(true);
         hboxHidden1.setDisable(true);
         vboxHidden2.setDisable(true);
         hboxHidden3.setDisable(true);
