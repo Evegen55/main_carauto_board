@@ -32,6 +32,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
@@ -81,7 +82,7 @@ public final class MagicTabController {
 
     //edge detection and hide unappropriated functionality
     private final HBox hboxHidden1;
-    private final HBox hboxHidden2;
+    private final VBox vboxHidden2;
     private final HBox hboxHidden3;
     private final CheckBox canny;
     private final Slider threshold;
@@ -97,7 +98,7 @@ public final class MagicTabController {
     public MagicTabController(final Stage primaryStage, final Button btnOpenCVStartCamera, final CheckBox grayscale,
                               final ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection,
                               final ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier,
-                              final HBox hboxHidden1, final HBox hboxHidden2, final HBox hboxHidden3, final CheckBox canny,
+                              final HBox hboxHidden1, final VBox vboxHidden2, final HBox hboxHidden3, final CheckBox canny,
                               final Slider threshold, final CheckBox dilateErode, final CheckBox inverse,
                               final Button btnActivateCamera, final Button btnOpenCVWriteVideo) {
         this.primaryStage = primaryStage;
@@ -108,7 +109,7 @@ public final class MagicTabController {
 
         //edge detection and hide unappropriated functionality
         this.hboxHidden1 = hboxHidden1;
-        this.hboxHidden2 = hboxHidden2;
+        this.vboxHidden2 = vboxHidden2;
         this.hboxHidden3 = hboxHidden3;
         this.canny = canny;
         this.threshold = threshold;
@@ -127,7 +128,7 @@ public final class MagicTabController {
         populateComboBoxWithTypeofclassifiers();
         btnOpenCVStartCamera.setDisable(true);
         hboxHidden1.setDisable(true);
-        hboxHidden2.setDisable(true);
+        vboxHidden2.setDisable(true);
         hboxHidden3.setDisable(true);
         threshold.setShowTickLabels(true);
         canny.setOnAction(event -> cannySelected());
@@ -147,17 +148,17 @@ public final class MagicTabController {
                 switch (typeOfDetection) {
                     case face:
                         hboxHidden1.setDisable(false);
-                        hboxHidden2.setDisable(true);
+                        vboxHidden2.setDisable(true);
                         hboxHidden3.setDisable(true);
                         break;
                     case plates_rus:
                         hboxHidden1.setDisable(false);
-                        hboxHidden2.setDisable(true);
+                        vboxHidden2.setDisable(true);
                         hboxHidden3.setDisable(true);
                         break;
                     case edges:
                         hboxHidden1.setDisable(true);
-                        hboxHidden2.setDisable(false);
+                        vboxHidden2.setDisable(false);
                         hboxHidden3.setDisable(false);
                         break;
                 }
@@ -218,14 +219,18 @@ public final class MagicTabController {
                     // grab a frame:
                     Runnable frameGrabber = () -> {
                         // effectively grab and process a single frame
-                        final Mat frame = writeVideoController.getCurrentframe();
-                        // convert and show the frame
-                        final Image imageToShow = UtilsOpenCV.mat2Image(frame);
-                        updateImageView(imageViewForOpenCV, imageToShow);
+//                        final Mat frame = writeVideoController.getCurrentframe();
+//                        if (frame != null) {
+//                            // convert and show the frame
+//                            final Image imageToShow = UtilsOpenCV.mat2Image(frame);
+//                            updateImageView(imageViewForOpenCV, imageToShow);
+//                        }
+//
                     };
 
                     timer = Executors.newSingleThreadScheduledExecutor();
                     timer.scheduleAtFixedRate(frameGrabber, 0, timeToRefresh, TimeUnit.MILLISECONDS);
+//                    timer.scheduleAtFixedRate(frameWriter, 1, timeToRefresh, TimeUnit.MILLISECONDS);
 
                     // update the button content
                     btnOpenCVWriteVideo.setText("Stop writing");
