@@ -22,6 +22,7 @@
 
 package controllers.openvc;
 
+import controllers.settings.PropertiesHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -31,6 +32,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
@@ -41,6 +43,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.UtilsOpenCV;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,9 +54,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public final class ImageRecognizer {
+public final class MagicTabController {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ImageRecognizer.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(MagicTabController.class);
 
     private final Stage primaryStage;
 
@@ -78,21 +84,25 @@ public final class ImageRecognizer {
 
     //edge detection and hide unappropriated functionality
     private final HBox hboxHidden1;
-    private final HBox hboxHidden2;
+    private final VBox vboxHidden2;
     private final HBox hboxHidden3;
     private final CheckBox canny;
     private final Slider threshold;
     private final CheckBox dilateErode;
     private final CheckBox inverse;
     private final Button btnActivateCamera;
+    private final Button btnOpenCVWriteVideo;
     Point clickedPoint = new Point(0, 0);
     Mat oldFrame;
 
-    public ImageRecognizer(final Stage primaryStage, final Button btnOpenCVStartCamera, final CheckBox grayscale,
-                           final ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection,
-                           final ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier,
-                           final HBox hboxHidden1, final HBox hboxHidden2, final HBox hboxHidden3, final CheckBox canny,
-                           final Slider threshold, final CheckBox dilateErode, final CheckBox inverse, Button btnActivateCamera) {
+    private WriteVideoController writeVideoController;
+
+    public MagicTabController(final Stage primaryStage, final Button btnOpenCVStartCamera, final CheckBox grayscale,
+                              final ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection,
+                              final ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier,
+                              final HBox hboxHidden1, final VBox vboxHidden2, final HBox hboxHidden3, final CheckBox canny,
+                              final Slider threshold, final CheckBox dilateErode, final CheckBox inverse,
+                              final Button btnActivateCamera, final Button btnOpenCVWriteVideo) {
         this.primaryStage = primaryStage;
         this.btnOpenCVStartCamera = btnOpenCVStartCamera;
         this.comboBoxForTypeOfDetection = comboBoxForTypeOfDetection;
@@ -101,23 +111,27 @@ public final class ImageRecognizer {
 
         //edge detection and hide unappropriated functionality
         this.hboxHidden1 = hboxHidden1;
-        this.hboxHidden2 = hboxHidden2;
+        this.vboxHidden2 = vboxHidden2;
         this.hboxHidden3 = hboxHidden3;
         this.canny = canny;
         this.threshold = threshold;
         this.dilateErode = dilateErode;
         this.inverse = inverse;
         this.btnActivateCamera = btnActivateCamera;
+
+        //write video with OpenCV
+        this.btnOpenCVWriteVideo = btnOpenCVWriteVideo;
     }
 
-    public ImageRecognizer init() {
+    public MagicTabController init() {
         primaryStage.setOnCloseRequest((windowEvent -> setClosed()));
         LOGGER.info("Application settings tab is initialising ...");
         populateComboBoxWithTypeOfDetection();
         populateComboBoxWithTypeofclassifiers();
         btnOpenCVStartCamera.setDisable(true);
+        btnOpenCVWriteVideo.setDisable(true);
         hboxHidden1.setDisable(true);
-        hboxHidden2.setDisable(true);
+        vboxHidden2.setDisable(true);
         hboxHidden3.setDisable(true);
         threshold.setShowTickLabels(true);
         canny.setOnAction(event -> cannySelected());
@@ -137,18 +151,27 @@ public final class ImageRecognizer {
                 switch (typeOfDetection) {
                     case face:
                         hboxHidden1.setDisable(false);
-                        hboxHidden2.setDisable(true);
+                        vboxHidden2.setDisable(true);
                         hboxHidden3.setDisable(true);
+                        btnOpenCVWriteVideo.setDisable(true);
                         break;
                     case plates_rus:
                         hboxHidden1.setDisable(false);
-                        hboxHidden2.setDisable(true);
+                        vboxHidden2.setDisable(true);
                         hboxHidden3.setDisable(true);
+                        btnOpenCVWriteVideo.setDisable(true);
                         break;
                     case edges:
                         hboxHidden1.setDisable(true);
-                        hboxHidden2.setDisable(false);
+                        vboxHidden2.setDisable(false);
                         hboxHidden3.setDisable(false);
+                        btnOpenCVWriteVideo.setDisable(true);
+                        break;
+                    case write_video:
+                        hboxHidden1.setDisable(true);
+                        vboxHidden2.setDisable(true);
+                        hboxHidden3.setDisable(true);
+                        btnOpenCVStartCamera.setDisable(true);
                         break;
                 }
             }
@@ -167,40 +190,12 @@ public final class ImageRecognizer {
                     case edges:
                         doForEdges(imageViewForOpenCV);
                         break;
+                    case write_video:
+                        doWritingActions(imageViewForOpenCV);
+                        break;
                 }
             }
         });
-
-    }
-
-    /*
-    It overrides behaviour for btnOpenCVStartCamera
-     */
-    private void doForEdges(ImageView imageViewForOpenCV) {
-        btnOpenCVStartCamera.setDisable(false);
-        btnOpenCVStartCamera.setOnAction(event -> {
-            LOGGER.info("Start detecting edges from a stream captured from camera to a " + imageViewForOpenCV.getId());
-            startCameraEdges(imageViewForOpenCV);
-        });
-    }
-
-    /*
-    It overrides behaviour for btnOpenCVStartCamera
-     */
-    private void doWithClassifiers(final RecognizingTypeOfDetection typeOfDetection, ImageView imageViewForOpenCV) {
-        final RecognizingTypeOfClassifier typeOfClassifierValue = comboBoxForTypeOfClassifier.getValue();
-        if (typeOfClassifierValue != null) {
-            final boolean success = retrieveSettingsAndLoadClassifier(typeOfDetection, typeOfClassifierValue);
-            if (success) {
-                btnOpenCVStartCamera.setDisable(false);
-                btnOpenCVStartCamera.setOnAction(event1 -> {
-                    LOGGER.info("Start showing a stream captured from camera to a " + imageViewForOpenCV.getId());
-                    startCamera(imageViewForOpenCV);
-                });
-            } else {
-                LOGGER.warn("Settings weren't setup");
-            }
-        }
     }
 
     private void populateComboBoxWithTypeofclassifiers() {
@@ -216,6 +211,59 @@ public final class ImageRecognizer {
         detections.addAll(Arrays.asList(values));
         comboBoxForTypeOfDetection.setItems(detections);
     }
+
+    //=================================================== assign button's behavior =====================================
+    /*
+    It overrides behaviour for btnOpenCVStartCamera
+    */
+    private void doWithClassifiers(final RecognizingTypeOfDetection typeOfDetection, ImageView imageViewForOpenCV) {
+        final RecognizingTypeOfClassifier typeOfClassifierValue = comboBoxForTypeOfClassifier.getValue();
+        if (typeOfClassifierValue != null) {
+            final boolean success = retrieveSettingsAndLoadClassifier(typeOfDetection, typeOfClassifierValue);
+            if (success) {
+                btnOpenCVWriteVideo.setDisable(true);
+                btnOpenCVStartCamera.setDisable(false);
+                btnOpenCVStartCamera.setOnAction(event1 -> {
+                    LOGGER.info("Start showing a stream captured from camera to a " + imageViewForOpenCV.getId());
+                    startCamera(imageViewForOpenCV);
+                });
+            } else {
+                LOGGER.warn("Settings weren't setup");
+            }
+        }
+    }
+
+    /*
+    It overrides behaviour for btnOpenCVStartCamera
+     */
+    private void doForEdges(ImageView imageViewForOpenCV) {
+        btnOpenCVWriteVideo.setDisable(true);
+        btnOpenCVStartCamera.setDisable(false);
+        btnOpenCVStartCamera.setOnAction(event -> {
+            LOGGER.info("Start detecting edges from a stream captured from camera to a " + imageViewForOpenCV.getId());
+            startCameraEdges(imageViewForOpenCV);
+        });
+    }
+
+    /*
+    It overrides behaviour for btnOpenCVWriteVideo
+    */
+    private void doWritingActions(final ImageView imageViewForOpenCV) {
+        final String videoFolderFromProperties = PropertiesHelper.getVideoFolderFromProperties();
+        //we can write a video only if folder exists
+        if (checkFolderExistence(videoFolderFromProperties)) {
+            btnOpenCVStartCamera.setDisable(true);
+            //activate the button to write video
+            btnOpenCVWriteVideo.setDisable(false);
+            // TODO: 1/17/2018 pass imageView to action
+            btnOpenCVWriteVideo.setOnAction(event -> startWriteOnBackground(videoFolderFromProperties));
+        }
+
+    }
+
+    //=================================                                            =====================================
+    //===============================  core logic can be moved to another controller  ==================================
+    //=================================                                            =====================================
 
     private boolean retrieveSettingsAndLoadClassifier(final RecognizingTypeOfDetection typeOfDetectionValue,
                                                       final RecognizingTypeOfClassifier typeOfClassifierValue) {
@@ -759,5 +807,88 @@ public final class ImageRecognizer {
 
         // now the capture can start
         btnOpenCVStartCamera.setDisable(false);
+    }
+
+    //==================================================   writing a videofile  ========================================
+    /*
+    TODO: 1/17/2018 now it can write video without showing it on the display.
+    TODO: In order to do it needs a thread-safe buffer
+    */
+    private void startWriteOnBackground(String videoFolderFromProperties) {
+        if (!isCameraActive) {
+            // start the video capture
+            VIDEO_CAPTURE.open(cameraId);
+
+            // is the video stream available?
+            if (VIDEO_CAPTURE.isOpened()) {
+                isCameraActive = true;
+
+//                final Mat frame = new Mat();
+//                VIDEO_CAPTURE.read(frame); //here is default minimum resolution
+
+                // every 33 ms (30 frames/sec)
+                // every 66 ms (15 frames/sec)
+                final int timeToRefresh = 66;
+                writeVideoController = new WriteVideoController(VIDEO_CAPTURE, 1280, 720);
+
+                Runnable frameWriter = () -> {
+                    writeVideoController.writeFromCameraToFolder(videoFolderFromProperties, Float.POSITIVE_INFINITY, 15);
+                };
+
+                // grab a frame:
+                Runnable frameGrabber = () -> {
+                    // effectively grab and process a single frame
+//                        final Mat frame = writeVideoController.getCurrentframe();
+//                        if (frame != null) {
+//                            // convert and show the frame
+//                            final Image imageToShow = UtilsOpenCV.mat2Image(frame);
+//                            updateImageView(imageViewForOpenCV, imageToShow);
+//                        }
+//
+                };
+
+                timer = Executors.newSingleThreadScheduledExecutor();
+//                    timer.scheduleAtFixedRate(frameGrabber, 0, timeToRefresh, TimeUnit.MILLISECONDS);
+                timer.scheduleAtFixedRate(frameWriter, 0, timeToRefresh, TimeUnit.MILLISECONDS);
+
+                // update the button content
+                btnOpenCVWriteVideo.setText("Stop writing");
+            } else {
+                // log the error
+                LOGGER.error("Impossible to open the camera connection...");
+            }
+        } else {
+            // the camera is not active at this point
+            isCameraActive = false;
+            // update again the button content
+            btnOpenCVWriteVideo.setText("Start writing");
+            // stop the timer
+            stopAcquisition();
+            //release writer
+            if (writeVideoController != null) {
+                writeVideoController.releaseResources();
+            }
+        }
+    }
+
+    /*
+    it check a folder. If it doesn't exist - method creates one.
+     */
+    private boolean checkFolderExistence(final String videoFolderFromProperties) {
+        final Path path = Paths.get(videoFolderFromProperties);
+        if (!Files.exists(path)) {
+            LOGGER.warn("The folder for storing video DOESN'T exists and will be created");
+            try {
+                Files.createDirectory(path); //we can return the full path if it needs
+                return true;
+            } catch (IOException e) {
+                LOGGER.error("Something went wrong" + e);
+                e.printStackTrace();
+            }
+        } else {
+            LOGGER.info("The folder for storing video EXISTS");
+            return true;
+        }
+        return false;
     }
 }

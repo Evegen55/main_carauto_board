@@ -23,7 +23,7 @@
 package controllers;
 
 import controllers.imageViewer.ImageViewController;
-import controllers.openvc.ImageRecognizer;
+import controllers.openvc.MagicTabController;
 import controllers.openvc.RecognizingTypeOfClassifier;
 import controllers.openvc.RecognizingTypeOfDetection;
 import controllers.settings.ApplicationSettingsController;
@@ -141,6 +141,8 @@ public final class MainController {
     @FXML
     private ComboBox<LanguageList> listLanguages;
     @FXML
+    private TextField txtFieldPathToVideo;
+    @FXML
     private Button btnApplySettings;
 
     //photo viewer
@@ -159,6 +161,8 @@ public final class MainController {
     @FXML
     private Button btnActivateCamera;
     @FXML
+    private Button btnOpenCVWriteVideo;
+    @FXML
     private CheckBox grayscale;
     @FXML
     private ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection;
@@ -167,7 +171,7 @@ public final class MainController {
     @FXML
     private ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier;
     @FXML
-    private HBox hboxHidden2;
+    private VBox vboxHidden2;
     @FXML
     private CheckBox canny;
     @FXML
@@ -225,7 +229,7 @@ public final class MainController {
     }
 
     public void initApplicationSettings() {
-        ApplicationSettingsController.initSettings(listStyles, listLanguages, btnApplySettings);
+        ApplicationSettingsController.initSettings(listStyles, listLanguages, txtFieldPathToVideo, btnApplySettings);
     }
 
     public void initPhotoTab() {
@@ -234,10 +238,10 @@ public final class MainController {
     }
 
     public void initOpenCVTab() {
-        final ImageRecognizer imageRecognizer = new ImageRecognizer(primaryStage, btnOpenCVStartCamera,
+        final MagicTabController magicTabController = new MagicTabController(primaryStage, btnOpenCVStartCamera,
                 grayscale, comboBoxForTypeOfDetection, comboBoxForTypeOfClassifier,
-                hboxHidden1, hboxHidden2, hboxHidden3, canny, threshold, dilateErode, inverse, btnActivateCamera);
-        imageRecognizer.init()
+                hboxHidden1, vboxHidden2, hboxHidden3, canny, threshold, dilateErode, inverse, btnActivateCamera, btnOpenCVWriteVideo);
+        magicTabController.init()
                 .showSimpleCameraInto(imageViewForOpenCV);
     }
 }
