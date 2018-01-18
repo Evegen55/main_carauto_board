@@ -372,7 +372,7 @@
                                 </AnchorPane>
                             </content>
                         </Tab>
-                  <Tab text="Intel Tab">
+                  <Tab text="Smart Tab">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
