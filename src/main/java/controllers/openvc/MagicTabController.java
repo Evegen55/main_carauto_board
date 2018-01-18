@@ -153,16 +153,25 @@ public final class MagicTabController {
                         hboxHidden1.setDisable(false);
                         vboxHidden2.setDisable(true);
                         hboxHidden3.setDisable(true);
+                        btnOpenCVWriteVideo.setDisable(true);
                         break;
                     case plates_rus:
                         hboxHidden1.setDisable(false);
                         vboxHidden2.setDisable(true);
                         hboxHidden3.setDisable(true);
+                        btnOpenCVWriteVideo.setDisable(true);
                         break;
                     case edges:
                         hboxHidden1.setDisable(true);
                         vboxHidden2.setDisable(false);
                         hboxHidden3.setDisable(false);
+                        btnOpenCVWriteVideo.setDisable(true);
+                        break;
+                    case write_video:
+                        hboxHidden1.setDisable(true);
+                        vboxHidden2.setDisable(true);
+                        hboxHidden3.setDisable(true);
+                        btnOpenCVStartCamera.setDisable(true);
                         break;
                 }
             }
@@ -212,6 +221,7 @@ public final class MagicTabController {
         if (typeOfClassifierValue != null) {
             final boolean success = retrieveSettingsAndLoadClassifier(typeOfDetection, typeOfClassifierValue);
             if (success) {
+                btnOpenCVWriteVideo.setDisable(true);
                 btnOpenCVStartCamera.setDisable(false);
                 btnOpenCVStartCamera.setOnAction(event1 -> {
                     LOGGER.info("Start showing a stream captured from camera to a " + imageViewForOpenCV.getId());
@@ -227,6 +237,7 @@ public final class MagicTabController {
     It overrides behaviour for btnOpenCVStartCamera
      */
     private void doForEdges(ImageView imageViewForOpenCV) {
+        btnOpenCVWriteVideo.setDisable(true);
         btnOpenCVStartCamera.setDisable(false);
         btnOpenCVStartCamera.setOnAction(event -> {
             LOGGER.info("Start detecting edges from a stream captured from camera to a " + imageViewForOpenCV.getId());
@@ -241,6 +252,7 @@ public final class MagicTabController {
         final String videoFolderFromProperties = PropertiesHelper.getVideoFolderFromProperties();
         //we can write a video only if folder exists
         if (checkFolderExistence(videoFolderFromProperties)) {
+            btnOpenCVStartCamera.setDisable(true);
             //activate the button to write video
             btnOpenCVWriteVideo.setDisable(false);
             // TODO: 1/17/2018 pass imageView to action
