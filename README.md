@@ -65,7 +65,7 @@ Download [OpenCV](https://opencv.org/releases.html) and unpack it to a `<path-to
 
 Note: now application supports OpenCV ver.3.4.0
 
-Note: now there is a conflict with came at video tab and intel tab. Choose only one way to get video stream from cams
+Note: now there is a conflict with came at video tab and smart tab. Choose only one way to get video stream from cams
 
 `mvn install:install-file -Dfile=<path-to-installed-opencv-340>\build\java\opencv-340.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.0 -Dpackaging=jar`
 
