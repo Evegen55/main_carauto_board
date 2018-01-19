@@ -61,16 +61,17 @@ Plates recognition:
 
 **Build and run:**
 
-Download [OpenCV](https://opencv.org/releases.html) and unpack it to a `<path-to-installed-opencv-331>`
+Download [OpenCV](https://opencv.org/releases.html) and unpack it to a `<path-to-installed-opencv-340>`
 
 Note: now application supports OpenCV ver.3.4.0
+
 Note: now there is a conflict with came at video tab and intel tab. Choose only one way to get video stream from cams
 
-`mvn install:install-file -Dfile=<path-to-installed-opencv-331>\build\java\opencv-331.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.3.1 -Dpackaging=jar`
+`mvn install:install-file -Dfile=<path-to-installed-opencv-340>\build\java\opencv-340.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.0 -Dpackaging=jar`
 
 or
 
-`mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\opencv-331.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.3.1 -Dpackaging=jar`
+`mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\opencv-340.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.0 -Dpackaging=jar`
 
 then assembly distributive:
 
