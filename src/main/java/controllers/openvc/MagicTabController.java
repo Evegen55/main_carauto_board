@@ -635,7 +635,7 @@ public final class MagicTabController {
         Mat thresholdImg = new Mat();
 
         int thresh_type = Imgproc.THRESH_BINARY_INV;
-        if (this.inverse.isSelected())
+        if (inverse.isSelected())
             thresh_type = Imgproc.THRESH_BINARY;
 
         // threshold the image with the average hue value
@@ -644,7 +644,7 @@ public final class MagicTabController {
         Core.split(hsvImg, hsvPlanes);
 
         // get the average hue value of the image
-        double threshValue = this.getHistAverage(hsvImg, hsvPlanes.get(0));
+        double threshValue = getHistAverage(hsvImg, hsvPlanes.get(0));
 
         Imgproc.threshold(hsvPlanes.get(0), thresholdImg, threshValue, 179.0, thresh_type);
 
@@ -695,7 +695,9 @@ public final class MagicTabController {
         }
 
         // return the average hue of the image
-        return average = average / hsvImg.size().height / hsvImg.size().width;
+        average = average / hsvImg.size().height / hsvImg.size().width;
+
+        return average;
     }
 
     /**
@@ -809,7 +811,7 @@ public final class MagicTabController {
         btnOpenCVStartCamera.setDisable(false);
     }
 
-    //==================================================   writing a videofile  ========================================
+    //==================================================   writing a video file  ========================================
     /*
     TODO: 1/17/2018 now it can write video without showing it on the display.
     TODO: In order to do it needs a thread-safe buffer
