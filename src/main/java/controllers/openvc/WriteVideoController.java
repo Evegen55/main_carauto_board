@@ -1,7 +1,5 @@
 package controllers.openvc;
 
-import javafx.util.converter.LocalDateTimeStringConverter;
-import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.videoio.VideoCapture;
@@ -11,9 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Deprecated
 public class WriteVideoController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(WriteVideoController.class);

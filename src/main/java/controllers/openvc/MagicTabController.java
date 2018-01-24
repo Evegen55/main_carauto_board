@@ -39,17 +39,21 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.objdetect.Objdetect;
 import org.opencv.videoio.VideoCapture;
+import org.opencv.videoio.VideoWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.UtilsOpenCV;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -95,7 +99,12 @@ public final class MagicTabController {
     Point clickedPoint = new Point(0, 0);
     Mat oldFrame;
 
-    private WriteVideoController writeVideoController;
+    private VideoWriter writer;
+    public final int FOURCC_MJPG = VideoWriter.fourcc('M', 'J', 'P', 'G');
+    public static final String VIDEO_FILE_NAME_EXTENSION = ".avi";
+    public static final String VIDEO_FILE_NAME_ROOT = "video";
+    public static final String FILE_SEPARATOR = File.separator;
+    private static final ConcurrentLinkedQueue<Mat> MAT_CONCURRENT_LINKED_QUEUE = new ConcurrentLinkedQueue<>();
 
     public MagicTabController(final Stage primaryStage, final Button btnOpenCVStartCamera, final CheckBox grayscale,
                               final ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection,
@@ -255,8 +264,7 @@ public final class MagicTabController {
             btnOpenCVStartCamera.setDisable(true);
             //activate the button to write video
             btnOpenCVWriteVideo.setDisable(false);
-            // TODO: 1/17/2018 pass imageView to action
-            btnOpenCVWriteVideo.setOnAction(event -> startWriteOnBackground(videoFolderFromProperties));
+            btnOpenCVWriteVideo.setOnAction(event -> startWriteAndShow(imageViewForOpenCV, videoFolderFromProperties));
         }
 
     }
@@ -464,6 +472,10 @@ public final class MagicTabController {
             VIDEO_CAPTURE.release();
         }
 
+        if (writer != null) {
+            writer.release();
+        }
+
         LOGGER.info("all the resources for camera released.");
     }
 
@@ -473,7 +485,7 @@ public final class MagicTabController {
      * @param view  the {@link ImageView} to update
      * @param image the {@link Image} to show
      */
-    private void updateImageView(final ImageView view, final Image image) {
+    public static void updateImageView(final ImageView view, final Image image) {
         UtilsOpenCV.onFXThread(view.imageProperty(), image);
     }
 
@@ -811,46 +823,47 @@ public final class MagicTabController {
         btnOpenCVStartCamera.setDisable(false);
     }
 
-    //==================================================   writing a video file  ========================================
-    /*
-    TODO: 1/17/2018 now it can write video without showing it on the display.
-    TODO: In order to do it needs a thread-safe buffer
-    */
-    private void startWriteOnBackground(String videoFolderFromProperties) {
+
+    //==================================================   writing a videofile  ========================================
+
+    private void startWriteAndShow(final ImageView imageViewForOpenCV, final String videoFolderFromProperties) {
+        // every 33 ms (30 frames/sec)
+        // every 66 ms (15 frames/sec)
+        final int timeToRefresh = 33;
+        final int fps = 30;
         if (!isCameraActive) {
             // start the video capture
             VIDEO_CAPTURE.open(cameraId);
-
             // is the video stream available?
             if (VIDEO_CAPTURE.isOpened()) {
                 isCameraActive = true;
+                final Mat frame = new Mat(); //we will reuse this object
 
-//                final Mat frame = new Mat();
-//                VIDEO_CAPTURE.read(frame); //here is default minimum resolution
+                VIDEO_CAPTURE.read(frame); //just once in order to get info about size
+                final Size frameSize = frame.size();
+                final String videoFileName = getVideoFileName(videoFolderFromProperties);
+                final VideoWriter writer = new VideoWriter(videoFileName, FOURCC_MJPG, fps, frameSize, true);
 
-                // every 33 ms (30 frames/sec)
-                // every 66 ms (15 frames/sec)
-                final int timeToRefresh = 66;
-                writeVideoController = new WriteVideoController(VIDEO_CAPTURE, 1280, 720);
-
-                Runnable frameWriter = () -> {
-                    writeVideoController.writeFromCameraToFolder(videoFolderFromProperties, Float.POSITIVE_INFINITY, 15);
+                final Runnable frameShower = () -> {
+                    // grab a frame:
+                    VIDEO_CAPTURE.read(frame); //here is default minimum resolution
+                    // show the frame
+                    final Image imageToShow = UtilsOpenCV.mat2Image(frame);
+                    updateImageView(imageViewForOpenCV, imageToShow);
+                    //PUT frame TO a thread-safe queue
+                    MAT_CONCURRENT_LINKED_QUEUE.offer(frame);
                 };
 
-                // grab a frame:
-                Runnable frameGrabber = () -> {
-                    // effectively grab and process a single frame
-//                        final Mat frame = writeVideoController.getCurrentframe();
-//                        if (frame != null) {
-//                            // convert and show the frame
-//                            final Image imageToShow = UtilsOpenCV.mat2Image(frame);
-//                            updateImageView(imageViewForOpenCV, imageToShow);
-//                        }
-//
+                //GET frame FROM a thread-safe queue and write it
+                final Runnable frameWriter = () -> {
+                    if (!MAT_CONCURRENT_LINKED_QUEUE.isEmpty()) {
+                        final Mat poll = MAT_CONCURRENT_LINKED_QUEUE.poll();
+                        writer.write(poll);
+                    }
                 };
 
-                timer = Executors.newSingleThreadScheduledExecutor();
-//                    timer.scheduleAtFixedRate(frameGrabber, 0, timeToRefresh, TimeUnit.MILLISECONDS);
+                timer = Executors.newScheduledThreadPool(2);
+                timer.scheduleAtFixedRate(frameShower, 0, timeToRefresh, TimeUnit.MILLISECONDS);
                 timer.scheduleAtFixedRate(frameWriter, 0, timeToRefresh, TimeUnit.MILLISECONDS);
 
                 // update the button content
@@ -866,10 +879,6 @@ public final class MagicTabController {
             btnOpenCVWriteVideo.setText("Start writing");
             // stop the timer
             stopAcquisition();
-            //release writer
-            if (writeVideoController != null) {
-                writeVideoController.releaseResources();
-            }
         }
     }
 
@@ -892,5 +901,16 @@ public final class MagicTabController {
             return true;
         }
         return false;
+    }
+
+    private String getVideoFileName(final String videoFolderFromProperties) {
+        final String timeMark = LocalDateTime.now().toString();
+        final String timeMarkprepared = timeMark.replace(':', '-');
+        return new StringBuilder().append(videoFolderFromProperties)
+                .append(FILE_SEPARATOR).append(VIDEO_FILE_NAME_ROOT)
+                .append("_")
+                .append(timeMarkprepared)
+                .append("_")
+                .append(VIDEO_FILE_NAME_EXTENSION).toString();
     }
 }
