@@ -96,14 +96,14 @@ public final class MagicTabController {
     private final CheckBox inverse;
     private final Button btnActivateCamera;
     private final Button btnOpenCVWriteVideo;
-    Point clickedPoint = new Point(0, 0);
-    Mat oldFrame;
+    private Point clickedPoint = new Point(0, 0);
+    private Mat oldFrame;
 
     private VideoWriter writer;
-    public final int FOURCC_MJPG = VideoWriter.fourcc('M', 'J', 'P', 'G');
-    public static final String VIDEO_FILE_NAME_EXTENSION = ".avi";
-    public static final String VIDEO_FILE_NAME_ROOT = "video";
-    public static final String FILE_SEPARATOR = File.separator;
+    private final int FOURCC_MJPG = VideoWriter.fourcc('M', 'J', 'P', 'G');
+    private static final String VIDEO_FILE_NAME_EXTENSION = ".avi";
+    private static final String VIDEO_FILE_NAME_ROOT = "video";
+    private static final String FILE_SEPARATOR = File.separator;
     private static final ConcurrentLinkedQueue<Mat> MAT_CONCURRENT_LINKED_QUEUE = new ConcurrentLinkedQueue<>();
 
     public MagicTabController(final Stage primaryStage, final Button btnOpenCVStartCamera, final CheckBox grayscale,
@@ -842,7 +842,7 @@ public final class MagicTabController {
                 VIDEO_CAPTURE.read(frame); //just once in order to get info about size
                 final Size frameSize = frame.size();
                 final String videoFileName = getVideoFileName(videoFolderFromProperties);
-                final VideoWriter writer = new VideoWriter(videoFileName, FOURCC_MJPG, fps, frameSize, true);
+                writer = new VideoWriter(videoFileName, FOURCC_MJPG, fps, frameSize, true);
 
                 final Runnable frameShower = () -> {
                     // grab a frame:
