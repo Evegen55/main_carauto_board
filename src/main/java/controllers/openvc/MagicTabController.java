@@ -256,7 +256,8 @@ public final class MagicTabController {
             //activate the button to write video
             btnOpenCVWriteVideo.setDisable(false);
             // TODO: 1/17/2018 pass imageView to action
-            btnOpenCVWriteVideo.setOnAction(event -> startWriteOnBackground(videoFolderFromProperties));
+            //btnOpenCVWriteVideo.setOnAction(event -> startWriteOnBackground(videoFolderFromProperties));
+            btnOpenCVWriteVideo.setOnAction(event -> startWriteAndShow(imageViewForOpenCV, videoFolderFromProperties));
         }
 
     }
@@ -849,6 +850,62 @@ public final class MagicTabController {
 
                 timer = Executors.newSingleThreadScheduledExecutor();
 //                    timer.scheduleAtFixedRate(frameGrabber, 0, timeToRefresh, TimeUnit.MILLISECONDS);
+                timer.scheduleAtFixedRate(frameWriter, 0, timeToRefresh, TimeUnit.MILLISECONDS);
+
+                // update the button content
+                btnOpenCVWriteVideo.setText("Stop writing");
+            } else {
+                // log the error
+                LOGGER.error("Impossible to open the camera connection...");
+            }
+        } else {
+            // the camera is not active at this point
+            isCameraActive = false;
+            // update again the button content
+            btnOpenCVWriteVideo.setText("Start writing");
+            // stop the timer
+            stopAcquisition();
+            //release writer
+            if (writeVideoController != null) {
+                writeVideoController.releaseResources();
+            }
+        }
+    }
+
+    private void startWriteAndShow(final ImageView imageViewForOpenCV, final String videoFolderFromProperties) {
+
+        // every 33 ms (30 frames/sec)
+        // every 66 ms (15 frames/sec)
+        final int timeToRefresh = 33;
+
+        if (!isCameraActive) {
+            // start the video capture
+            VIDEO_CAPTURE.open(cameraId);
+
+            // is the video stream available?
+            if (VIDEO_CAPTURE.isOpened()) {
+                isCameraActive = true;
+                final Mat frame = new Mat(); //we will reuse this object
+
+                Runnable frameShower = () -> {
+                    if (frame != null) {
+                        // grab a frame:
+                        VIDEO_CAPTURE.read(frame); //here is default minimum resolution
+                        // show the frame
+                        final Image imageToShow = UtilsOpenCV.mat2Image(frame);
+                        updateImageView(imageViewForOpenCV, imageToShow);
+                        // TODO: 1/24/2018 put frame to a thread-safe queue
+                    }
+                };
+
+                Runnable frameWriter = () -> {
+                    // TODO: 1/24/2018 GET frame FROM a thread-safe queue
+                    // TODO and write it
+                    System.out.println("Written");
+                };
+
+                timer = Executors.newScheduledThreadPool(2);
+                timer.scheduleAtFixedRate(frameShower, 0, timeToRefresh, TimeUnit.MILLISECONDS);
                 timer.scheduleAtFixedRate(frameWriter, 0, timeToRefresh, TimeUnit.MILLISECONDS);
 
                 // update the button content
