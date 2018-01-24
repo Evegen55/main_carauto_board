@@ -839,22 +839,26 @@ public final class MagicTabController {
                 isCameraActive = true;
                 final Mat frame = new Mat(); //we will reuse this object
 
-                VIDEO_CAPTURE.read(frame); //just once in order to get info about size
+                //just once in order to get info about size
+                //here is default minimum resolution
+                VIDEO_CAPTURE.read(frame);
                 final Size frameSize = frame.size();
                 final String videoFileName = getVideoFileName(videoFolderFromProperties);
                 writer = new VideoWriter(videoFileName, FOURCC_MJPG, fps, frameSize, true);
 
                 final Runnable frameShower = () -> {
-                    // grab a frame:
-                    VIDEO_CAPTURE.read(frame); //here is default minimum resolution
-                    // show the frame
-                    final Image imageToShow = UtilsOpenCV.mat2Image(frame);
-                    updateImageView(imageViewForOpenCV, imageToShow);
-                    //PUT frame TO a thread-safe queue
-                    MAT_CONCURRENT_LINKED_QUEUE.offer(frame);
+                    // Producer grabs a frame, checks it, shows it in a display and put to the thread-safe queue:
+                    VIDEO_CAPTURE.read(frame);
+                    if (!frame.empty()) {
+                        // show the frame
+                        final Image imageToShow = UtilsOpenCV.mat2Image(frame);
+                        updateImageView(imageViewForOpenCV, imageToShow);
+                        //PUT frame TO a thread-safe queue
+                        MAT_CONCURRENT_LINKED_QUEUE.offer(frame);
+                    }
                 };
 
-                //GET frame FROM a thread-safe queue and write it
+                //Consumer GETs frame FROM the thread-safe queue and write it
                 final Runnable frameWriter = () -> {
                     if (!MAT_CONCURRENT_LINKED_QUEUE.isEmpty()) {
                         final Mat poll = MAT_CONCURRENT_LINKED_QUEUE.poll();
@@ -862,6 +866,7 @@ public final class MagicTabController {
                     }
                 };
 
+                //we need threads only for producer and consumer
                 timer = Executors.newScheduledThreadPool(2);
                 timer.scheduleAtFixedRate(frameShower, 0, timeToRefresh, TimeUnit.MILLISECONDS);
                 timer.scheduleAtFixedRate(frameWriter, 0, timeToRefresh, TimeUnit.MILLISECONDS);
