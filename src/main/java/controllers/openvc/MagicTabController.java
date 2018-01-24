@@ -647,7 +647,7 @@ public final class MagicTabController {
         Mat thresholdImg = new Mat();
 
         int thresh_type = Imgproc.THRESH_BINARY_INV;
-        if (this.inverse.isSelected())
+        if (inverse.isSelected())
             thresh_type = Imgproc.THRESH_BINARY;
 
         // threshold the image with the average hue value
@@ -656,7 +656,7 @@ public final class MagicTabController {
         Core.split(hsvImg, hsvPlanes);
 
         // get the average hue value of the image
-        double threshValue = this.getHistAverage(hsvImg, hsvPlanes.get(0));
+        double threshValue = getHistAverage(hsvImg, hsvPlanes.get(0));
 
         Imgproc.threshold(hsvPlanes.get(0), thresholdImg, threshValue, 179.0, thresh_type);
 
@@ -707,7 +707,9 @@ public final class MagicTabController {
         }
 
         // return the average hue of the image
-        return average = average / hsvImg.size().height / hsvImg.size().width;
+        average = average / hsvImg.size().height / hsvImg.size().width;
+
+        return average;
     }
 
     /**
@@ -821,6 +823,7 @@ public final class MagicTabController {
         btnOpenCVStartCamera.setDisable(false);
     }
 
+
     //==================================================   writing a videofile  ========================================
 
     private void startWriteAndShow(final ImageView imageViewForOpenCV, final String videoFolderFromProperties) {
@@ -828,7 +831,6 @@ public final class MagicTabController {
         // every 66 ms (15 frames/sec)
         final int timeToRefresh = 33;
         final int fps = 30;
-
         if (!isCameraActive) {
             // start the video capture
             VIDEO_CAPTURE.open(cameraId);
