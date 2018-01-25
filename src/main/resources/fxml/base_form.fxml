@@ -355,9 +355,11 @@
                                  <children>
                                     <VBox fx:id="vboxHidden2" prefHeight="48.0" prefWidth="301.0">
                                        <children>
-                                          <CheckBox fx:id="canny" text="Edge detection" /><!--onAction="#cannySelected"-->
+                                          <CheckBox fx:id="canny" text="Edge detection with Canny" /><!--onAction="#cannySelected"-->
                                           <Label text="Canny Threshold" />
                                           <Slider fx:id="threshold" disable="true" />
+                                          <Separator prefWidth="200.0" />
+                                          <CheckBox fx:id="chkBoxSobel" mnemonicParsing="false" text="Edge detection with Sobel" />
                                        </children>
                                     </VBox>
                                     <Separator prefWidth="200.0" />

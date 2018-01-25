@@ -182,6 +182,8 @@ public final class MainController {
     private CheckBox dilateErode;// checkbox for enabling/disabling background removal
     @FXML
     private CheckBox inverse;// inverse the threshold value for background removal
+    @FXML
+    private CheckBox chkBoxSobel;
 
 
     public MainController(Stage primaryStage) {
@@ -240,7 +242,8 @@ public final class MainController {
     public void initOpenCVTab() {
         final MagicTabController magicTabController = new MagicTabController(primaryStage, btnOpenCVStartCamera,
                 grayscale, comboBoxForTypeOfDetection, comboBoxForTypeOfClassifier,
-                hboxHidden1, vboxHidden2, hboxHidden3, canny, threshold, dilateErode, inverse, btnActivateCamera, btnOpenCVWriteVideo);
+                hboxHidden1, vboxHidden2, hboxHidden3, canny, threshold, dilateErode, inverse, btnActivateCamera,
+                btnOpenCVWriteVideo, chkBoxSobel);
         magicTabController.init()
                 .showSimpleCameraInto(imageViewForOpenCV);
     }

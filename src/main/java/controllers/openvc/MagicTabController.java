@@ -106,12 +106,14 @@ public final class MagicTabController {
     private static final String FILE_SEPARATOR = File.separator;
     private static final ConcurrentLinkedQueue<Mat> MAT_CONCURRENT_LINKED_QUEUE = new ConcurrentLinkedQueue<>();
 
+    private CheckBox chkBoxSobel;
+
     public MagicTabController(final Stage primaryStage, final Button btnOpenCVStartCamera, final CheckBox grayscale,
                               final ComboBox<RecognizingTypeOfDetection> comboBoxForTypeOfDetection,
                               final ComboBox<RecognizingTypeOfClassifier> comboBoxForTypeOfClassifier,
                               final HBox hboxHidden1, final VBox vboxHidden2, final HBox hboxHidden3, final CheckBox canny,
                               final Slider threshold, final CheckBox dilateErode, final CheckBox inverse,
-                              final Button btnActivateCamera, final Button btnOpenCVWriteVideo) {
+                              final Button btnActivateCamera, final Button btnOpenCVWriteVideo, CheckBox chkBoxSobel) {
         this.primaryStage = primaryStage;
         this.btnOpenCVStartCamera = btnOpenCVStartCamera;
         this.comboBoxForTypeOfDetection = comboBoxForTypeOfDetection;
@@ -130,6 +132,8 @@ public final class MagicTabController {
 
         //write video with OpenCV
         this.btnOpenCVWriteVideo = btnOpenCVWriteVideo;
+
+        this.chkBoxSobel = chkBoxSobel;
     }
 
     public MagicTabController init() {
@@ -144,6 +148,7 @@ public final class MagicTabController {
         hboxHidden3.setDisable(true);
         threshold.setShowTickLabels(true);
         canny.setOnAction(event -> cannySelected());
+        chkBoxSobel.setOnAction(event -> sobelSelected());
         dilateErode.setOnAction(event -> dilateErodeSelected());
         LOGGER.info("Application settings tab initialised");
         return this;
@@ -510,9 +515,8 @@ public final class MagicTabController {
         });
 
         if (!isCameraActive) {
-            // disable setting checkboxes
-            this.canny.setDisable(true);
-            this.dilateErode.setDisable(true);
+            // disable setting checkboxes why??
+            dilateErode.setDisable(true);
 
             // start the video capture
             VIDEO_CAPTURE.open(0);
@@ -572,8 +576,12 @@ public final class MagicTabController {
                     // handle edge detection
                     if (canny.isSelected()) {
                         frame = doCanny(frame);
-                        //frame = this.doSobel(frame);
                     }
+
+                    else if (chkBoxSobel.isSelected()) {
+                        frame = doSobel(frame);
+                    }
+
                     // foreground detection
                     else if (dilateErode.isSelected()) {
                         // Es. 2.1
@@ -786,18 +794,43 @@ public final class MagicTabController {
     /**
      * Action triggered when the Canny checkbox is selected
      */
-    protected void cannySelected() {
+    private void cannySelected() {
+        // check whether the other checkbox is selected and deselect it
+        if (dilateErode.isSelected()) {
+            dilateErode.setSelected(false);
+            chkBoxSobel.setSelected(false);
+            inverse.setDisable(true);
+        }
+
+        // enable the threshold slider
+        if (canny.isSelected()) {
+            chkBoxSobel.setSelected(false);
+            threshold.setDisable(false);
+        } else {
+            threshold.setDisable(true);
+        }
+
+        // now the capture can start
+        btnOpenCVStartCamera.setDisable(false);
+    }
+
+    private void sobelSelected() {
         // check whether the other checkbox is selected and deselect it
         if (dilateErode.isSelected()) {
             dilateErode.setSelected(false);
             inverse.setDisable(true);
         }
 
-        // enable the threshold slider
-        if (canny.isSelected())
+        if (canny.isSelected()) {
+            canny.setSelected(false);
+        }
+
+        // enable the threshold slider FOR WHAT??
+        if (chkBoxSobel.isSelected()) {
             threshold.setDisable(false);
-        else
+        } else {
             threshold.setDisable(true);
+        }
 
         // now the capture can start
         btnOpenCVStartCamera.setDisable(false);
@@ -806,7 +839,7 @@ public final class MagicTabController {
     /**
      * Action triggered when the "background removal" checkbox is selected
      */
-    protected void dilateErodeSelected() {
+    private void dilateErodeSelected() {
         // check whether the canny checkbox is selected, deselect it and disable
         // its slider
         if (canny.isSelected()) {
