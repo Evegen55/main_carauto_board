@@ -357,13 +357,12 @@
                                        <children>
                                           <CheckBox fx:id="canny" text="Edge detection with Canny" /><!--onAction="#cannySelected"-->
                                           <Label text="Canny Threshold" />
-                                          <Slider fx:id="threshold" />
+                                          <Slider fx:id="threshold" disable="true" />
                                           <Separator prefWidth="200.0" />
                                           <CheckBox fx:id="chkBoxSobel" mnemonicParsing="false" text="Edge detection with Sobel" />
                                        </children>
                                     </VBox>
-                                    <Separator prefWidth="200.0" />
-                                    <HBox fx:id="hboxHidden3" alignment="CENTER_LEFT" spacing="10.0">
+                                    <HBox fx:id="hboxHidden3" alignment="CENTER_LEFT" prefHeight="3.0" prefWidth="301.0" spacing="10.0">
                                        <children>
                                           <CheckBox fx:id="dilateErode" text="Background removal" /><!--onAction="#dilateErodeSelected"-->
                                           <CheckBox fx:id="inverse" disable="true" text="Invert" />
@@ -372,6 +371,14 @@
                                           <Insets bottom="10.0" top="10.0" />
                                        </padding>
                                     </HBox>
+                                    <Separator prefWidth="200.0" />
+                                    <VBox>
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" text="doBackgroundRemovalFloodFill" />
+                                          <CheckBox mnemonicParsing="false" text="doBackgroundRemovalAbsDiff" />
+                                          <CheckBox mnemonicParsing="false" text="doBackgroundRemoval" />
+                                       </children>
+                                    </VBox>
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" layoutX="14.0" layoutY="492.0" prefHeight="76.0" prefWidth="152.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="600.0">
