@@ -357,7 +357,7 @@
                                        <children>
                                           <CheckBox fx:id="canny" text="Edge detection with Canny" /><!--onAction="#cannySelected"-->
                                           <Label text="Canny Threshold" />
-                                          <Slider fx:id="threshold" disable="true" />
+                                          <Slider fx:id="threshold" />
                                           <Separator prefWidth="200.0" />
                                           <CheckBox fx:id="chkBoxSobel" mnemonicParsing="false" text="Edge detection with Sobel" />
                                        </children>

@@ -515,8 +515,6 @@ public final class MagicTabController {
         });
 
         if (!isCameraActive) {
-            // disable setting checkboxes why??
-            dilateErode.setDisable(true);
 
             // start the video capture
             VIDEO_CAPTURE.open(0);
@@ -576,9 +574,7 @@ public final class MagicTabController {
                     // handle edge detection
                     if (canny.isSelected()) {
                         frame = doCanny(frame);
-                    }
-
-                    else if (chkBoxSobel.isSelected()) {
+                    } else if (chkBoxSobel.isSelected()) {
                         frame = doSobel(frame);
                     }
 
@@ -792,44 +788,23 @@ public final class MagicTabController {
     }
 
     /**
-     * Action triggered when the Canny checkbox is selected
+     * TODO
      */
     private void cannySelected() {
-        // check whether the other checkbox is selected and deselect it
-        if (dilateErode.isSelected()) {
-            dilateErode.setSelected(false);
-            chkBoxSobel.setSelected(false);
-            inverse.setDisable(true);
-        }
 
-        // enable the threshold slider
         if (canny.isSelected()) {
             chkBoxSobel.setSelected(false);
             threshold.setDisable(false);
-        } else {
-            threshold.setDisable(true);
         }
 
-        // now the capture can start
-        btnOpenCVStartCamera.setDisable(false);
-    }
-
-    private void sobelSelected() {
-        // check whether the other checkbox is selected and deselect it
-        if (dilateErode.isSelected()) {
-            dilateErode.setSelected(false);
-            inverse.setDisable(true);
-        }
-
-        if (canny.isSelected()) {
-            canny.setSelected(false);
-        }
-
-        // enable the threshold slider FOR WHAT??
         if (chkBoxSobel.isSelected()) {
-            threshold.setDisable(false);
-        } else {
-            threshold.setDisable(true);
+            chkBoxSobel.setSelected(false);
+        }
+
+        if (dilateErode.isSelected()) {
+            dilateErode.setSelected(false);
+            chkBoxSobel.setSelected(false);
+            inverse.setDisable(true);
         }
 
         // now the capture can start
@@ -837,7 +812,30 @@ public final class MagicTabController {
     }
 
     /**
-     * Action triggered when the "background removal" checkbox is selected
+     *
+     */
+    private void sobelSelected() {
+
+        if (canny.isSelected()) {
+            canny.setSelected(false);
+        }
+
+        if (chkBoxSobel.isSelected()) {
+            dilateErode.setSelected(false);
+            inverse.setDisable(true);
+        }
+
+        if (dilateErode.isSelected()) {
+            dilateErode.setSelected(false);
+            inverse.setDisable(true);
+        }
+
+        // now the capture can start
+        btnOpenCVStartCamera.setDisable(false);
+    }
+
+    /**
+     * TODO
      */
     private void dilateErodeSelected() {
         // check whether the canny checkbox is selected, deselect it and disable
@@ -847,10 +845,17 @@ public final class MagicTabController {
             threshold.setDisable(true);
         }
 
-        if (dilateErode.isSelected())
+        if (chkBoxSobel.isSelected()) {
+            chkBoxSobel.setSelected(false);
+        }
+
+        if (dilateErode.isSelected()) {
             inverse.setDisable(false);
-        else
+            threshold.setDisable(true);
+        } else {
+            threshold.setDisable(true);
             inverse.setDisable(true);
+        }
 
         // now the capture can start
         btnOpenCVStartCamera.setDisable(false);
