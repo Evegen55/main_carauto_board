@@ -578,14 +578,15 @@ public final class MagicTabController {
                         frame = doSobel(frame);
                     }
 
+                    // TODO: 1/25/2018 Add checkbox to swith on functions
                     // foreground detection
                     else if (dilateErode.isSelected()) {
                         // Es. 2.1
-                        // frame = this.doBackgroundRemovalFloodFill(frame);
+//                         frame = doBackgroundRemovalFloodFill(frame);
                         // Es. 2.2
                         frame = doBackgroundRemovalAbsDiff(frame);
                         // Es. 2.3
-                        // frame = this.doBackgroundRemoval(frame);
+//                         frame = doBackgroundRemoval(frame);
 
                     }
 
