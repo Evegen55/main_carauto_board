@@ -42,6 +42,7 @@ import org.opencv.videoio.VideoCapture;
 import org.opencv.videoio.VideoWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Util;
 import utils.UtilsOpenCV;
 
 import java.io.File;
@@ -101,9 +102,7 @@ public final class MagicTabController {
 
     private VideoWriter writer;
     private final int FOURCC_MJPG = VideoWriter.fourcc('M', 'J', 'P', 'G');
-    private static final String VIDEO_FILE_NAME_EXTENSION = ".avi";
-    private static final String VIDEO_FILE_NAME_ROOT = "video";
-    private static final String FILE_SEPARATOR = File.separator;
+
     private static final ConcurrentLinkedQueue<Mat> MAT_CONCURRENT_LINKED_QUEUE = new ConcurrentLinkedQueue<>();
 
     private CheckBox chkBoxSobel;
@@ -882,7 +881,7 @@ public final class MagicTabController {
                 //here is default minimum resolution
                 VIDEO_CAPTURE.read(frame);
                 final Size frameSize = frame.size();
-                final String videoFileName = getVideoFileName(videoFolderFromProperties);
+                final String videoFileName = Util.getVideoFileName(videoFolderFromProperties);
                 writer = new VideoWriter(videoFileName, FOURCC_MJPG, fps, frameSize, true);
 
                 final Runnable frameShower = () -> {
@@ -947,14 +946,4 @@ public final class MagicTabController {
         return false;
     }
 
-    private String getVideoFileName(final String videoFolderFromProperties) {
-        final String timeMark = LocalDateTime.now().toString();
-        final String timeMarkprepared = timeMark.replace(':', '-');
-        return new StringBuilder().append(videoFolderFromProperties)
-                .append(FILE_SEPARATOR).append(VIDEO_FILE_NAME_ROOT)
-                .append("_")
-                .append(timeMarkprepared)
-                .append("_")
-                .append(VIDEO_FILE_NAME_EXTENSION).toString();
-    }
 }
