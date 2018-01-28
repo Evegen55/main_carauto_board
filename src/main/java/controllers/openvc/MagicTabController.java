@@ -45,12 +45,6 @@ import org.slf4j.LoggerFactory;
 import utils.Util;
 import utils.UtilsOpenCV;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -264,7 +258,7 @@ public final class MagicTabController {
     private void doWritingActions(final ImageView imageViewForOpenCV) {
         final String videoFolderFromProperties = PropertiesHelper.getVideoFolderFromProperties();
         //we can write a video only if folder exists
-        if (checkFolderExistence(videoFolderFromProperties)) {
+        if (Util.checkFolderExistence(videoFolderFromProperties)) {
             btnOpenCVStartCamera.setDisable(true);
             //activate the button to write video
             btnOpenCVWriteVideo.setDisable(false);
@@ -923,27 +917,6 @@ public final class MagicTabController {
             // stop the timer
             stopAcquisition();
         }
-    }
-
-    /*
-    it check a folder. If it doesn't exist - method creates one.
-     */
-    private boolean checkFolderExistence(final String videoFolderFromProperties) {
-        final Path path = Paths.get(videoFolderFromProperties);
-        if (!Files.exists(path)) {
-            LOGGER.warn("The folder for storing video DOESN'T exists and will be created");
-            try {
-                Files.createDirectory(path); //we can return the full path if it needs
-                return true;
-            } catch (IOException e) {
-                LOGGER.error("Something went wrong" + e);
-                e.printStackTrace();
-            }
-        } else {
-            LOGGER.info("The folder for storing video EXISTS");
-            return true;
-        }
-        return false;
     }
 
 }
