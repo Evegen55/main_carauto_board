@@ -81,6 +81,7 @@ public final class MagicTabController {
 
     //cascade classifier
     private static final CascadeClassifier CASCADE_CLASSIFIER = new CascadeClassifier();
+    private static final CascadeClassifier CASCADE_CLASSIFIER_2 = new CascadeClassifier();
     private int absoluteAreaSize = 0;
 
     //just for fun
@@ -285,11 +286,12 @@ public final class MagicTabController {
         if (typeOfDetectionValue.equals(RecognizingTypeOfDetection.face)) {
             if (typeOfClassifierValue != null) {
                 if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.haar)) {
-                    loadClassifier("trainedNN/opencv/haarcascades/haarcascade_frontalface_alt.xml");
+                    loadClassifier("trainedNN/opencv/haarcascades/haarcascade_frontalface_alt.xml", CASCADE_CLASSIFIER);
+                    loadClassifier("trainedNN/opencv/haarcascades/haarcascade_profileface.xml", CASCADE_CLASSIFIER_2);
                     result = true;
                 }
                 if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.lbp)) {
-                    loadClassifier("trainedNN/opencv/lbpcascades/lbpcascade_frontalface.xml");
+                    loadClassifier("trainedNN/opencv/lbpcascades/lbpcascade_frontalface.xml", CASCADE_CLASSIFIER);
                     result = true;
                 }
             }
@@ -298,7 +300,7 @@ public final class MagicTabController {
         if (typeOfDetectionValue.equals(RecognizingTypeOfDetection.plates_rus)) {
             if (typeOfClassifierValue != null) {
                 if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.haar)) {
-                    loadClassifier("trainedNN/opencv/haarcascades/haarcascade_russian_plate_number.xml");
+                    loadClassifier("trainedNN/opencv/haarcascades/haarcascade_russian_plate_number.xml", CASCADE_CLASSIFIER);
                     result = true;
                 }
                 if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.lbp)) {
@@ -311,13 +313,13 @@ public final class MagicTabController {
         return result;
     }
 
-    private void loadClassifier(final String classifierPath) {
+    private void loadClassifier(final String classifierPath, final CascadeClassifier cascadeClassifier) {
         // load the classifier(s)
-        boolean load = CASCADE_CLASSIFIER.load(classifierPath);
+        boolean load = cascadeClassifier.load(classifierPath);
         if (load) {
-            LOGGER.info("Classifier loaded");
+            LOGGER.info("Classifier {} loaded", classifierPath);
         } else {
-            LOGGER.warn("Classifier wasn't loaded");
+            LOGGER.warn("Classifier {} wasn't loaded", classifierPath);
         }
     }
 
@@ -333,9 +335,9 @@ public final class MagicTabController {
                 // grab a frame every 33 ms (30 frames/sec)
                 Runnable frameGrabber = () -> {
                     // effectively grab and process a single frame
-                    final Mat frame = grabFrame();
+                    final Mat processedFrameWithDetectedFeatures = grabFrame();
                     // convert and show the frame
-                    final Image imageToShow = UtilsOpenCV.mat2Image(frame);
+                    final Image imageToShow = UtilsOpenCV.mat2Image(processedFrameWithDetectedFeatures);
                     updateImageView(imageViewForOpenCV, imageToShow);
                 };
 
@@ -404,7 +406,7 @@ public final class MagicTabController {
         Mat grayFrame = new Mat();
 
         if (grayIsAlreadySelected) {
-            LOGGER.warn("TODO IT :-)");
+            //LOGGER.warn("TODO IT :-)");
         } else {
             // convert the frame in gray scale to ANOTHER frame
             Imgproc.cvtColor(frame, grayFrame, Imgproc.COLOR_BGR2GRAY);
@@ -436,7 +438,9 @@ public final class MagicTabController {
          */
         CASCADE_CLASSIFIER.detectMultiScale(grayFrame, faces, 1.1, 2,
                 0 | Objdetect.CASCADE_SCALE_IMAGE, new Size(absoluteAreaSize, absoluteAreaSize), new Size());
-
+        // TODO: 2/1/2018 at here is possible to detect something else by using another pre-loaded classifier
+        CASCADE_CLASSIFIER_2.detectMultiScale(grayFrame, faces, 1.1, 2,
+                0 | Objdetect.CASCADE_SCALE_IMAGE, new Size(absoluteAreaSize, absoluteAreaSize), new Size());
         /*
         each rectangle in faces is a face: draw them!
         Let’s put this result in an array of rects and draw them on the frame, by doing so we can display the detected face are.
@@ -486,11 +490,10 @@ public final class MagicTabController {
 
     /**
      * Update the {@link ImageView} in the JavaFX main thread
-     *
-     * @param view  the {@link ImageView} to update
+     *  @param view  the {@link ImageView} to update
      * @param image the {@link Image} to show
      */
-    public static void updateImageView(final ImageView view, final Image image) {
+    private static void updateImageView(final ImageView view, final Image image) {
         UtilsOpenCV.onFXThread(view.imageProperty(), image);
     }
 
