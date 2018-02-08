@@ -441,6 +441,7 @@ public final class MagicTabController {
         // TODO: 2/1/2018 at here is possible to detect something else by using another pre-loaded classifier
         CASCADE_CLASSIFIER_2.detectMultiScale(grayFrame, faces, 1.1, 2,
                 0 | Objdetect.CASCADE_SCALE_IMAGE, new Size(absoluteAreaSize, absoluteAreaSize), new Size());
+        // TODO: 2/8/2018 is it rigth to user faces object for both classifiers? Now I don't know...
         // TODO: 2/1/2018 at here we can also get a frame with face only and then we can detect smile, eyes and so on with no mistakes
         /*
         each rectangle in faces is a face: draw them!
