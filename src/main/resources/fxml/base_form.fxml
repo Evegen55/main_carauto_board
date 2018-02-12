@@ -31,7 +31,7 @@
             <children>
                 <TabPane fx:id="tabPaneWithMap" prefHeight="1020.0" prefWidth="766.0" styleClass="tab" stylesheets="@../css/tab.css" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                        <Tab fx:id="tab_with_map" text="Maps and Routes">
+                        <Tab fx:id="tab_with_map" text="Navigation">
                             <content>
                                 <Pane fx:id="paneWithMap" prefHeight="50.0" prefWidth="50.0">
                                     <children>
@@ -94,6 +94,11 @@
                                 </Pane>
                             </content>
                         </Tab>
+                  <Tab text="Phohe">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                  </Tab>
                         <Tab fx:id="tab_with_music" text="Music">
                             <content>
                                 <AnchorPane>
