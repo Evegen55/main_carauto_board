@@ -66,6 +66,7 @@ public final class CarControlBoard extends Application {
         mainController.initWebcams();
         mainController.initApplicationSettings();
         mainController.initPhotoTab();
+        mainController.initPhoneTab();
 
         //conflict with mainController.initWebcams() just because it uses it own version of an opencv lib?
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
