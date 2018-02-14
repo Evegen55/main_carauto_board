@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -128,6 +129,9 @@
                                                    <font>
                                                       <Font name="System Bold" size="24.0" />
                                                    </font>
+                                                   <effect>
+                                                      <Reflection />
+                                                   </effect>
                                                 </Button>
                                                 <Button minHeight="80.0" mnemonicParsing="false" opacity="0.79" prefHeight="80.0" prefWidth="130.0" stylesheets="@../css/phone_pad.css" text="2" textAlignment="CENTER" GridPane.columnIndex="1">
                                                    <font>
@@ -207,7 +211,7 @@
                                        <children>
                                           <ImageView fitHeight="640.0" fitWidth="480.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../pic/bush_doing_it_wrong.jpg" />
+                                                <Image url="@../pic/starman.jpg" />
                                              </image>
                                           </ImageView>
                                        </children>
