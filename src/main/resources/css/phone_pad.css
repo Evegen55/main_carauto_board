@@ -1,0 +1,14 @@
+.button {
+    -fx-alignment: center;
+    -fx-background-color:
+            #99ccff,
+            linear-gradient(#38424b 0%, #1f2429 20%, #99ccff 100%),
+            linear-gradient(#99ccff, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-border-color: black;
+    -fx-font-size: 30;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+}

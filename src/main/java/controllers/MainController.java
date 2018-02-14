@@ -26,6 +26,7 @@ import controllers.imageViewer.ImageViewController;
 import controllers.openvc.MagicTabController;
 import controllers.openvc.RecognizingTypeOfClassifier;
 import controllers.openvc.RecognizingTypeOfDetection;
+import controllers.phone.PhoneTabController;
 import controllers.settings.ApplicationSettingsController;
 import controllers.settings.LanguageList;
 import controllers.settings.StyleList;
@@ -246,5 +247,10 @@ public final class MainController {
                 btnOpenCVWriteVideo, chkBoxSobel);
         magicTabController.init()
                 .showSimpleCameraInto(imageViewForOpenCV);
+    }
+
+    public void initPhoneTab() {
+        final PhoneTabController phoneTabController = new PhoneTabController();
+        phoneTabController.initPhone();
     }
 }
