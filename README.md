@@ -36,6 +36,10 @@ Here is the screen capture for the main ideas:
 
 ![**Video panel with carcams**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/9_1_photoviewer.PNG)
 
+**Phone tab**:
+
+![**Phone tab**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/10_phone.PNG)
+
 **Smart tab**:
 
 Convert stream to a gray
