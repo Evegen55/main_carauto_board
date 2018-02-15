@@ -7,7 +7,7 @@ Thanks for this guys very much:
 - [Luigi Derussis](https://github.com/luigidr) with his really cool and helpful [examples](https://github.com/opencv-java/getting-started) and [articles](http://opencv-java-tutorials.readthedocs.io/en/latest/03-first-javafx-application-with-opencv.html)
 
 
-There will be the next attempt to create by using [Qt platform](https://www.qt.io/) but this project is suitable to rapid prototyping the main idea.
+There will be the next attempt to create by using [Qt platform](https://www.qt.io/) to get something like [this](https://github.com/Evegen55/opencv_widget) but this project is suitable to rapid prototyping the main idea.
 
 Here is the screen capture for the main ideas:
 
