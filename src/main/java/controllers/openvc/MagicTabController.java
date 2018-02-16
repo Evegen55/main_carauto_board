@@ -302,6 +302,7 @@ public final class MagicTabController {
         }
         if (typeOfDetectionValue.equals(RecognizingTypeOfDetection.pedestrian)) {
             if (typeOfClassifierValue != null) {
+                // TODO: 2/16/2018 check it!
                 if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.haar)) {
                     loadClassifier("trainedNN/opencv/haarcascades/haarcascade_fullbody.xml", CASCADE_CLASSIFIER);
                     loadClassifier("trainedNN/opencv/haarcascades/haarcascade_lowerbody.xml", CASCADE_CLASSIFIER_2);
