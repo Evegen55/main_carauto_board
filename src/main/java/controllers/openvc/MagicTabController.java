@@ -435,14 +435,17 @@ public final class MagicTabController {
             maxSize Maximum possible object size. Objects larger than that are ignored.
         So the result of the detection is going to be in the objects parameter or in our case faces.
          */
-        CASCADE_CLASSIFIER.detectMultiScale(grayFrame, faces, 1.1, 2,
-                0 | Objdetect.CASCADE_SCALE_IMAGE, new Size(absoluteAreaSize, absoluteAreaSize), new Size());
-        // TODO: 2/1/2018 at here is possible to detect something else by using another pre-loaded classifier
+        if (!CASCADE_CLASSIFIER.empty()) {
+            CASCADE_CLASSIFIER.detectMultiScale(grayFrame, faces, 1.1, 2,
+                    0 | Objdetect.CASCADE_SCALE_IMAGE, new Size(absoluteAreaSize, absoluteAreaSize), new Size());
+        }
+
         if (!CASCADE_CLASSIFIER_2.empty()) {
             CASCADE_CLASSIFIER_2.detectMultiScale(grayFrame, faces, 1.1, 2,
                     0 | Objdetect.CASCADE_SCALE_IMAGE, new Size(absoluteAreaSize, absoluteAreaSize), new Size());
         }
 
+        // TODO: 2/1/2018 at here is possible to detect something else by using another pre-loaded classifier
         // TODO: 2/8/2018 is it rigth to user faces object for both classifiers? Now I don't know...
         // TODO: 2/1/2018 at here we can also get a frame with face only and then we can detect smile, eyes and so on with no mistakes
         /*
