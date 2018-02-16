@@ -132,7 +132,7 @@ public final class MagicTabController {
 
     public MagicTabController init() {
         primaryStage.setOnCloseRequest((windowEvent -> setClosed()));
-        LOGGER.info("Application settings tab is initialising ...");
+        LOGGER.info("Application SMART tab is initialising ...");
         populateComboBoxWithTypeOfDetection();
         populateComboBoxWithTypeofclassifiers();
         btnOpenCVStartCamera.setDisable(true);
@@ -144,7 +144,7 @@ public final class MagicTabController {
         canny.setOnAction(event -> cannySelected());
         chkBoxSobel.setOnAction(event -> sobelSelected());
         dilateErode.setOnAction(event -> dilateErodeSelected());
-        LOGGER.info("Application settings tab initialised");
+        LOGGER.info("Application SMART tab initialised");
         return this;
     }
 
