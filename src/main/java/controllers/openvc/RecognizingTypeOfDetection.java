@@ -23,5 +23,5 @@
 package controllers.openvc;
 
 public enum RecognizingTypeOfDetection {
-    write_video, face, plates_rus, edges
+    write_video, face, plates_rus, edges, pedestrian
 }

@@ -63,16 +63,23 @@ public final class ApplicationSettingsController {
         //it retrieves all settings from all fields and boxes and write them into EXTERNAL file only.
         btnApplySettings.setOnAction(action -> {
 
-            final String styleValueFromComboBox = listStylesBox.getValue().toString(); // TODO: 12/29/2017 check NULL listStylesBox.getValue()
-            final String languagesValueFromComboBox = listLanguages.getValue().toString(); // TODO: 12/29/2017 check NULL listLanguages.getValue()
-            final String pathToVideoFolder = txtFieldPathToVideo.getText();
+            final StyleList listStylesBoxValue = listStylesBox.getValue();
+            if (listStylesBoxValue != null) {
+                final String styleValueFromComboBox = listStylesBoxValue.toString();
+                if (styleValueFromComboBox != null) {
+                    PropertiesHelper.setProperty(PropertyList.STYLE, styleValueFromComboBox);
+                }
+            }
 
-            if (styleValueFromComboBox != null) {
-                PropertiesHelper.setProperty(PropertyList.STYLE, styleValueFromComboBox);
+            final LanguageList listLanguagesValue = listLanguages.getValue();
+            if (listLanguagesValue != null) {
+                final String languagesValueFromComboBox = listLanguagesValue.toString();
+                if (languagesValueFromComboBox != null) {
+                    PropertiesHelper.setProperty(PropertyList.LANGUAGE, languagesValueFromComboBox);
+                }
             }
-            if (languagesValueFromComboBox != null) {
-                PropertiesHelper.setProperty(PropertyList.LANGUAGE, languagesValueFromComboBox);
-            }
+
+            final String pathToVideoFolder = txtFieldPathToVideo.getText();
             if (pathToVideoFolder != null) {
                 PropertiesHelper.setProperty(PropertyList.VIDEO_FOLDER, pathToVideoFolder);
             }

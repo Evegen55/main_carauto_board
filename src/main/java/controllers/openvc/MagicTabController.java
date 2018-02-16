@@ -132,7 +132,7 @@ public final class MagicTabController {
 
     public MagicTabController init() {
         primaryStage.setOnCloseRequest((windowEvent -> setClosed()));
-        LOGGER.info("Application settings tab is initialising ...");
+        LOGGER.info("Application SMART tab is initialising ...");
         populateComboBoxWithTypeOfDetection();
         populateComboBoxWithTypeofclassifiers();
         btnOpenCVStartCamera.setDisable(true);
@@ -144,7 +144,7 @@ public final class MagicTabController {
         canny.setOnAction(event -> cannySelected());
         chkBoxSobel.setOnAction(event -> sobelSelected());
         dilateErode.setOnAction(event -> dilateErodeSelected());
-        LOGGER.info("Application settings tab initialised");
+        LOGGER.info("Application SMART tab initialised");
         return this;
     }
 
@@ -158,11 +158,7 @@ public final class MagicTabController {
                 LOGGER.info("Type of detection: " + typeOfDetection);
                 switch (typeOfDetection) {
                     case face:
-                        hboxHidden1.setDisable(false);
-                        vboxHidden2.setDisable(true);
-                        hboxHidden3.setDisable(true);
-                        btnOpenCVWriteVideo.setDisable(true);
-                        break;
+                    case pedestrian:
                     case plates_rus:
                         hboxHidden1.setDisable(false);
                         vboxHidden2.setDisable(true);
@@ -190,8 +186,6 @@ public final class MagicTabController {
             if (typeOfDetection != null) {
                 switch (typeOfDetection) {
                     case face:
-                        doWithClassifiers(typeOfDetection, imageViewForOpenCV);
-                        break;
                     case plates_rus:
                         doWithClassifiers(typeOfDetection, imageViewForOpenCV);
                         break;
@@ -200,6 +194,9 @@ public final class MagicTabController {
                         break;
                     case write_video:
                         doWritingActions(imageViewForOpenCV);
+                        break;
+                    case pedestrian:
+                        doWithClassifiers(typeOfDetection, imageViewForOpenCV);
                         break;
                 }
             }
@@ -299,6 +296,15 @@ public final class MagicTabController {
                 if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.lbp)) {
 //                loadClassifier("trainedNN/opencv/lbpcascades/lbpcascade_frontalface.xml");
                     LOGGER.warn("Nothing to load!!");
+                    result = true;
+                }
+            }
+        }
+        if (typeOfDetectionValue.equals(RecognizingTypeOfDetection.pedestrian)) {
+            if (typeOfClassifierValue != null) {
+                if (typeOfClassifierValue.equals(RecognizingTypeOfClassifier.haar)) {
+                    loadClassifier("trainedNN/opencv/haarcascades/haarcascade_fullbody.xml", CASCADE_CLASSIFIER);
+                    loadClassifier("trainedNN/opencv/haarcascades/haarcascade_lowerbody.xml", CASCADE_CLASSIFIER_2);
                     result = true;
                 }
             }
@@ -429,11 +435,17 @@ public final class MagicTabController {
             maxSize Maximum possible object size. Objects larger than that are ignored.
         So the result of the detection is going to be in the objects parameter or in our case faces.
          */
-        CASCADE_CLASSIFIER.detectMultiScale(grayFrame, faces, 1.1, 2,
-                0 | Objdetect.CASCADE_SCALE_IMAGE, new Size(absoluteAreaSize, absoluteAreaSize), new Size());
+        if (!CASCADE_CLASSIFIER.empty()) {
+            CASCADE_CLASSIFIER.detectMultiScale(grayFrame, faces, 1.1, 2,
+                    0 | Objdetect.CASCADE_SCALE_IMAGE, new Size(absoluteAreaSize, absoluteAreaSize), new Size());
+        }
+
+        if (!CASCADE_CLASSIFIER_2.empty()) {
+            CASCADE_CLASSIFIER_2.detectMultiScale(grayFrame, faces, 1.1, 2,
+                    0 | Objdetect.CASCADE_SCALE_IMAGE, new Size(absoluteAreaSize, absoluteAreaSize), new Size());
+        }
+
         // TODO: 2/1/2018 at here is possible to detect something else by using another pre-loaded classifier
-        CASCADE_CLASSIFIER_2.detectMultiScale(grayFrame, faces, 1.1, 2,
-                0 | Objdetect.CASCADE_SCALE_IMAGE, new Size(absoluteAreaSize, absoluteAreaSize), new Size());
         // TODO: 2/8/2018 is it rigth to user faces object for both classifiers? Now I don't know...
         // TODO: 2/1/2018 at here we can also get a frame with face only and then we can detect smile, eyes and so on with no mistakes
         /*
