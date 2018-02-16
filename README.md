@@ -42,6 +42,9 @@ Here is the screen capture for the main ideas:
 
 **Smart tab**:
 
+Warn if OpenCV can't be loaded
+![**OpenCV can't be loaded**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/11_warning_opencv.PNG.PNG)
+
 Convert stream to a gray
 ![**Don't recognized gray**](https://raw.githubusercontent.com/Evegen55/main_carauto_board/master/src/test/resources/for_readme/smart_1_convert_to_gray.PNG)
 
