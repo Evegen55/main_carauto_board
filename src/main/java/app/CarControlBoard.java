@@ -19,7 +19,10 @@
  * @author Evgenii Lartcev
  * @created on 10/20/2017.
  * <p>
- * Here is the main application *
+ * Here is the main application
+ * Requires next JVM params in order to use full capabilities:
+ * -Djava.library.path=d:\path\to-build-with\opencv\build\java\x64
+ * -Dprism.verbose=true
  */
 
 package app;
@@ -40,12 +43,6 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-/**
- * Requires next JVM params in order to use full capabilities:
- * -Djava.library.path=d:\path\to-build-with\opencv\build\java\x64
- * -Dprism.verbose=true
- */
 
 public final class CarControlBoard extends Application {
 
