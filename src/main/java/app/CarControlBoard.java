@@ -41,6 +41,12 @@ import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Requires next JVM params in order to use full capabilities:
+ * -Djava.library.path=d:\path\to-build-with\opencv\build\java\x64
+ * -Dprism.verbose=true
+ */
+
 public final class CarControlBoard extends Application {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(CarControlBoard.class);

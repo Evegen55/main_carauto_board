@@ -88,6 +88,17 @@ and run it
 
 `java -Djava.library.path=<path-to-installed-opencv-331>\build\java\x64 -jar <Path-to-your-jar>/main_carauto_board-1.1-SNAPSHOT-jar-with-dependencies.jar`
 
+
+## Experiments
+
+Now I'm starting playing around [hardware accelerating](https://youtu.be/ESrkDUqSf84) with next parameters:
+
+    -Dprism.verbose=true    
+    -Dprism.forceGPU=true
+    -Dprism.order=es2,j2d
+    -Dsun.java2d.opengl=true
+
+
 ## License
 
 Copyright (C) 2017 - 2018 [Evgenii Lartcev](https://github.com/Evegen55/) and contributors
