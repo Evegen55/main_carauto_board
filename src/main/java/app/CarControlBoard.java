@@ -19,9 +19,13 @@
  * @author Evgenii Lartcev
  * @created on 10/20/2017.
  * <p>
- * Here is the main application
+ * Here is the main application entry point.
+ * <p>
  * Requires next JVM params in order to use full capabilities:
+ * path to OpenCV:
  * -Djava.library.path=d:\path\to-build-with\opencv\build\java\x64
+ * It's a way to force Java FX to use hardware acceleration which will print what graphics pipeline it uses:
+ * "sw" or "j2d" for software and "d3d" or "es2" for hardware accelerated
  * -Dprism.verbose=true
  */
 
