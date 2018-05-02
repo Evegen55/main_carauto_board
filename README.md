@@ -86,7 +86,7 @@ then assembly distributive:
 
 and run it
 
-`java -Djava.library.path=<path-to-installed-opencv-331>\build\java\x64 -jar <Path-to-your-jar>/main_carauto_board-1.1-SNAPSHOT-jar-with-dependencies.jar`
+`java -Djava.library.path=<path-to-installed-opencv-340>\build\java\x64 -jar <Path-to-your-jar>/main_carauto_board-1.1-SNAPSHOT-jar-with-dependencies.jar`
 
 
 ## Experiments
