@@ -17,7 +17,7 @@ import java.awt.image.DataBufferByte;
  *
  * @author <a href="mailto:luigi.derussis@polito.it">Luigi De Russis</a>
  * @author <a href="http://max-z.de">Maximilian Zuleger</a>
- * @author Evgenii_Lartcev
+ * @author <a href="mailto:i.dolende@gmail.com">Evgenii_Lartcev</a>
  * @version 1.0.0 (2017-12-12)
  * @since 1.0
  */
@@ -48,9 +48,7 @@ public final class UtilsOpenCV {
      * @param value    the value to set for the given {@link ObjectProperty}
      */
     public static <T> void onFXThread(final ObjectProperty<T> property, final T value) {
-        Platform.runLater(() -> {
-            property.set(value);
-        });
+        Platform.runLater(() -> property.set(value));
     }
 
     /**

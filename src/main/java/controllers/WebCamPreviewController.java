@@ -31,7 +31,7 @@ import static app.CarControlBoard.EXECUTOR_SERVICE;
  * This is controller for WebCamPreview FXML.
  *
  * @author Rakesh Bhatt (rakeshbhatt10)
- * @author Evgenii Lartcev
+ * @author <a href="mailto:i.dolende@gmail.com">Evgenii_Lartcev</a>
  */
 public class WebCamPreviewController implements Initializable {
 
