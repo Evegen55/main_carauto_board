@@ -60,7 +60,10 @@ public final class UtilsOpenCV {
     private static BufferedImage matToBufferedImage(Mat original) {
         // init
         BufferedImage image = null;
-        int width = original.width(), height = original.height(), channels = original.channels();
+        int width = original.width();
+        int height = original.height();
+        int channels = original.channels();
+
         byte[] sourcePixels = new byte[width * height * channels];
         original.get(0, 0, sourcePixels);
 
