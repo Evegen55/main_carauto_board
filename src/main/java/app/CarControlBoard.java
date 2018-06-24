@@ -58,19 +58,25 @@ public final class CarControlBoard extends Application {
         launch(args);
     }
 
+    Stage window;
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         LOGGER.info("Start loading application ...\n");
-        primaryStage.setTitle("Car control panel");
+        window = primaryStage;
+        window.setTitle("Car control panel");
+
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/base_form.fxml"));
         // set the main controller as root controller
-        final MainController mainController = new MainController(primaryStage);
+        final MainController mainController = new MainController(window);
         loader.setController(mainController);
         final Parent parent = loader.load();
         final Scene scene = new Scene(parent);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+
+        window.setScene(scene);
+        window.show();
 
         //do the stuff
         mainController.initMap();
