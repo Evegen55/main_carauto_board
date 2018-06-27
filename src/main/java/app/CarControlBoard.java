@@ -31,6 +31,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import org.opencv.core.Core;
 import org.slf4j.Logger;
@@ -115,6 +116,7 @@ public final class CarControlBoard extends Application {
                 "but with loss appropriate functionality. " +
                 "Do you want to proceed with NO OpenCV?",
                 ButtonType.YES, ButtonType.NO);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
         final Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.YES) {
