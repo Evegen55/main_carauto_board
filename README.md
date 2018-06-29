@@ -80,9 +80,11 @@ or
 
 `mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\opencv-340.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.0 -Dpackaging=jar`
 
+NOTE! Minimum required version of Java is 10
+
 then assembly distributive:
 
-`mvn assembly:assembly -Dmaven.test.skip=true`
+`package assembly:single -Dmaven.test.skip=true -f pom.xml`
 
 and run it
 
