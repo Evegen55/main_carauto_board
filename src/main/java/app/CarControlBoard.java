@@ -50,16 +50,14 @@ import java.util.concurrent.Executors;
 
 public final class CarControlBoard extends Application {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(CarControlBoard.class);
-
     public static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
+    private final static Logger LOGGER = LoggerFactory.getLogger(CarControlBoard.class);
     private boolean openCV_loaded = false;
+    private Stage window;
 
     public static void main(String[] args) {
         launch(args);
     }
-
-    Stage window;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -76,7 +74,8 @@ public final class CarControlBoard extends Application {
         final Parent parent = loader.load();
         final Scene scene = new Scene(parent);
 
-        window.setScene(scene);
+        window.setScene(scene); //here is the key to set new scene by loading it from another fxml configuration
+        // so it also key to avoid using table with tabs instead of different windows
         window.show();
 
         //do the stuff
