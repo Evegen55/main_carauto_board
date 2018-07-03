@@ -70,17 +70,21 @@ Plates recognition:
 
 Download [OpenCV](https://opencv.org/releases.html) and unpack it to a `<path-to-installed-opencv-340>`
 
-Note: now application supports OpenCV ver.3.4.0
+Note: now application supports OpenCV ver.3.4.1
 
 Note: now there is a conflict with came at video tab and smart tab. Choose only one way to get video stream from cams
 
-`mvn install:install-file -Dfile=<path-to-installed-opencv-340>\build\java\opencv-340.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.0 -Dpackaging=jar`
+`mvn install:install-file -Dfile=<path-to-installed-opencv-340>\build\java\opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
 
 or
 
-`mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\opencv-340.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.0 -Dpackaging=jar`
+`mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
 
-NOTE! Minimum required version of Java is 10
+or
+
+`mvn install:install-file -Dfile=local-maven-repo/opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
+
+NOTE! Minimum required version of Java for APPLICATION is JDK 10
 
 then assembly distributive:
 
@@ -88,7 +92,7 @@ then assembly distributive:
 
 and run it
 
-`java -Djava.library.path=<path-to-installed-opencv-331>\build\java\x64 -jar <Path-to-your-jar>/main_carauto_board-1.1-SNAPSHOT-jar-with-dependencies.jar`
+`java -Djava.library.path=<path-to-installed-opencv-341>\build\java\x64 -jar <Path-to-your-jar>/main_carauto_board-1.1-SNAPSHOT-jar-with-dependencies.jar`
 
 
 ## Experiments
