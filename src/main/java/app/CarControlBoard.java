@@ -44,7 +44,23 @@ import java.util.concurrent.Executors;
 
 /**
  * Requires next JVM params in order to use full capabilities:
+ * <p>
+ * Win:
+ * <p>
  * -Djava.library.path=d:\path\to-build-with\opencv\build\java\x64
+ * <p>
+ * or
+ * <p>
+ * Linux
+ * <p>
+ * -Djava.library.path=/usr/local/share/OpenCV/java
+ * <p>
+ * for Linux Ubuntu 16.04.04 there is a precompiled library
+ * <p>
+ * -Djava.library.path=local-maven-repo/libopencv_java341.so
+ * <p>
+ * JavaFX:
+ * <p>
  * -Dprism.verbose=true
  */
 
