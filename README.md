@@ -68,32 +68,44 @@ Plates recognition:
 
 **Build and run:**
 
-Download [OpenCV](https://opencv.org/releases.html) and unpack it to a `<path-to-installed-opencv-340>`
+Note: now application supports:
 
-Note: now application supports OpenCV ver.3.4.1
+- Minimum required version of Java for APPLICATION is JDK 10
+- OpenCV ver.3.4.1
 
-Note: now there is a conflict with came at video tab and smart tab. Choose only one way to get video stream from cams
+We will use precompiled libs from our project (folder local-maven-repo)
 
-`mvn install:install-file -Dfile=<path-to-installed-opencv-340>\build\java\opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
+or
+
+from official web-site [OpenCV](https://opencv.org/releases.html)
+
+or feel free to compile OpenCV from source code (as me).
+
+In case of using from web-site, please, Download [OpenCV](https://opencv.org/releases.html) and unpack it to a `<path-to-installed-opencv>`
+
+Note: now there is a conflict with came at video tab and smart tab. Choose only one way to get video stream from cams.
+
+You also need to install java lib to a local maven repository by invoking next command:
+
+for Windows:
+
+`mvn install:install-file -Dfile=<path-to-installed-opencv>\build\java\opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
 
 or
 
 `mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
 
-or
+for Linux (invoke from project root folder):
 
 `mvn install:install-file -Dfile=local-maven-repo/opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
 
-NOTE! Minimum required version of Java for APPLICATION is JDK 10
-
-then assembly distributive:
+then assembly distributive with all JAVA dependencies:
 
 `package assembly:single -Dmaven.test.skip=true -f pom.xml`
 
-and run it
+It won't contain native library so it still needs to pass it as JVM argument in order to run it:
 
-`java -Djava.library.path=<path-to-installed-opencv-341>\build\java\x64 -jar <Path-to-your-jar>/main_carauto_board-1.1-SNAPSHOT-jar-with-dependencies.jar`
-
+`java -Djava.library.path=<path-to-installed-opencv>\<path-fith-native-library-folder> -jar <Path-to-your-jar>/main_carauto_board-1.1-SNAPSHOT-jar-with-dependencies.jar`
 
 ## Experiments
 
@@ -104,6 +116,7 @@ Now I'm starting playing around [hardware accelerating](https://youtu.be/ESrkDUq
     -Dprism.order=es2,j2d
     -Dsun.java2d.opengl=true
 
+It also good idea to place prebuilt native libraries into resourse folder and use it without passing as JVM argument
 
 ## License
 
