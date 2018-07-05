@@ -68,26 +68,44 @@ Plates recognition:
 
 **Build and run:**
 
-Download [OpenCV](https://opencv.org/releases.html) and unpack it to a `<path-to-installed-opencv-340>`
+Note: now application supports:
 
-Note: now application supports OpenCV ver.3.4.0
+- Minimum required version of Java for APPLICATION is JDK 10
+- OpenCV ver.3.4.1
 
-Note: now there is a conflict with came at video tab and smart tab. Choose only one way to get video stream from cams
-
-`mvn install:install-file -Dfile=<path-to-installed-opencv-340>\build\java\opencv-340.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.0 -Dpackaging=jar`
+We will use precompiled libs from our project (folder local-maven-repo)
 
 or
 
-`mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\opencv-340.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.0 -Dpackaging=jar`
+from official web-site [OpenCV](https://opencv.org/releases.html)
 
-then assembly distributive:
+or feel free to compile OpenCV from source code (as me).
 
-`mvn assembly:assembly -Dmaven.test.skip=true`
+In case of using from web-site, please, Download [OpenCV](https://opencv.org/releases.html) and unpack it to a `<path-to-installed-opencv>`
 
-and run it
+Note: now there is a conflict with came at video tab and smart tab. Choose only one way to get video stream from cams.
 
-`java -Djava.library.path=<path-to-installed-opencv-331>\build\java\x64 -jar <Path-to-your-jar>/main_carauto_board-1.1-SNAPSHOT-jar-with-dependencies.jar`
+You also need to install java lib to a local maven repository by invoking next command:
 
+for Windows:
+
+`mvn install:install-file -Dfile=<path-to-installed-opencv>\build\java\opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
+
+or
+
+`mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
+
+for Linux (invoke from project root folder):
+
+`mvn install:install-file -Dfile=local-maven-repo/opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
+
+then assembly distributive with all JAVA dependencies:
+
+`package assembly:single -Dmaven.test.skip=true -f pom.xml`
+
+It won't contain native library so it still needs to pass it as JVM argument in order to run it:
+
+`java -Djava.library.path=<path-to-installed-opencv>\<path-fith-native-library-folder> -jar <Path-to-your-jar>/main_carauto_board-1.1-SNAPSHOT-jar-with-dependencies.jar`
 
 ## Experiments
 
@@ -98,6 +116,7 @@ Now I'm starting playing around [hardware accelerating](https://youtu.be/ESrkDUq
     -Dprism.order=es2,j2d
     -Dsun.java2d.opengl=true
 
+It also good idea to place prebuilt native libraries into resourse folder and use it without passing as JVM argument
 
 ## License
 

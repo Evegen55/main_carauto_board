@@ -44,16 +44,32 @@ import java.util.concurrent.Executors;
 
 /**
  * Requires next JVM params in order to use full capabilities:
+ * <p>
+ * Win:
+ * <p>
  * -Djava.library.path=d:\path\to-build-with\opencv\build\java\x64
+ * <p>
+ * or
+ * <p>
+ * Linux
+ * <p>
+ * -Djava.library.path=/usr/local/share/OpenCV/java
+ * <p>
+ * for Linux Ubuntu 16.04.04 there is a precompiled library
+ * <p>
+ * -Djava.library.path=local-maven-repo/libopencv_java341.so
+ * <p>
+ * JavaFX:
+ * <p>
  * -Dprism.verbose=true
  */
 
 public final class CarControlBoard extends Application {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(CarControlBoard.class);
-
     public static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
+    private final static Logger LOGGER = LoggerFactory.getLogger(CarControlBoard.class);
     private boolean openCV_loaded = false;
+    private Stage window;
 
     public static void main(String[] args) {
         launch(args);
@@ -62,16 +78,21 @@ public final class CarControlBoard extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         LOGGER.info("Start loading application ...\n");
-        primaryStage.setTitle("Car control panel");
+        window = primaryStage;
+        window.setTitle("Car control panel");
+
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/base_form.fxml"));
         // set the main controller as root controller
-        final MainController mainController = new MainController(primaryStage);
+        final MainController mainController = new MainController(window);
         loader.setController(mainController);
         final Parent parent = loader.load();
         final Scene scene = new Scene(parent);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+
+        window.setScene(scene); //here is the key to set new scene by loading it from another fxml configuration
+        // so it also key to avoid using table with tabs instead of different windows
+        window.show();
 
         //do the stuff
         mainController.initMap();
