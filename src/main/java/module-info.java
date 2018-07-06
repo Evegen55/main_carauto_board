@@ -1,5 +1,5 @@
 module main.carauto.board {
-    requires java.base;
+//    requires java.base; //redundant
     requires transitive javafx.graphics;
     requires transitive javafx.media;
     requires transitive javafx.deploy;
@@ -19,13 +19,13 @@ module main.carauto.board {
     requires webcam.capture;
     requires javax.json;
 
-
     exports app;
-    exports controllers.imageViewer;
-    exports controllers.mapListeners;
-    exports controllers.openvc;
-    exports controllers.phone;
-    exports controllers.settings;
-    exports entities;
-    exports utils;
+    //unnecessary
+//    exports controllers.imageViewer;
+//    exports controllers.mapListeners;
+//    exports controllers.openvc;
+//    exports controllers.phone;
+//    exports controllers.settings;
+//    exports entities;
+//    exports utils;
 }
