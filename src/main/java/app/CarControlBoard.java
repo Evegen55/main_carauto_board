@@ -3,18 +3,16 @@
  * <p>
  * Copyright (C) 2017 - 2017 Evgenii Lartcev (https://github.com/Evegen55/) and contributors
  * <p>
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
- * associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright
+ * notice and this permission notice shall be included in all copies or substantial portions of the Software.
  * <p>
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * @author Evgenii Lartcev
  * @created on 10/20/2017.
@@ -67,8 +65,11 @@ import java.util.concurrent.Executors;
 public final class CarControlBoard extends Application {
 
     public static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
+
     private final static Logger LOGGER = LoggerFactory.getLogger(CarControlBoard.class);
+
     private boolean openCV_loaded = false;
+
     private Stage window;
 
     public static void main(String[] args) {
@@ -76,13 +77,13 @@ public final class CarControlBoard extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(final Stage primaryStage) throws IOException {
         LOGGER.info("Start loading application ...\n");
         window = primaryStage;
         window.setTitle("Car control panel");
 
 
-        FXMLLoader loader = new FXMLLoader();
+        final FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/base_form.fxml"));
         // set the main controller as root controller
         final MainController mainController = new MainController(window);
@@ -126,15 +127,15 @@ public final class CarControlBoard extends Application {
     private void showPopUpWarnWindow() {
         LOGGER.info("Show warning dialog");
         final Alert alert = new Alert(Alert.AlertType.WARNING, "Application can't load OpenCV library. " +
-                "Try install OpenCV and start application as shown in README.md. " +
-                "If you press \"NO\" button the app will be stopped. Otherwise, it starts without OpenCV " +
-                "but with loss appropriate functionality. " +
-                "Do you want to proceed with NO OpenCV?",
-                ButtonType.YES, ButtonType.NO);
+                                                               "Try install OpenCV and start application as shown in README.md. " +
+                                                               "If you press \"NO\" button the app will be stopped. Otherwise, it starts without OpenCV " +
+                                                               "but with loss appropriate functionality. " +
+                                                               "Do you want to proceed with NO OpenCV?",
+                                      ButtonType.YES, ButtonType.NO);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
         final Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.YES) {
+        if (ButtonType.YES == result.get()) {
             LOGGER.info("User chose YES");
         } else {
             LOGGER.info("User chose to stop application. Good, good user.");
