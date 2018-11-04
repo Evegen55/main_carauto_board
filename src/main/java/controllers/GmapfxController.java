@@ -3,18 +3,16 @@
  * <p>
  * Copyright (C) 2017 - 2017 Evgenii Lartcev (https://github.com/Evegen55/) and contributors
  * <p>
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
- * associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright
+ * notice and this permission notice shall be included in all copies or substantial portions of the Software.
  * <p>
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * @author Evgenii Lartcev
  * @created on 10/20/2017
@@ -50,9 +48,18 @@ import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class GmapfxController implements MapComponentInitializedListener, DirectionsServiceCallback, GeocodingServiceCallback {
+/**
+ *
+ */
+public final class GmapfxController implements MapComponentInitializedListener,
+                                               DirectionsServiceCallback,
+                                               GeocodingServiceCallback {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(GmapfxController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GmapfxController.class);
+    private static final MouseClckForGetCoordListenerImpl MOUSE_CLCK_FOR_GET_COORD_LISTENER = new MouseClckForGetCoordListenerImpl();
+
+    private static final double CENTER_LATITUDE = 34.0219;
+    private static final double CENTER_LONGITUDE = -118.4814;
 
     private GoogleMapView mapComponent;
     private GoogleMap map;
@@ -60,7 +67,13 @@ public final class GmapfxController implements MapComponentInitializedListener, 
     private DirectionsRenderer directionsRenderer;
     private DirectionsService directionsService;
 
-    private static final MouseClckForGetCoordListenerImpl MOUSE_CLCK_FOR_GET_COORD_LISTENER = new MouseClckForGetCoordListenerImpl();
+
+    public GmapfxController() {
+        //generates google map with some defaults and put it into top pane
+        this.mapComponent = new GoogleMapView("/html/maps.html");
+        this.mapComponent.addMapInializedListener(this);
+        this.mapComponent.addMapReadyListener(MOUSE_CLCK_FOR_GET_COORD_LISTENER);
+    }
 
     /**
      * @param tab
@@ -78,22 +91,15 @@ public final class GmapfxController implements MapComponentInitializedListener, 
                                 final Button btn_clear_path, final Pane path_choice_pane,
                                 final Button btn_get_coords_find_path, final TextField txt_from,
                                 final TextField txt_to) {
-        //generates google map with some defaults and put it into top pane
-        mapComponent = new GoogleMapView("/html/maps.html");
-        mapComponent.addMapInializedListener(this);
-        mapComponent.addMapReadyListener(MOUSE_CLCK_FOR_GET_COORD_LISTENER);
-
         initControls(btn_clear_directions, btn_show_directions, btn_find_path, btn_clear_path, path_choice_pane,
-                btn_get_coords_find_path, txt_from, txt_to);
-
+                     btn_get_coords_find_path, txt_from, txt_to);
         mapComponent.getChildren().addAll(flowPane, path_choice_pane);
         tab.setContent(mapComponent);
     }
 
     @Override
     public void mapInitialized() {
-        // TODO: 11/23/2017 move it into global settings
-        final LatLong center = new LatLong(34.0219, -118.4814);
+        final LatLong center = new LatLong(CENTER_LATITUDE, CENTER_LONGITUDE);
         final MapOptions options = new MapOptions()
                 .center(center)
                 .mapType(MapTypeIdEnum.ROADMAP)
@@ -113,14 +119,20 @@ public final class GmapfxController implements MapComponentInitializedListener, 
     }
 
     @Override
-    public void directionsReceived(DirectionsResult results, DirectionStatus status) {
-        if (status.equals(DirectionStatus.OK)) {
+    public void directionsReceived(final DirectionsResult directionsResult, final DirectionStatus directionStatus) {
+        if (DirectionStatus.OK == directionStatus) {
             mapComponent.getMap().showDirectionsPane();
             LOGGER.info("Directions was found");
-            DirectionsResult directionsResult = results;
+
             GeocodingService geocodingService = new GeocodingService();
-//            LOGGER.info("SIZE ROUTES: " + directionsResult.getRoutes().size() + "\n" + "ORIGIN: " + directionsResult.getRoutes().get(0).getLegs().get(0).getStartLocation());
-            geocodingService.reverseGeocode(directionsResult.getRoutes().get(0).getLegs().get(0).getStartLocation().getLatitude(), directionsResult.getRoutes().get(0).getLegs().get(0).getStartLocation().getLongitude(), this);
+//            LOGGER.info("SIZE ROUTES: " + directionsResult.getRoutes().size() + "\n" + "ORIGIN: " +
+// directionsResult.getRoutes().get(0).getLegs().get(0).getStartLocation());
+            geocodingService.reverseGeocode(directionsResult.getRoutes().get(0)
+                                                    .getLegs().get(0)
+                                                    .getStartLocation().getLatitude(),
+                                            directionsResult.getRoutes().get(0)
+                                                    .getLegs().get(0)
+                                                    .getStartLocation().getLongitude(), this);
 //            LOGGER.info("LEGS SIZE: " + directionsResult.getRoutes().get(0).getLegs().size());
 //            LOGGER.info("WAYPOINTS " + directionsResult.getGeocodedWaypoints().size());
 //            double d = 0;
@@ -137,9 +149,9 @@ public final class GmapfxController implements MapComponentInitializedListener, 
     }
 
     @Override
-    public void geocodedResultsReceived(GeocodingResult[] results, GeocoderStatus status) {
-        if (status.equals(GeocoderStatus.OK)) {
-            for (GeocodingResult e : results) {
+    public void geocodedResultsReceived(final GeocodingResult[] geocodingResults, final GeocoderStatus geocoderStatus) {
+        if (geocoderStatus.equals(GeocoderStatus.OK)) {
+            for (GeocodingResult e : geocodingResults) {
                 LOGGER.info(e.getVariableName());
                 LOGGER.info("GEOCODE: " + e.getFormattedAddress() + "\n" + e.toString());
                 // TODO: 11/24/2017 do smth with results
@@ -175,8 +187,8 @@ public final class GmapfxController implements MapComponentInitializedListener, 
 
             //text fields are always not null but "" because we invoked clear()
             btn_get_coords_find_path.setOnAction(btn_action ->
-                    getCoordinatesCalculatePathShowDirectionsAndHidePanel(path_choice_pane, txt_from,
-                            txt_to, btn_get_coords_find_path));
+                                                         getCoordinatesCalculatePathShowDirectionsAndHidePanel(path_choice_pane, txt_from,
+                                                                                                               txt_to, btn_get_coords_find_path));
 
             //add text fields to a listener
             MOUSE_CLCK_FOR_GET_COORD_LISTENER.setTxt_from(txt_from);
