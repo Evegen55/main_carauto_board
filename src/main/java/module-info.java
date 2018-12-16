@@ -1,5 +1,7 @@
-module main.carauto.board {
-//    requires java.base; //redundant
+module main.carauto.board.app {
+    // allow only module javafx.graphics access module in app via qualified export
+    exports app to javafx.graphics;
+
     requires transitive javafx.graphics;
     requires transitive javafx.media;
     requires transitive javafx.deploy;
@@ -18,14 +20,4 @@ module main.carauto.board {
     requires commons.io;
     requires webcam.capture;
     requires javax.json;
-
-    exports app;
-    //unnecessary
-//    exports controllers.imageViewer;
-//    exports controllers.mapListeners;
-//    exports controllers.openvc;
-//    exports controllers.phone;
-//    exports controllers.settings;
-//    exports entities;
-//    exports utils;
 }
