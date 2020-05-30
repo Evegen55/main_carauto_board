@@ -70,7 +70,7 @@
         <!---Djava.library.path=<path-to-installed-opencv-331>\build\java\x64-->
         <dependency>
             <groupId>org.opencv</groupId>
-            <artifactId>opencv.win10_64</artifactId>
+            <artifactId>opencv.javawraper</artifactId>
             <version>3.4.1</version>
         </dependency>
 

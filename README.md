@@ -89,15 +89,15 @@ You also need to install java lib to a local maven repository by invoking next c
 
 for Windows:
 
-`mvn install:install-file -Dfile=<path-to-installed-opencv>\build\java\opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
+`mvn install:install-file -Dfile=<path-to-installed-opencv>\build\java\windows\opencv-341.jar -DgroupId=org.opencv -DartifactId=javawraper -Dversion=3.4.1 -Dpackaging=jar`
 
 or
 
-`mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
+`mvn install:install-file -Dfile=${project.basedir}\local-maven-repo\windows\opencv-341.jar -DgroupId=org.opencv -DartifactId=javawraper -Dversion=3.4.1 -Dpackaging=jar`
 
 for Linux (invoke from project root folder):
 
-`mvn install:install-file -Dfile=local-maven-repo/opencv-341.jar -DgroupId=org.opencv -DartifactId=opencv.win10_64 -Dversion=3.4.1 -Dpackaging=jar`
+`mvn install:install-file -Dfile=local-maven-repo/linux/opencv-341.jar -DgroupId=org.opencv -DartifactId=javawraper -Dversion=3.4.1 -Dpackaging=jar`
 
 then assembly distributive with all JAVA dependencies:
 

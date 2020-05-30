@@ -110,7 +110,8 @@ public final class CarControlBoard extends Application {
             //conflict with mainController.initWebcams() just because it uses it own version of an opencv lib?
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
             openCV_loaded = true;
-            LOGGER.info("Application loaded OpenCV library successfully");
+            LOGGER.info("Application loaded OpenCV {} library successfully", Core.VERSION);
+            LOGGER.debug(Core.getBuildInformation());
         } catch (Throwable e) {
             LOGGER.warn("Application can't load OpenCV library");
             showPopUpWarnWindow();
